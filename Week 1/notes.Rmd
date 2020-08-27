@@ -121,7 +121,7 @@ packages.
 You can install packages from CRAN with `install.packages()`.
 
 For example:
-```{r}
+```{r, eval=FALSE}
 #install.packages("ggplot2")
 ```
 

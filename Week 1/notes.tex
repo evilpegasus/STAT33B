@@ -1,0 +1,658 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Stat 33B - Lecture Notes 1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{Stat 33B - Lecture Notes 1}
+\author{}
+\date{\vspace{-2.5em}August 23, 2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{r-basics}{%
+\section{R Basics}\label{r-basics}}
+
+R has a Read-Eval-Print Loop (REPL):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Type an expression at the R prompt and hit the enter key.
+\item
+  R reads the expression.
+\item
+  R evaluates the expression to compute a result.
+\item
+  R prints the result in the console.
+\item
+  R loops back to waiting for you to enter an expression.
+\end{enumerate}
+
+This is similar to Python, Julia, Lisp, etc.
+
+R has many built-in functions for doing math and stats.
+
+\hypertarget{getting-help}{%
+\section{Getting Help}\label{getting-help}}
+
+R has built-in documentation.
+
+You can use the \texttt{?} command to get help with a specific function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?sin}
+\end{Highlighting}
+\end{Shaded}
+
+You can use the \texttt{??} command to search the documentation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{??graphics}
+\end{Highlighting}
+\end{Shaded}
+
+Strings use single or double quotes (there's no difference).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"hi"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hi"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{\textquotesingle{}hi\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hi"
+\end{verbatim}
+
+The help commands work with strings or unquoted names.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}\StringTok{"+"}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{sessionInfo()} function prints info about your R session:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sessionInfo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 19041)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] ggplot2_3.3.2
+## 
+## loaded via a namespace (and not attached):
+##  [1] knitr_1.29       magrittr_1.5     munsell_0.5.0    colorspace_1.4-1
+##  [5] R6_2.4.1         rlang_0.4.7      stringr_1.4.0    tools_4.0.2     
+##  [9] grid_4.0.2       gtable_0.3.0     xfun_0.16        tinytex_0.25    
+## [13] withr_2.2.0      htmltools_0.5.0  ellipsis_0.3.1   yaml_2.2.1      
+## [17] digest_0.6.25    tibble_3.0.3     lifecycle_0.2.0  crayon_1.3.4    
+## [21] vctrs_0.3.2      glue_1.4.1       evaluate_0.14    rmarkdown_2.3   
+## [25] stringi_1.4.6    compiler_4.0.2   pillar_1.4.6     scales_1.1.1    
+## [29] pkgconfig_2.0.3
+\end{verbatim}
+
+\hypertarget{order-of-operations}{%
+\subsection{Order of Operations}\label{order-of-operations}}
+
+The order of operations in R is similar to math and most programming
+languages.
+
+To see the entire order:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?Syntax}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{functions-calls}{%
+\subsection{Functions \& Calls}\label{functions-calls}}
+
+Recall that:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Parameters} are the inputs a function accepts.
+\item
+  \textbf{Arguments} are the values assigned to parameters in a call.
+\end{itemize}
+
+You can set arguments by position or by name:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{log}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.302585
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?log}
+
+\KeywordTok{log}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.321928
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{log}\NormalTok{(}\DataTypeTok{base =} \DecValTok{2}\NormalTok{, }\DataTypeTok{x =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.321928
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{log}\NormalTok{(}\DataTypeTok{base =} \DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.321928
+\end{verbatim}
+
+\hypertarget{copy-on-write-part-1}{%
+\subsection{Copy-on-write, Part 1}\label{copy-on-write-part-1}}
+
+In R, most objects are \textbf{copy-on-write}.
+
+That is, if we assign \texttt{x} to \texttt{y}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\DecValTok{3}
+\NormalTok{y =}\StringTok{ }\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+And then change \texttt{x}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+Then \texttt{y} remains unchanged:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+Originally, \texttt{x} and \texttt{y} referred to the same value in
+memory.
+
+When we changed \texttt{x} (a ``write''), R automatically copied the
+original value so that \texttt{y} remained the same.
+
+\hypertarget{packages-notebooks}{%
+\section{Packages \& Notebooks}\label{packages-notebooks}}
+
+A \textbf{package} is collection of functions and/or data for use in R.
+
+The Comprehensive R Archive Network (\textbf{CRAN}) stores most
+user-contributed packages.
+
+You can install packages from CRAN with \texttt{install.packages()}.
+
+For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("ggplot2")}
+\end{Highlighting}
+\end{Shaded}
+
+A package only needs to be installed once.
+
+For maintaining your packages, there are also the functions:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{installed.packages()} to list installed packages
+\item
+  \texttt{remove.packages()} to remove a package
+\item
+  \texttt{update.packages()} to update ALL packages
+\end{itemize}
+
+\hypertarget{loading-packages}{%
+\subsection{Loading Packages}\label{loading-packages}}
+
+The \texttt{library()} function loads an installed package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+Only load the packages you actually need.
+
+You'll have to reload the packages each time you restart R.
+
+\hypertarget{notebooks}{%
+\subsection{Notebooks}\label{notebooks}}
+
+Two typical ways to save R code:
+
+\begin{itemize}
+\tightlist
+\item
+  R script (.R file)
+\item
+  R notebook (.Rmd file)
+\end{itemize}
+
+R scripts are simpler:
+
+\begin{itemize}
+\tightlist
+\item
+  No extra packages required
+\item
+  Ideal for developing software
+\end{itemize}
+
+R notebooks are richer:
+
+\begin{itemize}
+\tightlist
+\item
+  Can store formatted text and code
+\item
+  Can be converted to HTML, DOCX, and PDF
+\item
+  Ideal for data analyses and presentations
+\end{itemize}
+
+R notebooks require the \texttt{rmarkdown} package:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Generating a report from an R notebook is called \textbf{knitting}.
+
+\hypertarget{tinytex}{%
+\subsection{TinyTeX}\label{tinytex}}
+
+If you want to knit PDFs from R notebooks, you also need LaTeX.
+
+LaTeX is programming language for typesetting books.
+
+The \texttt{tinytex} package aims to make installing LaTeX easy.
+
+First, install \texttt{tinytex}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(}\StringTok{"tinytex"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Second, tell \texttt{tinytex} to install LaTeX:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tinytex)}
+\KeywordTok{install\_tinytex}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+This may take a while, and you may need administrator permissions.
+
+Finally, restart R and try knitting an R notebook.
+
+Remember that the output type must be \texttt{pdf\_document}.
+
+\hypertarget{vectors}{%
+\section{Vectors}\label{vectors}}
+
+R has no concept of scalars or arrays.
+
+R's atomic data type is the \textbf{vector}, an ordered container for 0
+or more elements.
+
+Vector elements must all have the same data type.
+
+The \texttt{c()} function combines vectors:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 7 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(x, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5 7 1 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\StringTok{"hi"}\NormalTok{, }\StringTok{"hello"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hi"    "hello"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"hi"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hi"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\StringTok{"hi"}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "hi" "1"
+\end{verbatim}
+
+\hypertarget{vectorization}{%
+\subsection{Vectorization}\label{vectorization}}
+
+A \textbf{vectorized} function is one that is applied element-by-element
+when passed a vector argument.
+
+Many R functions are vectorized:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{c}\NormalTok{(}\KeywordTok{sin}\NormalTok{(}\DecValTok{0}\NormalTok{), }\KeywordTok{sin}\NormalTok{(}\DecValTok{1}\NormalTok{), }\KeywordTok{sin}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0000000 0.8414710 0.9092974
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\KeywordTok{sin}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0000000 0.8414710 0.9092974
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# NOT VECTORIZED:}
+\KeywordTok{mean}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+Vectorization is the fastest kind of iteration in R.
+
+\hypertarget{indexing}{%
+\subsection{Indexing}\label{indexing}}
+
+In R, indexes start at 1.
+
+Use the square bracket \texttt{{[}} to access elements of a vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\NormalTok{x[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[}\DecValTok{6}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+
+You can use a vector as an index:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 3
+\end{verbatim}
+
+\hypertarget{copy-on-write-part-2}{%
+\subsection{Copy-on-write, Part 2}\label{copy-on-write-part-2}}
+
+The copy-on-write rule applies to vectors.
+
+For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\NormalTok{y =}\StringTok{ }\NormalTok{x}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10 20 30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10 20 30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\DecValTok{15}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15 20 30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10 20 30
+\end{verbatim}
+
+This is different from languages like C and Python.
+
+\end{document}
