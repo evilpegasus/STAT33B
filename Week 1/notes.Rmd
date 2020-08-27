@@ -1,0 +1,278 @@
+---
+title: "Stat 33B - Lecture Notes 1"
+date: August 23, 2020
+output: pdf_document
+---
+
+R Basics
+========
+
+R has a Read-Eval-Print Loop (REPL):
+
+1. Type an expression at the R prompt and hit the enter key.
+2. R reads the expression.
+3. R evaluates the expression to compute a result.
+4. R prints the result in the console.
+5. R loops back to waiting for you to enter an expression.
+
+This is similar to Python, Julia, Lisp, etc.
+
+R has many built-in functions for doing math and stats.
+
+
+# Getting Help
+
+R has built-in documentation.
+
+You can use the `?` command to get help with a specific function:
+```{r}
+?sin
+```
+
+You can use the `??` command to search the documentation:
+```{r}
+??graphics
+```
+
+Strings use single or double quotes (there's no difference).
+```{r}
+"hi"
+'hi'
+```
+
+
+The help commands work with strings or unquoted names.
+```{r}
+?"+"
+```
+
+
+The `sessionInfo()` function prints info about your R session:
+```{r}
+sessionInfo()
+```
+
+
+## Order of Operations
+
+The order of operations in R is similar to math and most programming languages.
+
+To see the entire order:
+```{r}
+?Syntax
+```
+
+## Functions & Calls
+
+Recall that:
+
+* __Parameters__ are the inputs a function accepts.
+* __Arguments__ are the values assigned to parameters in a call.
+
+You can set arguments by position or by name:
+```{r}
+log(10)
+?log
+
+log(10, 2)
+
+log(base = 2, x = 10)
+
+log(base = 2, 10)
+```
+
+
+## Copy-on-write, Part 1
+
+In R, most objects are __copy-on-write__.
+
+That is, if we assign `x` to `y`:
+```{r}
+x = 3
+y = x
+```
+
+And then change `x`:
+```{r}
+x = 5
+```
+
+Then `y` remains unchanged:
+```{r}
+y
+```
+
+Originally, `x` and `y` referred to the same value in memory.
+
+When we changed `x` (a "write"), R automatically copied the original value so
+that `y` remained the same.
+
+
+
+Packages & Notebooks
+====================
+
+A __package__ is collection of functions and/or data for use in R.
+
+The Comprehensive R Archive Network (__CRAN__) stores most user-contributed
+packages.
+
+
+You can install packages from CRAN with `install.packages()`.
+
+For example:
+```{r}
+#install.packages("ggplot2")
+```
+
+A package only needs to be installed once.
+
+For maintaining your packages, there are also the functions:
+
+* `installed.packages()` to list installed packages
+* `remove.packages()` to remove a package
+* `update.packages()` to update ALL packages
+
+
+## Loading Packages
+
+The `library()` function loads an installed package:
+```{r}
+library(ggplot2)
+```
+
+Only load the packages you actually need.
+
+You'll have to reload the packages each time you restart R.
+
+
+## Notebooks
+
+Two typical ways to save R code:
+
+* R script (.R file)
+* R notebook (.Rmd file)
+
+R scripts are simpler:
+
+* No extra packages required
+* Ideal for developing software
+
+R notebooks are richer:
+
+* Can store formatted text and code
+* Can be converted to HTML, DOCX, and PDF
+* Ideal for data analyses and presentations
+
+R notebooks require the `rmarkdown` package:
+```{r, eval=FALSE}
+install.packages("rmarkdown")
+```
+
+Generating a report from an R notebook is called __knitting__.
+
+
+## TinyTeX
+
+If you want to knit PDFs from R notebooks, you also need LaTeX.
+
+LaTeX is programming language for typesetting books.
+
+The `tinytex` package aims to make installing LaTeX easy.
+
+First, install `tinytex`:
+```{r, eval=FALSE}
+install.packages("tinytex")
+```
+
+Second, tell `tinytex` to install LaTeX:
+```{r, eval=FALSE}
+library(tinytex)
+install_tinytex()
+```
+This may take a while, and you may need administrator permissions.
+
+Finally, restart R and try knitting an R notebook.
+
+Remember that the output type must be `pdf_document`.
+
+
+
+Vectors
+=======
+
+R has no concept of scalars or arrays.
+
+R's atomic data type is the __vector__, an ordered container for 0 or more
+elements.
+
+Vector elements must all have the same data type.
+
+The `c()` function combines vectors:
+```{r}
+x = c(5, 7, 1)
+x
+
+c(x, 1)
+
+c("hi", "hello")
+"hi"
+
+c("hi", 1)
+```
+
+## Vectorization
+
+A __vectorized__ function is one that is applied element-by-element when passed
+a vector argument.
+
+Many R functions are vectorized:
+```{r}
+c(sin(0), sin(1), sin(2))
+
+x = c(0, 1, 2)
+sin(x)
+
+# NOT VECTORIZED:
+mean(x)
+```
+
+Vectorization is the fastest kind of iteration in R.
+
+
+
+## Indexing
+
+In R, indexes start at 1.
+
+Use the square bracket `[` to access elements of a vector:
+```{r}
+x = c(1, 3, 7)
+x[2]
+x[6]
+```
+
+You can use a vector as an index:
+```{r}
+x[c(1, 1, 2)]
+```
+
+
+## Copy-on-write, Part 2
+
+The copy-on-write rule applies to vectors.
+
+For example:
+```{r}
+x = c(10, 20, 30)
+y = x
+x
+y
+
+x[1] = 15
+x
+
+y
+```
+
+This is different from languages like C and Python.
