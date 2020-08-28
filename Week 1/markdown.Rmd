@@ -1,0 +1,41 @@
+---
+title: "My Notebook"
+author: "Ming Fong"
+output: pdf_document
+---
+
+*This is italic*
+
+_This is also italic_
+
+**This is bold**
+
+__This is also bold__
+
+* First
+* Second
+
+- First
+- Second
+
++ First
++ Second
+
+1. Hello
+2. Goodbye
+7. STAT 33A
+
+[Google](https://www.google.com/)
+
+> Long long ago...
+> There was a castle
+
+```{r}
+mean(1)
+```
+
+This is `code`.
+
+# Section
+
+## Subsection
