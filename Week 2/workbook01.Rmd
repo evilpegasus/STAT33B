@@ -1,0 +1,236 @@
+---
+title: "STAT 33B Workbook 1"
+date: "Sep 3, 2020"
+author: "Ming Fong (3035619833)"
+output: pdf_document
+---
+
+This workbook is due __Sep 3, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+
+Data Types
+==========
+
+Watch the "Data Types" lecture video.
+
+## Exercise 1
+
+In R, if you pass vectors with different lengths to a binary operator, the
+shorter one will be __recycled__. This means the elements of the shorter vector
+will be repeated to match the length of the longer vector.
+
+Use the recycling rule to explain what's happening in each of these lines of
+code:
+```{r}
+c(1, 2) + c(3, 4)
+
+c(20, 30, 40) / 10
+
+c(1, 3) + c(0, 0, 0, 0, 0)
+```
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 2
+
+Run each line in the following code chunk and inspect the result. For each one,
+state the type and class of the result, and explain why the result has that
+type.
+
+```{r}
+c(TRUE, "hello", 3, 6)
+
+3L + 3i
+
+c(3L, 4L, 5L) / TRUE
+```
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 3
+
+Another way to create vectors is with the `rep()` function. The `rep()`
+function creates a vector by replicating a value or vector of values.
+
+1. The first parameter of `rep()` is the thing to replicate. The second
+   parameter, `times`, is the number of times to to replicate. Use `rep()` to
+   make a vector with 10 elements, all equal to 78.
+
+2. What happens if you pass a vector as the first argument to `rep()`? Give
+   some examples.
+
+3. Skim the help file `?rep`. What happens if you pass a vector as the second
+   argument to `rep()`? The help file might seem a bit cryptic, so you'll also
+   need to experiment. Give some examples.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 4
+
+Yet another way to create vectors is with the `seq()` function. The `seq()`
+function creates a vector that contains a sequence of numbers.
+
+Skim the help file `?seq`. Give some examples of creating vectors with the
+`seq()` function.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 5
+
+In R, `T` and `F` are shortcuts for `TRUE` and `FALSE`.
+
+1. What happens if you try to assign a value to `TRUE`?
+
+2. What happens if you try to assign a value to `T`?
+
+3. Check that what you observed in #1 and #2 is also true for `FALSE` and `F`.
+   Why might it be safer to use `TRUE` and `FALSE` rather than `T` and `F` in
+   code?
+
+YOUR ANSWER GOES HERE:
+
+
+
+Matrices, Arrays, & Lists
+=========================
+
+Watch the "Matrices, Arrays, & Lists" lecture video.
+
+## Exercise 6
+
+Recall that many of R's functions are vectorized, which means they are applied
+element-by-element to vectors.
+
+1. What happens if you call a vectorized function on a matrix?
+
+2. What happens if you call a vectorized function on an array?
+
+Give examples to support your answer.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 7
+
+Suppose we want to multiply a length-2 vector with a 2-by-2 matrix.
+
+What happens if you use `*` to multiply them? What happens if you use `%*%`?
+
+Give some examples that show the difference, including for vectors and matrices
+of other sizes.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 8
+
+The `c()` function combines vectors, but it can also combine lists. Use
+`list()` to create two lists, and show that `c()` can be used to combine them.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Special Values
+==============
+
+Watch the "Special Values" lecture video.
+
+## Exercise 9
+
+Skim the help file for the `mean()` function.
+
+1. What happens if you call the mean function on a vector that contains missing
+   values? Is there a way to override this behavior?
+
+2. What happens if you call the mean function on a vector that contains `NaN`
+   values or infinite values?
+
+In each case, provide examples to suport your answers.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Making Comparisons
+==================
+
+Watch the "Making Comparisons" lecture video.
+
+## Exercise 10
+
+
+Each of the following lines of code produces a result that, at a glance, you
+might not expect. Explain the reason for each result.
+```{r}
+3 == "3"
+
+50 < '6'
+
+isTRUE("TRUE")
+```
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 11
+
+Suppose you want to check whether any of the values in `c(1, 2, 3)` appear in
+the vector `c(4, 1, 3, 1)`.
+
+Novice R users often expect they can check with the code:
+```{r}
+c(1, 2, 3) == c(4, 1, 3, 1)
+```
+
+1. Explain why the code above is not correct, and what's actually happening.
+
+2. The correct way is to use the `%in%` operator. Give some examples of using
+   the `%in%` operator. Recall that you can access its help page with
+   `?"%in%"`.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Submitting Your Work
+====================
+
+Congratulations, you made it through the first workbook!
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
