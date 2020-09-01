@@ -1,0 +1,396 @@
+---
+title: "Stat 33B - Lecture Notes 2"
+date: August 30, 2020
+output: pdf_document
+---
+
+Data Types
+==========
+
+In statistics, we categorize data into different types:
+
+* Continuous (real numbers)
+* Discrete (integers, or finite number of values)
+* Logical (1 and 0s, T and Fs)
+* Nominal (categorical values with no ordering)
+* Ordinal (categorical values with ordering) (good, better, best)
+* Graph (network data)
+* Textual (books, websites, etc)
+
+R also categorizes data into different types.
+
+
+Type specifies how the object is stored in memory.
+
+Type answers the question "What is this thing?"
+
+The `typeof()` function returns an object's type:
+```{r}
+typeof(5) # double precision floating point
+
+typeof(6.1)
+
+typeof("hi")
+
+typeof(1 + 3i)
+
+typeof(TRUE)
+
+typeof(FALSE)
+
+typeof(5L)
+
+typeof(mean) # type of function
+```
+
+
+## Classes
+
+Every object also has at least one class.
+
+Class answers the question "How does this thing behave?"
+
+The `class()` function returns an object's class:
+```{r}
+class(6)
+
+class(TRUE)
+
+class(0 + 3i)
+
+class(mean)
+```
+
+Classes are more important than types for day-to-day programming.
+
+
+## Identifying Vectors
+
+Technically, class and type are independent.
+
+For vectors, usually the class and type are the same:
+```{r}
+class(TRUE)
+typeof(TRUE)
+
+class(c(0 + 1i, 0 + 5i))
+typeof(0 + 1i)
+```
+
+Vectors of decimal numbers are an exception:
+```{r}
+class(5.1)
+typeof(5.1)
+```
+
+## Implicit Coercion
+
+R can automatically convert or **coerce** types in one direction:
+
+    logical -> integer -> numeric -> complex -> character
+
+
+For example:
+```{r}
+class(c(1, TRUE))
+
+c(TRUE, 0 + 3i)
+```
+
+This process is called **implicit coercion**.
+
+
+We already saw this for the `c()` function.
+
+We can also use implict coercion with other functions:
+```{r}
+TRUE + 1
+```
+
+There are data types R will never implicitly coerce:
+```{r}
+c(1, sin)
+```
+
+
+
+Matrices, Arrays, & Lists
+=========================
+
+## Matrices & Arrays
+
+**Matrices** are two-dimensional containers for values.
+
+You can create a matrix from a vector with the `matrix()` function:
+```{r}
+matrix(c(1, 3, 7, 9), 2)
+
+m = matrix(c(TRUE, FALSE), 1)
+
+class(m)
+
+typeof(m)
+```
+
+The elements of a matrix must all have the same type.
+
+It's usually faster to operate on matrix columns rather than rows.
+
+The matrix multiplication operator is `%*%`:
+```{r}
+m1 = matrix(seq(1, 8), 2)
+m1
+
+m2 = matrix(seq(1, 12), 4)
+m2
+
+m1 %*% m2
+```
+
+Access matrix elements with `[`, the subset operator:
+```{r}
+m1[2, 3]
+m1
+
+m1[1, ]
+
+m1[, 3]
+```
+
+
+**Arrays** generalize vectors and matrices to higher dimensions.
+
+Use the `array()` function to create an array:
+```{r}
+x = array(seq(1, 8), c(2, 2, 2))
+
+class(x)
+typeof(x)
+```
+
+Like matrices, access array elements with `[`, the subset operator.
+
+
+
+## Lists
+
+
+A **list** is a container for elements with _different_ types.
+
+The `c()` function returns a list if implicit coercion is not possible:
+```{r}
+class(c(sin, 1))
+typeof(c(sin, 1))
+```
+
+You can also create a list with the `list()` function:
+```{r}
+list(1, 2, 3)
+
+list(1, sin, TRUE)
+```
+
+List elements can have names:
+```{r}
+list(x = 3)
+```
+
+Vectorized functions don't work for lists:
+```{r}
+list(1, 2) + list(3, 4)
+```
+
+Access list elements by position with `[[`, the extraction operator:
+```{r}
+mylist = list(1, 2, TRUE)
+mylist
+
+mylist[[3]]
+```
+
+
+
+Special Values
+==============
+
+R has four special values.
+
+
+## Missing Values
+
+`NA` represents a **missing value** in a data set:
+```{r}
+NA
+
+class(NA)
+typeof(NA)
+
+x = c(1, NA, 2)
+class(x)
+
+x = c("hi", NA)
+class(x)
+x
+
+c("NA", NA)
+```
+
+The missing value `NA` is contagious!
+```{r}
+NA + 3
+
+3 * NA
+
+7 / NA
+```
+
+Using a unknown argument in a computation usually produces an unknown result.
+
+
+## Null
+
+`NULL` represents a value that's not defined _in R_.
+
+`NULL` usually indicates absence of a result:
+```{r}
+c()
+
+dim(c(1, 2))
+
+class(NULL)
+typeof(NULL)
+
+c(1, NULL)
+```
+
+For instance, if we try to get the matrix dimensions of a vector.
+
+
+## Not a Number
+
+`NaN`, or "not a number", represents a value that's not defined mathematically.
+
+
+```{r}
+NaN
+
+class(NaN)
+typeof(NaN)
+
+c(1, NaN)
+
+0 / 0
+```
+
+
+# Infinite Values
+
+`Inf` represents infinity. Produced by some computations:
+
+```{r}
+13 / 0 
+
+Inf
+
+c(1, Inf)
+
+class(Inf)
+typeof(Inf)
+```
+
+
+
+Making Comparisons
+==================
+
+We saw operators for doing arithmetic: `+`, `-`, `*`, `/`, `^`
+
+R also has operators for making comparisons:
+
+* `==` for equality
+* `<`, `<=`, `>`, `>=` for inequality
+
+For example:
+```{r}
+1 < 2
+
+1 == 1
+
+5 <= -1
+```
+
+Comparison operators are vectorized, just like arithmetic operators:
+```{r}
+c(1, 2, 3) == c(4, 5, 3)
+
+c("hi", "hello") == "hi"
+
+c(1, 2) < c(3, 4)
+
+NA == 3
+
+NA == NA
+```
+
+To check equality for special values, use the `is.` functions:
+
+* `is.na()`
+* `is.null()`
+* `is.nan()`
+* `is.infinite()`
+
+For example:
+```{r}
+is.na(NA)
+
+is.na(c(1, NA, 3))
+
+is.null(NULL)
+
+is.null(NA)
+```
+
+
+## Equality & Numerical Precision
+
+To check equality within a tolerance, use `all.equal()`:
+```{r}
+5 == 5
+
+all.equal(5, 5)
+
+all.equal(7, 21)
+
+# isTRUE
+isTRUE(3)
+
+isTRUE(all.equal(7, 21))
+isTRUE(all.equal(7, 7))
+```
+
+Two reasons to use `all.equal()`:
+
+1. Sometimes you want a tolerance (e.g., simulations).
+
+2. On computers, all numbers are discrete (so most are imprecise).
+
+As an example of the second point:
+```{r}
+0.1 == 0.3 / 3
+
+0.3 / 3
+
+all.equal(0.1, 0.3 / 3)
+```
+
+
+To check whether two objects are identical, use `identical()`.
+
+The `identical()` function is _not_ vectorized:
+```{r}
+c(6, 7) == c(6, 7)
+
+identical(c(6, 7), c(6, 7))
+
+identical(c(6, 7), c(6L, 7L))
+```

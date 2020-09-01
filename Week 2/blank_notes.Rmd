@@ -1,0 +1,307 @@
+---
+title: "Stat 33B - Lecture Notes 2"
+date: August 30, 2020
+output: pdf_document
+---
+
+Data Types
+==========
+
+In statistics, we categorize data into different types:
+
+* Continuous (real numbers)
+* Discrete (integers, or finite number of values)
+* Logical (1 and 0s, T and Fs)
+* Nominal (categorical values with no ordering)
+* Ordinal (categorical values with ordering)
+* Graph (network data)
+* Textual (books, websites, etc)
+
+R also categorizes data into different types.
+
+
+Type specifies how the object is stored in memory.
+
+Type answers the question "What is this thing?"
+
+The `typeof()` function returns an object's type:
+```{r}
+
+```
+
+
+## Classes
+
+Every object also has at least one class.
+
+Class answers the question "How does this thing behave?"
+
+The `class()` function returns an object's class:
+```{r}
+
+```
+
+Classes are more important than types for day-to-day programming.
+
+
+## Identifying Vectors
+
+Technically, class and type are independent.
+
+For vectors, usually the class and type are the same:
+```{r}
+
+```
+
+Vectors of decimal numbers are an exception:
+```{r}
+
+```
+
+## Implicit Coercion
+
+R can automatically convert or **coerce** types in one direction:
+
+    logical -> integer -> numeric -> complex -> character
+
+
+For example:
+```{r}
+
+```
+
+This process is called **implicit coercion**.
+
+
+We already saw this for the `c()` function:
+```{r}
+
+```
+
+There are data types R will never implicitly coerce:
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+Matrices, Arrays, & Lists
+=========================
+
+## Matrices & Arrays
+
+**Matrices** are two-dimensional containers for values.
+
+You can create a matrix from a vector with the `matrix()` function:
+```{r}
+
+```
+
+The elements of a matrix must all have the same type.
+
+It's usually faster to operate on matrix columns rather than rows.
+
+The matrix multiplication operator is `%*%`:
+```{r}
+
+```
+
+
+**Arrays** generalize vectors and matrices to higher dimensions.
+
+Use the `array()` function to create an array:
+```{r}
+
+```
+
+
+## Lists
+
+
+A **list** is a container for elements with _different_ types.
+
+The `c()` function returns a list if implicit coercion is not possible:
+```{r}
+
+```
+
+You can also create a list with the `list()` function:
+```{r}
+
+```
+
+List elements can have names:
+```{r}
+
+```
+
+Vectorized functions don't work for lists:
+```{r}
+
+```
+
+Access list elements by position with `[[`, the extraction operator:
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Special Values
+==============
+
+R has four special values.
+
+
+## Missing Values
+
+`NA` represents a **missing value** in a data set:
+```{r}
+
+```
+
+The missing value `NA` is contagious!
+```{r}
+
+```
+
+Using a unknown argument in a computation usually produces an unknown result.
+
+
+## Null
+
+`NULL` represents a value that's not defined _in R_.
+
+`NULL` usually indicates absence of a result:
+```{r}
+
+```
+
+For instance, if we try to get the matrix dimensions of a vector:
+```{r}
+
+```
+
+
+## Not a Number
+
+`NaN`, or "not a number", represents a value that's not defined mathematically.
+
+
+```{r}
+
+```
+
+
+# Infinite Values
+
+`Inf` represents infinity. Produced by some computations:
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Making Comparisons
+==================
+
+We saw operators for doing arithmetic: `+`, `-`, `*`, `/`, `^`
+
+R also has operators for making comparisons:
+
+* `==` for equality
+* `<`, `<=`, `>`, `>=` for inequality
+
+For example:
+```{r}
+
+```
+
+Comparison operators are vectorized, just like arithmetic operators:
+```{r}
+
+```
+
+To check equality for special values, use the `is.` functions:
+
+* `is.na()`
+* `is.null()`
+* `is.nan()`
+* `is.infinite()`
+
+For example:
+```{r}
+
+```
+
+
+## Equality & Numerical Precision
+
+To check equality within a tolerance, use `all.equal()`:
+```{r}
+
+# isTRUE
+
+```
+
+Two reasons to use `all.equal()`:
+
+1. Sometimes you want a tolerance (e.g., simulations).
+
+2. On computers, all numbers are discrete (so most are imprecise).
+
+As an example of the second point:
+```{r}
+
+```
+
+
+To check whether two objects are identical, use `identical()`.
+
+The `identical()` function is _not_ vectorized:
+```{r}
+
+```
