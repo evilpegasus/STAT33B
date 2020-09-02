@@ -295,7 +295,7 @@ c(1, NaN)
 `Inf` represents infinity. Produced by some computations:
 
 ```{r}
-13 / 0 
+13 / 0
 
 Inf
 
