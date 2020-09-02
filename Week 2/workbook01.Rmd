@@ -265,7 +265,21 @@ In each case, provide examples to suport your answers.
 
 YOUR ANSWER GOES HERE:
 
+1. The output will be `NA`. This can be prevented by passing `na.rm = TRUE` to strip `NA` values first.
+```{r}
+x = c(1, 2, 3, NA, 5)
+mean(x)
+mean(x, na.rm = TRUE)
+```
 
+2. Passing `NaN` returns `NaN` from the mean function. Passing `Inf` returns `Inf`, which makes sense mathematically.
+```{r}
+mean(c(1, 2, 3, NaN, 4))
+mean(c(1, 2, 3, NaN, 4), na.rm = TRUE) # NaN can be removed with na.rm = TRUE
+
+mean(c(1, 2, 3, Inf, 4))
+mean(c(1, 2, 3, Inf, 4), na.rm = TRUE) # na.rm will not remove Inf
+```
 
 Making Comparisons
 ==================
