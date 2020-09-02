@@ -937,6 +937,21 @@ you might not expect. Explain the reason for each result.
 
 YOUR ANSWER GOES HERE:
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{3} is coerced into the character \texttt{"3"} which makes the
+  two sides the same character.
+\item
+  The \texttt{50} is coerced into a character \texttt{50}. \texttt{"6"}
+  is greater because the operator orders characters alphabetically
+  (based on locale settings).
+\item
+  \texttt{"TRUE"} in quotes is a character, not a logical. Thus the
+  character is not \texttt{TRUE}.
+\end{enumerate}
+
 \hypertarget{exercise-11}{%
 \subsection{Exercise 11}\label{exercise-11}}
 
