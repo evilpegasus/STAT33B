@@ -323,7 +323,12 @@ c(1, 2, 3) == c(4, 1, 3, 1)
 
 YOUR ANSWER GOES HERE:
 
-
+1. The nth value of the left vector is checked with the nth value of the right vector. The first vector is also recycled so the 1st left value is checked with the 4th right value.
+2. 
+```{r}
+c(1, 2, 3) %in% c(4, 1, 3, 1)
+c(1, 44) %in% c(2, 4, 12, 1, 0)
+```
 
 Submitting Your Work
 ====================
