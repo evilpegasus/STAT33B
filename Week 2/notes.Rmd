@@ -123,12 +123,15 @@ Matrices, Arrays, & Lists
 
 You can create a matrix from a vector with the `matrix()` function:
 ```{r}
-matrix(c(1, 3, 7, 9), 2)
+matrix(c(1, 3, 7, 9), 2) # values filled in in column order
 
+# data types of elements have to be same or will be coerced
 m = matrix(c(TRUE, FALSE), 1)
+m
 
 class(m)
 
+# type of matrix is same as type of elements
 typeof(m)
 ```
 
@@ -148,12 +151,15 @@ m1 %*% m2
 ```
 
 Access matrix elements with `[`, the subset operator:
+m[row, column]
 ```{r}
 m1[2, 3]
 m1
 
+# get the whole first row as a vector
 m1[1, ]
 
+# get the whole column as a vector
 m1[, 3]
 ```
 
@@ -163,9 +169,10 @@ m1[, 3]
 Use the `array()` function to create an array:
 ```{r}
 x = array(seq(1, 8), c(2, 2, 2))
+x
 
 class(x)
-typeof(x)
+typeof(x) # same as element type
 ```
 
 Like matrices, access array elements with `[`, the subset operator.

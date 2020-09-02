@@ -148,16 +148,16 @@ In R, `T` and `F` are shortcuts for `TRUE` and `FALSE`.
 YOUR ANSWER GOES HERE:
 
 1. It throws an error: invalid (do_set) left-hand side to assignment.
-```{r}
+```{r, error = TRUE}
 TRUE = 15
 ```
 2. The value is assigned successfully
 ```{r}
 T = 15
 ```
-
+ 
 3. Using the full word could avoid bugs from accidentally assigning values to `T` and `F`.
-```{r}
+```{r, error = TRUE}
 FALSE = 888
 F = 888
 ```
@@ -180,9 +180,26 @@ Give examples to support your answer.
 
 YOUR ANSWER GOES HERE:
 
-1. 
+1. Each element in `a` is added to the corresponding element in `b`. Vectorized functions only work on matrices with the proper dimensions.
+```{r, error = TRUE}
+m1 = matrix(seq(1, 10), 2)
+m2 = matrix(seq(2, 20, 2), 2)
+m3 = matrix(c(1, 2, 3), 3)
+m1
+m2
+m3
+m1 + m2
+m1 + m3
+```
 
-2. 
+2. The same happens as with a matrix.
+```{r}
+a = array(1:8, c(2, 2, 2))
+b = array(9:16, c(2, 2, 2))
+a
+b
+a + b
+```
 
 ## Exercise 7
 
@@ -195,7 +212,25 @@ of other sizes.
 
 YOUR ANSWER GOES HERE:
 
+Using `*` turns the vector into a 2x1 matrix and multiplies across.
+Using `%*%` performs matix multiplication with dot products.
+```{r}
+v = c(1, 2)
+m = matrix(1:4, 2)
+v
+m
+v * m
+v %*% m
+```
 
+```{r}
+v = c(3, 6, 9)
+m = matrix(1:9, 3)
+v
+m
+v * m
+v %*% m
+```
 
 ## Exercise 8
 
@@ -204,7 +239,12 @@ The `c()` function combines vectors, but it can also combine lists. Use
 
 YOUR ANSWER GOES HERE:
 
+```{r}
+a = list(1, 4, 7, 12)
+b = list(TRUE, "asdf", 5L)
 
+c(a, b)
+```
 
 Special Values
 ==============
