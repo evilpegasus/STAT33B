@@ -127,7 +127,7 @@ Skim the help file `?seq`. Give some examples of creating vectors with the
 YOUR ANSWER GOES HERE:
 
 ```{r}
-x = seq(2, 10, 2)
+x = seq(1, 10)
 x
 y = seq(2, 100, 2)
 y
@@ -147,19 +147,21 @@ In R, `T` and `F` are shortcuts for `TRUE` and `FALSE`.
 
 YOUR ANSWER GOES HERE:
 
-1. It throws an error: invalid (do_set) left-hand side to assignment.
+1. It throws an error: `invalid (do_set) left-hand side to assignment`.
 ```{r, error = TRUE}
 TRUE = 15
 ```
 2. The value is assigned successfully
 ```{r}
 T = 15
+T
 ```
  
 3. Using the full word could avoid bugs from accidentally assigning values to `T` and `F`.
 ```{r, error = TRUE}
 FALSE = 888
 F = 888
+F
 ```
 
 Matrices, Arrays, & Lists
