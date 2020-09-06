@@ -1,0 +1,119 @@
+---
+title: "STAT 33B Workbook 2"
+date: "Sep 10, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Sep 10, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+
+File Systems
+============
+
+Watch the "File Systems" lecture video.
+
+
+## Exercise 1
+
+For each of the following paths, say whether the path is absolute or relative,
+and explain how you can tell.
+
+1. `"./documents"`
+2. `"/Users/Jun/doggos_to_pet.md"`
+3. `"TODO.md"`
+
+YOUR ANSWER GOES HERE:
+
+
+
+
+
+The R Working Directory
+=======================
+
+Watch the "The R Working Directory" lecture video.
+
+
+## Exercise 2
+
+1. What's the root directory called on your computer?
+2. What's the absolute path to the home directory on your computer?
+3. Use R to count the total number of files in your home directory. Your code
+   should return the result as a number.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Data Frames
+===========
+
+Watch the "Data Frames" lecture video.
+
+## Exercise 3
+
+1. Load the dogs data set `dogs.rds` into R (this one has more than 10 rows).
+2. What's the mean weight of the dogs? You can use the `na.rm` parameter in the
+   `mean()` function to make the function ignore missing values.
+3. The `which.min()` function returns the index of the minimum element of a
+   vector. Which breed of dog has the shortest height?
+4. Which breed of dog has the longest lifespan?
+
+YOUR ANSWER GOES HERE:
+
+
+
+Factors
+=======
+
+Watch the "Factors" lecture video.
+
+
+No exercises for this video. Get up, stretch, and take a break! :)
+
+
+File Formats
+============
+
+Watch the "File Formats" lecture video.
+
+
+## Exercise 5
+
+1. Load the volcano data set into R.
+2. What are the column names? Use R to get these rather than typing them out
+   yourself.
+3. How many volcano eruptions are recorded in the data set?
+4. What are the classes/types of the columns? _Hint: an earlier lecture
+   mentioned a function that summarizes of this information._
+5. Are there any columns that contain categorical data? Are these columns
+   factors? If not, what are their classes?
+
+YOUR ANSWER GOES HERE:

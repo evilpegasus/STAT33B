@@ -1,0 +1,567 @@
+---
+title: "Stat 33B - Lecture Notes 3"
+date: September 6, 2020
+output: pdf_document
+---
+
+File Systems
+============
+
+For this section, see the slides for notes.
+
+
+
+The R Working Directory
+=======================
+
+The **working directory** is the reference point R uses for relative paths.
+
+When navigating files in R, use the working directory to save time and make
+code reproducible.
+
+Important functions:
+
+* `getwd()` -- get the working directory
+* `setwd()` -- set the working directory
+* `list.files()` -- list files in a directory
+
+Try running these in the console first (rather than using `Ctrl` + `Enter` in a
+notebook chunk).
+
+Use `getwd()` to get the working directory:
+```{r}
+getwd()
+```
+The output on your computer will probably be different!
+
+
+Use `setwd()` to set the working directory:
+```{r}
+setwd("..")
+
+getwd()
+
+setwd("/home/nick")
+```
+
+
+Use `list.files()` to list files in a directory:
+```{r}
+list.files()
+
+list.files("/")
+```
+
+The output is an empty vector if:
+
+* The path you provided is incorrect.
+* The path you provided leads to a file, not a directory.
+* There are no files in the directory.
+
+For example, if we make a deliberate typo:
+```{r}
+list.files("foo")
+```
+
+
+## R Markdown Files
+
+RStudio tracks the working directory for the console and each R Markdown file
+separately.
+
+So:
+
+* Running `getwd()` from the notebook with `Ctrl + Enter` displays the
+  NOTEBOOK'S working directory.
+* Typing `getwd()` in the "Console" window and pressing `Enter` displays the
+  CONSOLE's working directory.
+
+```{r}
+getwd()
+```
+
+
+In the notebook, if you use `setwd()` it only lasts for __that chunk__ and is
+then reset:
+```{r}
+setwd("/home/nick")
+```
+
+So in subsequent chunks it looks like you didn't call `setwd()`:
+```{r}
+getwd()
+```
+
+Why does RStudio do this? It is a bad practice to include `setwd()` in your
+notebooks, because people you share the notebook with, like your colleagues,
+instructor, or employer, might not have the same directories on their computer
+as the ones you have on your computer. The next section has more details about
+this.
+
+By default, RStudio does the right thing and sets the notebook's working
+directory to the place where the notebook is saved. Then you can use relative
+paths (see below) to load and save files from the
+notebook.
+
+If you really want to set the working directory in a notebook, it is possible
+to override RStudio. See <https://yihui.org/knitr/options/> for details.
+
+
+## Editing Paths
+
+R also has functions to make it easier to edit/create paths:
+
+* `normalizePath()` -- convert relative path to absolute path
+* `file.path()` -- combine parts of a path
+* `dirname()` -- get all except last component of path
+* `basename()` -- get last component of path
+
+You can use `normalizePath()` to inspect the path shortcuts:
+```{r}
+getwd()
+list.files()
+
+normalizePath("data")
+```
+
+The path `~` is your **home directory**:
+```{r}
+normalizePath("~")
+```
+Your home directory is probably different!
+
+
+The `file.path()` function combines parts of a path:
+```{r}
+file.path("path", "to", "file")
+```
+
+The `dirname()` and `basename()` functions get parts of a path:
+```{r}
+dirname("/home/nick/TODO.md")
+
+basename("/home/nick/TODO.md")
+```
+
+
+## Reproducible Analyses
+
+Plan ahead so that other people can run your code and reproduce your results.
+
+Good habits:
+
+* Putting your notebook(s) and data in the project directory.
+* Using paths relative to the project directory.
+
+Bad habits:
+
+* Calling `setwd()` in R notebooks and scripts.
+* Using absolute paths.
+
+It's okay to use `setwd()` in the *R console* to set the working
+directory to your project directory.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Data Frames
+===========
+
+The first step of an analysis is to load a data set.
+
+Many different file formats exist for storing data. The broadly fall into two
+categories:
+
+1. **Plain-text**, which means the format is human-readable. You can open and
+   edit these in any text editor.
+
+2. **Binary**, which means the format is not human-readable. You need specific
+   software to open and edit these. Compared to plain-text, most binary formats
+   are faster to read and write, and use less space.
+
+
+R provides a binary data format called **RDS** (R data, serialized). The
+extension on an RDS file is usually `.rds`.
+
+Any R object can be stored an RDS file.
+
+Use `saveRDS()` to save an object to an RDS file:
+```{r}
+x = seq(1, 100, 0.8)
+x
+
+saveRDS(x, "myvector.rds")
+```
+This is a good way to save your work after a long computation.
+
+
+Use `readRDS()` to load an object from an RDS file:
+```{r}
+y = readRDS("myvector.rds")
+y
+```
+
+
+## Data Frames
+
+In statistics, we frequently work with 2-dimensional tables of data.
+
+For a tabular data set, typically:
+
+  * Each row corresponds to a single case or subject. These are called
+    **observations**.
+  * Each column corresponds to something the data measures. These are called
+    **features**, **covariates**, or variables.
+
+A "variable" means something else in R, so I'll avoid using it to refer to
+columns.
+
+R's data structure for tabular data is the **data frame**.
+
+Let's load a data frame:
+```{r}
+dogs = readRDS("data/dogs/dogs_sample.rds")
+```
+
+This data set is available on the bCourse.
+
+The Dogs Data Set is based on:
+
+    https://informationisbeautiful.net/visualizations/
+        best-in-show-whats-the-top-data-dog/
+
+
+## Inspecting Objects
+
+Printing is not the only way to inspect data, and has drawbacks:
+
+1. Slow (especially if you're knitting a notebook)
+2. Hard to read if there are lots of columns
+
+R provides functions to inspect objects.
+
+We already saw one of these:
+```{r}
+class(dogs)
+```
+
+Use `head()` to print the first 6 rows (or elements):
+```{r}
+head(dogs)
+```
+
+Use `tail()` for the last 6:
+```{r}
+tail(seq(1, 100))
+```
+
+Use `dim()` to print the dimensions:
+```{r}
+dim(dogs)
+```
+
+Alternatively, use `ncol()` and `nrow()`:
+```{r}
+ncol(dogs)
+
+nrow(dogs)
+```
+
+Use `names()` to print the column (or element) names:
+```{r}
+names(dogs)
+```
+
+Use `rownames()` to print the row names:
+```{r}
+rownames(dogs)
+```
+
+Use `str()` to print a structural summary:
+```{r}
+str(dogs)
+```
+
+Use `summary()` to print a statistical summary:
+```{r}
+summary(dogs)
+```
+
+
+## More about Data Frames
+
+R uses data frames to represent tabular data.
+
+A data frame is a list of column vectors. So:
+
+* Elements of a column must all have the same type (like a vector).
+* Elements of a row can have different types (like a list).
+* Every row must be the same length.
+
+In addition, every column must be the same length.
+
+
+This idea is reflected in the type of a data frame:
+```{r}
+typeof(dogs)
+```
+
+
+## Accessing Columns
+
+Recall that lists can have named elements:
+```{r}
+list(a = 5, b = "hi")
+```
+
+The dollar sign operator `$` extracts a named element from a list.
+
+It's especially useful for getting columns from data frames:
+```{r}
+dogs$breed
+
+dogs$weight
+```
+
+
+You can also use `$` to set an element:
+```{r}
+dogs$wt_by_height = dogs$weight / dogs$height
+
+dogs
+```
+
+
+## Deconstructing Data Frames
+
+The `unclass()` function resets the class of an object to match the object's
+type.
+
+You can use `unclass()` to inspect the internals of an object.
+
+For example, you can see that a data frame is a list:
+```{r}
+unclass(dogs)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Factors
+=======
+
+Again we'll use the dogs data:
+```{r}
+dogs = readRDS("data/dogs/dogs_sample.rds")
+
+class(dogs$breed)
+
+class(dogs$group)
+```
+
+R represents categorical data using the class `factor`:
+```{r}
+dogs$group
+```
+
+The categories of a factor are called **levels**.
+
+You can list the levels with the `levels()` function:
+```{r}
+levels(dogs$group)
+```
+
+
+Factors remember all possible levels even if you take a subset:
+```{r}
+dogs$group[c(1, 2, 3)]
+```
+
+This is one way factors are different from strings.
+
+For example:
+```{r}
+x = c("sporting", "herding", "hound")
+x[1]
+```
+
+
+You can make a factor forget levels that aren't present with `droplevels()`:
+```{r}
+new_groups = dogs$group[c(1, 2, 3)]
+droplevels(new_groups)
+```
+
+
+You can create a factor with the `factor()` function:
+```{r}
+factor(c("red", "red", "blue", "red"))
+```
+
+
+## Counting Things
+
+The `table()` function returns the frequency of each value in a vector.
+
+This is especially useful for factors:
+```{r}
+table(dogs$group)
+
+table(c(1, 1, 2, 3))
+```
+
+
+## Deconstructing Factors
+
+Internally, R represents factors as integer vectors:
+```{r}
+typeof(dogs$group)
+
+unclass(dogs$group)
+```
+Each integer corresponds to one level of the factor.
+
+This representation uses less memory than repeating each level's
+name.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+File Formats
+============
+
+Recall there are two kinds of file formats: plaintext and binary.
+
+The RDS format is a binary format.
+
+
+## Plaintext Formats for Tabular Data
+
+Several plaintext file formats are designed just for tabular data:
+
+* Delimited files
+    + Comma-separated value (CSV) files
+    + Tab-separated value (TSV) files
+* Fixed-width files
+
+
+For example, suppose you download the Significant Volcanic Eruption Database
+from:
+
+    https://www.ngdc.noaa.gov/nndc/struts/form?t=102557&s=50&d=50
+
+
+This file is also on the bCourse.
+
+
+The website says the file is tab-delimited, so use `read.delim()`:
+```{r}
+volcano = read.delim("data/volcano/volerup.txt")
+```
+
+Many things can go wrong when you read tabular data from a plaintext file:
+
+* Extra lines in the file
+* No header in the file
+* Incorrect column classes
+
+These can generally be fixed by setting parameters in the read function.
+
+You can read more about the parameters in `?read.table`.
+
+
+The most common plaintext data format is CSV.
+
+Use `write.csv()` to write CSV files:
+```{r}
+write.csv(volcano, "volcano.csv")
+```
+
+For other formats:
+
+* `read.csv()` -- read CSV files
+* `read.table()` -- read delimited files in general
+* `read.fwf()` -- read fixed-width files
+
+
+## Binary Formats for Tabular Data
+
+There are also a few binary formats for tabular data:
+
+* Excel spreadsheets
+* Feather
+
+R doesn't provide built-in support for these, but check CRAN for packages.
+
+For instance:
+
+* `readxl` -- a package with functions for reading Excel spreadsheets
+* `arrow` -- a package with functions for reading Feather files
+
+
+## Non-tabular Data
+
+Many packages are available for non-tabular file formats.
+
+For example:
+
+* `jsonlite` -- read JavaScript Object Notation (JSON) files
+* `xml2` -- read Extensible Markup Language (XML) files
+* `rvest` -- read Hypertext Markup Language (HTML) files
+
+The built-in `readLines()` function can read lines from any plaintext file.
+
+For example:
+```{r}
+readLines("volcano.csv", 1)
+```
+
+Think of `readLines()` as a last resort.
