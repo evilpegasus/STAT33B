@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Homework 1"
 date: "Sep 10, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -56,7 +56,20 @@ Here are the expressions:
 
 ### YOUR ANSWER GOES HERE:
 
+1. Zero at approximately $x = 0.2$
+```{r}
+curve(5*x - 1, 0, 2)
+```
 
+2. Zeros at approximately $x = -1.5, 2$
+```{r}
+curve(3*x^2 - 2*x - 8, -5, 5)
+```
+
+3. Zero at approximately $x = 0$
+```{r}
+curve(sqrt(3*x), 0, 5)
+```
 
 ## Exercise 2
 
