@@ -327,8 +327,8 @@ can sample 10 values from the continuous uniform distribution from -1 to
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.69902438  0.93961528  0.71045458  0.45948864 -0.32162408 -0.92631209
-##  [7] -0.02648591  0.49757109 -0.26970842 -0.88464378
+##  [1] -0.1714116  0.6112657  0.7749514 -0.1516303  0.8796781 -0.3951123
+##  [7]  0.4206564  0.4208752  0.2019265 -0.7710159
 \end{verbatim}
 
 Since these values are randomly sampled, they will be different each
@@ -399,8 +399,8 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 22.771523  3.953137  9.780686 21.293187 11.192279 14.899687  5.355719
-##  [8]  9.748617 17.831312  5.197148
+##  [1]  7.6837300 13.6769316  2.5368233  3.5637887  8.9338584 11.4614391
+##  [7] 12.1642721 18.4669725  7.4069560  0.9153097
 \end{verbatim}
 
 \begin{enumerate}
@@ -420,7 +420,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 12.20233
+## [1] 8.681008
 \end{verbatim}
 
 \begin{Shaded}
@@ -431,7 +431,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2.20233
+## [1] -1.318992
 \end{verbatim}
 
 \begin{Shaded}
@@ -442,7 +442,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 6.751262
+## [1] 5.451941
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.751262
+## [1] 0.4519415
 \end{verbatim}
 
 \hypertarget{exercise-3}{%
@@ -501,6 +501,78 @@ PRNG.
 
 \hypertarget{your-answer-goes-here-2}{%
 \subsubsection{YOUR ANSWER GOES HERE:}\label{your-answer-goes-here-2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{93}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{samp =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  If you set the seed and run the code again, the sampled points are
+  always the same. \texttt{set.seed()} ensures the pseudo-random numbers
+  used in \texttt{rnorm()} are the same each time.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(samp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.1505
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sd}\NormalTok{(samp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.127733
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{sum}\NormalTok{(samp }\OperatorTok{\textgreater{}}\StringTok{ }\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 668
+\end{verbatim}
 
 \hypertarget{exercise-4}{%
 \subsection{Exercise 4}\label{exercise-4}}

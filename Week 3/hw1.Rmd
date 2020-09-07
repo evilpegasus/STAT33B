@@ -226,7 +226,26 @@ notebook, because it affects all subsequent calls that use the PRNG.
 
 ### YOUR ANSWER GOES HERE:
 
+1. 
+```{r}
+set.seed(93)
+```
 
+2. 
+```{r}
+samp = rnorm(1000, 10, 5)
+```
+
+3. If you set the seed and run the code again, the sampled points are always the same. `set.seed()` ensures the pseudo-random numbers used in `rnorm()` are the same each time.
+```{r}
+mean(samp)
+sd(samp)
+```
+
+4. 
+```{r}
+sum(samp > 8)
+```
 
 ## Exercise 4
 
