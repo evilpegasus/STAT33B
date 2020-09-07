@@ -327,8 +327,8 @@ can sample 10 values from the continuous uniform distribution from -1 to
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.1714116  0.6112657  0.7749514 -0.1516303  0.8796781 -0.3951123
-##  [7]  0.4206564  0.4208752  0.2019265 -0.7710159
+##  [1] -0.8180239  0.7108587 -0.9457545  0.2886718 -0.6005458 -0.3572614
+##  [7]  0.9046318  0.2254425  0.8532265 -0.7445967
 \end{verbatim}
 
 Since these values are randomly sampled, they will be different each
@@ -399,8 +399,8 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  7.6837300 13.6769316  2.5368233  3.5637887  8.9338584 11.4614391
-##  [7] 12.1642721 18.4669725  7.4069560  0.9153097
+##  [1] 13.339538  1.589604 18.172134 10.581736 11.856612  7.739454  2.349451
+##  [8]  8.188245  5.608598 16.492769
 \end{verbatim}
 
 \begin{enumerate}
@@ -420,7 +420,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 8.681008
+## [1] 9.591814
 \end{verbatim}
 
 \begin{Shaded}
@@ -431,7 +431,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -1.318992
+## [1] -0.4081859
 \end{verbatim}
 
 \begin{Shaded}
@@ -442,7 +442,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.451941
+## [1] 5.569303
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.4519415
+## [1] 0.5693029
 \end{verbatim}
 
 \hypertarget{exercise-3}{%
@@ -628,5 +628,100 @@ compute the area of the circle.
 
 \hypertarget{your-answer-goes-here-3}{%
 \subsubsection{YOUR ANSWER GOES HERE:}\label{your-answer-goes-here-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{monte\_carlo =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{n =} \DecValTok{1000}\NormalTok{) \{}
+\NormalTok{   x =}\StringTok{ }\KeywordTok{runif}\NormalTok{(n, }\DecValTok{{-}1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{   y =}\StringTok{ }\KeywordTok{runif}\NormalTok{(n, }\DecValTok{{-}1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{   (}\KeywordTok{sum}\NormalTok{(x}\OperatorTok{\^{}}\DecValTok{2} \OperatorTok{+}\StringTok{ }\NormalTok{y}\OperatorTok{\^{}}\DecValTok{2} \OperatorTok{\textless{}}\StringTok{ }\DecValTok{1}\NormalTok{) }\OperatorTok{/}\StringTok{ }\NormalTok{n) }\OperatorTok{*}\StringTok{ }\DecValTok{4}
+\NormalTok{\}}
+\KeywordTok{monte\_carlo}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.128
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(microbenchmark)}
+\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Unit: microseconds
+##             expr   min    lq    mean median    uq    max neval
+##  monte_carlo(10) 7.301 7.851 8.86804  8.201 8.751 54.302   100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{100000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.1378
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{100000}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Unit: milliseconds
+##                expr      min       lq     mean   median       uq     max neval
+##  monte_carlo(1e+05) 7.389301 7.949001 8.657686 8.380501 8.874051 15.3774   100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{1000000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.141948
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{1000000}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Unit: milliseconds
+##                expr     min      lq    mean  median       uq      max neval
+##  monte_carlo(1e+06) 77.4741 82.5979 86.2263 85.1192 88.50615 128.4792   100
+\end{verbatim}
 
 \end{document}

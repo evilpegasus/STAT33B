@@ -292,3 +292,24 @@ circle.
    block of code by surrounding the code with curly braces `{ }`._
 
 ### YOUR ANSWER GOES HERE:
+
+1. 
+```{r}
+monte_carlo = function(n = 1000) {
+   x = runif(n, -1, 1)
+   y = runif(n, -1, 1)
+   (sum(x^2 + y^2 < 1) / n) * 4
+}
+monte_carlo()
+```
+
+2. The higher the value of `n`, the more accurate the approximation. The runtime of the Monte Carlo function seems to scale linearly with `n`, but only for sufficiently large values of `n`.
+```{r}
+library(microbenchmark)
+monte_carlo(10)
+microbenchmark(monte_carlo(10))
+monte_carlo(100000)
+microbenchmark(monte_carlo(100000))
+monte_carlo(1e6)
+microbenchmark(monte_carlo(1e6))
+```
