@@ -327,8 +327,8 @@ can sample 10 values from the continuous uniform distribution from -1 to
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.8180239  0.7108587 -0.9457545  0.2886718 -0.6005458 -0.3572614
-##  [7]  0.9046318  0.2254425  0.8532265 -0.7445967
+##  [1] -0.1066497  0.7831365 -0.8286759 -0.7650736 -0.8159307  0.3221902
+##  [7] -0.1631367 -0.4394865 -0.3538038 -0.6515584
 \end{verbatim}
 
 Since these values are randomly sampled, they will be different each
@@ -399,8 +399,8 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] 13.339538  1.589604 18.172134 10.581736 11.856612  7.739454  2.349451
-##  [8]  8.188245  5.608598 16.492769
+##  [1] 15.121132 10.886742 12.267268  8.631595 20.319527  2.499792  7.476326
+##  [8] 15.713676  9.082765  9.648479
 \end{verbatim}
 
 \begin{enumerate}
@@ -420,7 +420,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 9.591814
+## [1] 11.16473
 \end{verbatim}
 
 \begin{Shaded}
@@ -431,7 +431,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.4081859
+## [1] 1.16473
 \end{verbatim}
 
 \begin{Shaded}
@@ -442,7 +442,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5.569303
+## [1] 4.979793
 \end{verbatim}
 
 \begin{Shaded}
@@ -453,7 +453,7 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.5693029
+## [1] -0.02020705
 \end{verbatim}
 
 \hypertarget{exercise-3}{%
@@ -655,6 +655,10 @@ compute the area of the circle.
 \setcounter{enumi}{1}
 \tightlist
 \item
+  The higher the value of \texttt{n}, the more accurate the
+  approximation. The runtime of the Monte Carlo function seems to scale
+  linearly with \texttt{n}, but only for sufficiently large values of
+  \texttt{n}.
 \end{enumerate}
 
 \begin{Shaded}
@@ -676,8 +680,8 @@ compute the area of the circle.
 
 \begin{verbatim}
 ## Unit: microseconds
-##             expr   min    lq    mean median    uq    max neval
-##  monte_carlo(10) 7.301 7.851 8.86804  8.201 8.751 54.302   100
+##             expr min    lq     mean median    uq     max neval
+##  monte_carlo(10) 7.2 8.001 13.55798  8.401 9.201 203.301   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -698,13 +702,13 @@ compute the area of the circle.
 
 \begin{verbatim}
 ## Unit: milliseconds
-##                expr      min       lq     mean   median       uq     max neval
-##  monte_carlo(1e+05) 7.389301 7.949001 8.657686 8.380501 8.874051 15.3774   100
+##                expr    min       lq     mean   median       uq     max neval
+##  monte_carlo(1e+05) 7.3385 8.162301 8.826446 8.553301 8.878701 18.3079   100
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{1000000}\NormalTok{)}
+\KeywordTok{monte\_carlo}\NormalTok{(}\FloatTok{1e6}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -714,14 +718,14 @@ compute the area of the circle.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{monte\_carlo}\NormalTok{(}\DecValTok{1000000}\NormalTok{))}
+\KeywordTok{microbenchmark}\NormalTok{(}\KeywordTok{monte\_carlo}\NormalTok{(}\FloatTok{1e6}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## Unit: milliseconds
-##                expr     min      lq    mean  median       uq      max neval
-##  monte_carlo(1e+06) 77.4741 82.5979 86.2263 85.1192 88.50615 128.4792   100
+##                expr     min      lq     mean   median       uq      max neval
+##  monte_carlo(1e+06) 76.7213 81.7711 86.66589 84.87895 88.03375 131.0685   100
 \end{verbatim}
 
 \end{document}
