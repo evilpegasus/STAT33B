@@ -327,8 +327,8 @@ can sample 10 values from the continuous uniform distribution from -1 to
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.9280800  0.4565844 -0.5817105 -0.9181862 -0.9411328 -0.6354445
-##  [7] -0.6005164  0.1416951  0.7572552  0.6775763
+##  [1]  0.69902438  0.93961528  0.71045458  0.45948864 -0.32162408 -0.92631209
+##  [7] -0.02648591  0.49757109 -0.26970842 -0.88464378
 \end{verbatim}
 
 Since these values are randomly sampled, they will be different each
@@ -367,6 +367,94 @@ Gaussian distribution that are analogous to the \texttt{dunif()} and
 
 \hypertarget{your-answer-goes-here-1}{%
 \subsubsection{YOUR ANSWER GOES HERE:}\label{your-answer-goes-here-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{dnorm}\NormalTok{(x, }\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DecValTok{{-}10}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hw1_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu =}\StringTok{ }\DecValTok{10}
+\NormalTok{sigma =}\StringTok{ }\DecValTok{5}
+\NormalTok{samp =}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{, mu, sigma)}
+\NormalTok{samp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 22.771523  3.953137  9.780686 21.293187 11.192279 14.899687  5.355719
+##  [8]  9.748617 17.831312  5.197148
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Running the code many times will change the random sample and also
+  change the sample mean and sd. The difference is computed below.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mu2 =}\StringTok{ }\KeywordTok{mean}\NormalTok{(samp)}
+\NormalTok{mu2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12.20233
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The mean of the sample differs from the orignal mean by}
+\NormalTok{mu2 }\OperatorTok{{-}}\StringTok{ }\NormalTok{mu}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.20233
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sigma2 =}\StringTok{ }\KeywordTok{sd}\NormalTok{(samp)}
+\NormalTok{sigma2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.751262
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The standard deviation of the sample differs from the orignal standard deviation by}
+\NormalTok{sigma2 }\OperatorTok{{-}}\StringTok{ }\NormalTok{sigma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.751262
+\end{verbatim}
 
 \hypertarget{exercise-3}{%
 \subsection{Exercise 3}\label{exercise-3}}

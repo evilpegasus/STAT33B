@@ -164,7 +164,31 @@ are analogous to the `dunif()` and `runif()` functions described above.
 
 ### YOUR ANSWER GOES HERE:
 
+1. 
+```{r}
+curve(dnorm(x, 10, 5), -10, 30)
+```
 
+2. 
+```{r}
+mu = 10
+sigma = 5
+samp = rnorm(10, mu, sigma)
+samp
+```
+
+3. Running the code many times will change the random sample and also change the sample mean and sd. The difference is computed below.
+```{r}
+mu2 = mean(samp)
+mu2
+# The mean of the sample differs from the orignal mean by
+mu2 - mu
+
+sigma2 = sd(samp)
+sigma2
+# The standard deviation of the sample differs from the orignal standard deviation by
+sigma2 - sigma
+```
 
 ## Exercise 3
 
