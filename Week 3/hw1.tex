@@ -230,12 +230,12 @@ Here are the expressions:
 \setcounter{enumi}{2}
 \tightlist
 \item
-  Zero at approximately \(x = 0\)
+  Zero at approximately \(x = 5\)
 \end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{curve}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{3}\OperatorTok{*}\NormalTok{x), }\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\KeywordTok{curve}\NormalTok{(}\KeywordTok{sqrt}\NormalTok{(}\DecValTok{3}\OperatorTok{*}\NormalTok{x) }\OperatorTok{{-}}\StringTok{ }\DecValTok{4}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -680,8 +680,8 @@ compute the area of the circle.
 
 \begin{verbatim}
 ## Unit: microseconds
-##             expr   min lq    mean median    uq    max neval
-##  monte_carlo(10) 7.401  8 8.91297  8.301 8.901 56.101   100
+##             expr   min    lq    mean median    uq    max neval
+##  monte_carlo(10) 7.101 7.701 8.43698 7.9015 8.401 46.201   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -702,8 +702,8 @@ compute the area of the circle.
 
 \begin{verbatim}
 ## Unit: milliseconds
-##                expr      min       lq     mean   median     uq     max neval
-##  monte_carlo(1e+05) 7.985401 8.509902 9.181448 8.703351 8.9264 14.5616   100
+##                expr      min      lq     mean   median       uq     max neval
+##  monte_carlo(1e+05) 7.632201 8.45985 9.381431 8.780701 9.500851 16.6905   100
 \end{verbatim}
 
 \begin{Shaded}
@@ -724,8 +724,8 @@ compute the area of the circle.
 
 \begin{verbatim}
 ## Unit: milliseconds
-##                expr     min       lq     mean   median      uq      max neval
-##  monte_carlo(1e+06) 77.0869 79.24945 82.78038 82.81635 84.5489 116.6441   100
+##                expr     min       lq     mean  median       uq      max neval
+##  monte_carlo(1e+06) 79.0217 80.49285 84.24118 84.4154 86.13245 119.4025   100
 \end{verbatim}
 
 \end{document}

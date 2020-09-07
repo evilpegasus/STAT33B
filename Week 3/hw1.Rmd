@@ -66,9 +66,9 @@ curve(5*x - 1, 0, 2)
 curve(3*x^2 - 2*x - 8, -5, 5)
 ```
 
-3. Zero at approximately $x = 0$
+3. Zero at approximately $x = 5$
 ```{r}
-curve(sqrt(3*x), 0, 5)
+curve(sqrt(3*x) - 4, 0, 10)
 ```
 
 ## Exercise 2
