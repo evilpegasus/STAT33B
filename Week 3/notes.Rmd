@@ -41,7 +41,7 @@ setwd("..")
 
 getwd()
 
-setwd("/home/nick")
+setwd("C:/Users/mingf/Desktop/git/STAT33B/Week 3")
 ```
 
 
@@ -49,7 +49,7 @@ Use `list.files()` to list files in a directory:
 ```{r}
 list.files()
 
-list.files("/")
+list.files("/Users/mingf/Desktop/git/")
 ```
 
 The output is an empty vector if:
@@ -206,14 +206,14 @@ Use `saveRDS()` to save an object to an RDS file:
 x = seq(1, 100, 0.8)
 x
 
-saveRDS(x, "myvector.rds")
+saveRDS(x, "data/myvector.rds")
 ```
 This is a good way to save your work after a long computation.
 
 
 Use `readRDS()` to load an object from an RDS file:
 ```{r}
-y = readRDS("myvector.rds")
+y = readRDS("data/myvector.rds")
 y
 ```
 
@@ -236,7 +236,7 @@ R's data structure for tabular data is the **data frame**.
 
 Let's load a data frame:
 ```{r}
-dogs = readRDS("data/dogs/dogs_sample.rds")
+dogs = readRDS("data/dogs_sample.rds")
 ```
 
 This data set is available on the bCourse.
@@ -381,7 +381,7 @@ Factors
 
 Again we'll use the dogs data:
 ```{r}
-dogs = readRDS("data/dogs/dogs_sample.rds")
+dogs = readRDS("data/dogs_sample.rds")
 
 class(dogs$breed)
 
@@ -504,7 +504,7 @@ This file is also on the bCourse.
 
 The website says the file is tab-delimited, so use `read.delim()`:
 ```{r}
-volcano = read.delim("data/volcano/volerup.txt")
+volcano = read.delim("data/volerup.txt")
 ```
 
 Many things can go wrong when you read tabular data from a plaintext file:
@@ -522,7 +522,7 @@ The most common plaintext data format is CSV.
 
 Use `write.csv()` to write CSV files:
 ```{r}
-write.csv(volcano, "volcano.csv")
+write.csv(volcano, "data/volcano.csv")
 ```
 
 For other formats:
@@ -561,7 +561,7 @@ The built-in `readLines()` function can read lines from any plaintext file.
 
 For example:
 ```{r}
-readLines("volcano.csv", 1)
+readLines("data/volcano.csv", 1)
 ```
 
 Think of `readLines()` as a last resort.
