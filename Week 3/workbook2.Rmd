@@ -101,10 +101,24 @@ Watch the "Data Frames" lecture video.
 YOUR ANSWER GOES HERE:
 
 1. 
+```{r}
+dogs = readRDS("data/dogs.rds")
+```
 
 2. 
+```{r}
+mean(dogs$weight, na.rm = TRUE)
+```
 
-3. 
+3. `Chihuahua`
+```{r}
+dogs[which.min(dogs$height), 1]
+```
+
+4. `Chihuahua`
+```{r}
+dogs[which.max(dogs$longevity), 1]
+```
 
 Factors
 =======
