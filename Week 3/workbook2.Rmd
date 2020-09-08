@@ -147,3 +147,28 @@ Watch the "File Formats" lecture video.
    factors? If not, what are their classes?
 
 YOUR ANSWER GOES HERE:
+
+1. 
+```{r}
+volcanoes = read.csv("data/volcano.csv")
+```
+
+2. 
+```{r}
+colnames(volcanoes)
+```
+
+3. 835
+```{r}
+nrow(volcanoes)
+```
+
+4. 
+```{r}
+str(volcanoes)
+```
+
+5. 
+```{r}
+class(volcanoes[,])
+```
