@@ -170,5 +170,5 @@ str(volcanoes)
 
 5. 
 ```{r}
-class(volcanoes[,])
+
 ```
