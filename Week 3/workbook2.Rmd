@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Workbook 2"
 date: "Sep 10, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -51,9 +51,11 @@ and explain how you can tell.
 
 YOUR ANSWER GOES HERE:
 
+1. Relative. The path starts with a `.` which searches for `"/documents"` from the working directory
 
+2. Absolute. The path starts at the root `/`.
 
-
+3. Relative. The path searches for `"TODO.md"` from the current working directory.
 
 The R Working Directory
 =======================
@@ -70,7 +72,17 @@ Watch the "The R Working Directory" lecture video.
 
 YOUR ANSWER GOES HERE:
 
+1. `"C:/"`
 
+2. `""C:\\Users\\mingf\\Documents""`
+```{r}
+normalizePath("~")
+```
+
+3. There are 14 files in my home directory. See below:
+```{r}
+length(list.files("~"))
+```
 
 Data Frames
 ===========
@@ -88,7 +100,11 @@ Watch the "Data Frames" lecture video.
 
 YOUR ANSWER GOES HERE:
 
+1. 
 
+2. 
+
+3. 
 
 Factors
 =======
