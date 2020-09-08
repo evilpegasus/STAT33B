@@ -102,7 +102,7 @@ YOUR ANSWER GOES HERE:
 
 1. 
 ```{r}
-dogs = readRDS("data/dogs.rds")
+dogs = readRDS("Week 3/data/dogs.rds")
 ```
 
 2. 
@@ -150,7 +150,7 @@ YOUR ANSWER GOES HERE:
 
 1. 
 ```{r}
-volcanoes = read.csv("data/volcano.csv")
+volcanoes = read.csv("Week 3/data/volcano.csv")
 ```
 
 2. 
