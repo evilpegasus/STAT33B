@@ -51,7 +51,7 @@ and explain how you can tell.
 
 YOUR ANSWER GOES HERE:
 
-1. Relative. The path starts with a `.` which searches for `"/documents"` from the working directory
+1. Relative. The path starts with a `./` which searches for `"documents"` from the working directory.
 
 2. Absolute. The path starts at the root `/`.
 
@@ -79,7 +79,7 @@ YOUR ANSWER GOES HERE:
 normalizePath("~")
 ```
 
-3. There are 14 files in my home directory. See below:
+3. There are $14$ files in my home directory. See below:
 ```{r}
 length(list.files("~"))
 ```
@@ -102,10 +102,10 @@ YOUR ANSWER GOES HERE:
 
 1. 
 ```{r}
-dogs = readRDS("Week 3/data/dogs.rds")
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 3\\data\\dogs.rds")
 ```
 
-2. 
+2. The mean weight is $44.97093$.
 ```{r}
 mean(dogs$weight, na.rm = TRUE)
 ```
@@ -150,7 +150,7 @@ YOUR ANSWER GOES HERE:
 
 1. 
 ```{r}
-volcanoes = read.csv("Week 3/data/volcano.csv")
+volcanoes = read.csv("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 3\\data\\volcano.csv")
 ```
 
 2. 
@@ -168,7 +168,7 @@ nrow(volcanoes)
 str(volcanoes)
 ```
 
-5. 
+5. There are some columns containing categorical data. However, none have the class `"factor"` and are instead `"character"`. This is probably because the data was stored as a CSV file.
 ```{r}
-
+lapply(volcanoes, class) == "factor"
 ```

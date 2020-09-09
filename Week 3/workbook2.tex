@@ -1,0 +1,544 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STAT 33B Workbook 2},
+  pdfauthor={Ming Fong (3035619833)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{STAT 33B Workbook 2}
+\author{Ming Fong (3035619833)}
+\date{Sep 10, 2020}
+
+\begin{document}
+\maketitle
+
+This workbook is due \textbf{Sep 10, 2020} by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture
+videos for the week. Watch a video, then do the corresponding exercises
+\emph{before} moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear
+effort to solve each problem, you'll get full credit. That said, make
+sure you understand the concepts here, because they're likely to
+reappear in homeworks, quizzes, and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many
+new code chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by
+pressing \texttt{Ctrl} + \texttt{Enter} on Windows or \texttt{Cmd} +
+\texttt{Enter} on Mac OS X. You can run an entire code chunk by clicking
+on the green arrow in the upper right corner of the code chunk.
+
+Please do not delete the exercises already in this notebook, because it
+may interfere with our grading tools.
+
+You need to submit your work in two places:
+
+\begin{itemize}
+\tightlist
+\item
+  Submit this Rmd file with your edits on bCourses.
+\item
+  Knit and submit the generated PDF file on Gradescope.
+\end{itemize}
+
+\hypertarget{file-systems}{%
+\section{File Systems}\label{file-systems}}
+
+Watch the ``File Systems'' lecture video.
+
+\hypertarget{exercise-1}{%
+\subsection{Exercise 1}\label{exercise-1}}
+
+For each of the following paths, say whether the path is absolute or
+relative, and explain how you can tell.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{"./documents"}
+\item
+  \texttt{"/Users/Jun/doggos\_to\_pet.md"}
+\item
+  \texttt{"TODO.md"}
+\end{enumerate}
+
+YOUR ANSWER GOES HERE:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Relative. The path starts with a \texttt{./} which searches for
+  \texttt{"documents"} from the working directory.
+\item
+  Absolute. The path starts at the root \texttt{/}.
+\item
+  Relative. The path searches for \texttt{"TODO.md"} from the current
+  working directory.
+\end{enumerate}
+
+\hypertarget{the-r-working-directory}{%
+\section{The R Working Directory}\label{the-r-working-directory}}
+
+Watch the ``The R Working Directory'' lecture video.
+
+\hypertarget{exercise-2}{%
+\subsection{Exercise 2}\label{exercise-2}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What's the root directory called on your computer?
+\item
+  What's the absolute path to the home directory on your computer?
+\item
+  Use R to count the total number of files in your home directory. Your
+  code should return the result as a number.
+\end{enumerate}
+
+YOUR ANSWER GOES HERE:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{"C:/"}
+\item
+  \texttt{""C:\textbackslash{}\textbackslash{}Users\textbackslash{}\textbackslash{}mingf\textbackslash{}\textbackslash{}Documents""}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{normalizePath}\NormalTok{(}\StringTok{"\textasciitilde{}"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "C:\\Users\\mingf\\Documents"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  There are \(14\) files in my home directory. See below:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(}\KeywordTok{list.files}\NormalTok{(}\StringTok{"\textasciitilde{}"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 14
+\end{verbatim}
+
+\hypertarget{data-frames}{%
+\section{Data Frames}\label{data-frames}}
+
+Watch the ``Data Frames'' lecture video.
+
+\hypertarget{exercise-3}{%
+\subsection{Exercise 3}\label{exercise-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Load the dogs data set \texttt{dogs.rds} into R (this one has more
+  than 10 rows).
+\item
+  What's the mean weight of the dogs? You can use the \texttt{na.rm}
+  parameter in the \texttt{mean()} function to make the function ignore
+  missing values.
+\item
+  The \texttt{which.min()} function returns the index of the minimum
+  element of a vector. Which breed of dog has the shortest height?
+\item
+  Which breed of dog has the longest lifespan?
+\end{enumerate}
+
+YOUR ANSWER GOES HERE:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dogs =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mingf}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Desktop}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{git}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{STAT33B}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Week 3}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{data}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dogs.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  The mean weight is \(44.97093\).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(dogs}\OperatorTok{$}\NormalTok{weight, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 44.97093
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  \texttt{Chihuahua}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dogs[}\KeywordTok{which.min}\NormalTok{(dogs}\OperatorTok{$}\NormalTok{height), }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Chihuahua"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \texttt{Chihuahua}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dogs[}\KeywordTok{which.max}\NormalTok{(dogs}\OperatorTok{$}\NormalTok{longevity), }\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Chihuahua"
+\end{verbatim}
+
+\hypertarget{factors}{%
+\section{Factors}\label{factors}}
+
+Watch the ``Factors'' lecture video.
+
+No exercises for this video. Get up, stretch, and take a break! :)
+
+\hypertarget{file-formats}{%
+\section{File Formats}\label{file-formats}}
+
+Watch the ``File Formats'' lecture video.
+
+\hypertarget{exercise-5}{%
+\subsection{Exercise 5}\label{exercise-5}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Load the volcano data set into R.
+\item
+  What are the column names? Use R to get these rather than typing them
+  out yourself.
+\item
+  How many volcano eruptions are recorded in the data set?
+\item
+  What are the classes/types of the columns? \emph{Hint: an earlier
+  lecture mentioned a function that summarizes of this information.}
+\item
+  Are there any columns that contain categorical data? Are these columns
+  factors? If not, what are their classes?
+\end{enumerate}
+
+YOUR ANSWER GOES HERE:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{volcanoes =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mingf}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Desktop}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{git}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{STAT33B}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Week 3}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{data}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{volcano.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{colnames}\NormalTok{(volcanoes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "X"                                  "Year"                              
+##  [3] "Month"                              "Day"                               
+##  [5] "TSU"                                "EQ"                                
+##  [7] "Name"                               "Location"                          
+##  [9] "Country"                            "Latitude"                          
+## [11] "Longitude"                          "Elevation"                         
+## [13] "Type"                               "Status"                            
+## [15] "Time"                               "VEI"                               
+## [17] "Agent"                              "DEATHS"                            
+## [19] "DEATHS_DESCRIPTION"                 "MISSING"                           
+## [21] "MISSING_DESCRIPTION"                "INJURIES"                          
+## [23] "INJURIES_DESCRIPTION"               "DAMAGE_MILLIONS_DOLLARS"           
+## [25] "DAMAGE_DESCRIPTION"                 "HOUSES_DESTROYED"                  
+## [27] "HOUSES_DESTROYED_DESCRIPTION"       "TOTAL_DEATHS"                      
+## [29] "TOTAL_DEATHS_DESCRIPTION"           "TOTAL_MISSING"                     
+## [31] "TOTAL_MISSING_DESCRIPTION"          "TOTAL_INJURIES"                    
+## [33] "TOTAL_INJURIES_DESCRIPTION"         "TOTAL_DAMAGE_MILLIONS_DOLLARS"     
+## [35] "TOTAL_DAMAGE_DESCRIPTION"           "TOTAL_HOUSES_DESTROYED"            
+## [37] "TOTAL_HOUSES_DESTROYED_DESCRIPTION"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  835
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{nrow}\NormalTok{(volcanoes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 835
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{str}\NormalTok{(volcanoes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    835 obs. of  37 variables:
+##  $ X                                 : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Year                              : int  -4360 -4350 -4050 -4000 -3580 -3550 -2420 -2040 -1900 -1890 ...
+##  $ Month                             : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ Day                               : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TSU                               : chr  "" "" "" "" ...
+##  $ EQ                                : chr  "" "" "" "" ...
+##  $ Name                              : chr  "Macauley Island" "Kikai" "Masaya" "Pago" ...
+##  $ Location                          : chr  "Kermadec Is" "Ryukyu Is" "Nicaragua" "New Britain-SW Pac" ...
+##  $ Country                           : chr  "New Zealand" "Japan" "Nicaragua" "Papua New Guinea" ...
+##  $ Latitude                          : num  -30.2 30.78 11.98 -5.58 14 ...
+##  $ Longitude                         : num  -178.5 130.3 -86.2 150.5 121 ...
+##  $ Elevation                         : int  238 717 635 742 400 1486 1281 1280 1032 1905 ...
+##  $ Type                              : chr  "Caldera" "Caldera" "Caldera" "Caldera" ...
+##  $ Status                            : chr  "Holocene" "Historical" "Historical" "Historical" ...
+##  $ Time                              : chr  "U" "D1" "D1" "D2" ...
+##  $ VEI                               : int  6 7 6 6 6 6 5 6 6 6 ...
+##  $ Agent                             : chr  "" "P" "" "T" ...
+##  $ DEATHS                            : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ DEATHS_DESCRIPTION                : int  NA 3 NA 1 NA NA NA NA NA NA ...
+##  $ MISSING                           : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ MISSING_DESCRIPTION               : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ INJURIES                          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ INJURIES_DESCRIPTION              : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ DAMAGE_MILLIONS_DOLLARS           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ DAMAGE_DESCRIPTION                : int  NA 3 NA 1 NA NA NA NA NA NA ...
+##  $ HOUSES_DESTROYED                  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ HOUSES_DESTROYED_DESCRIPTION      : int  NA 3 NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_DEATHS                      : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_DEATHS_DESCRIPTION          : int  NA 3 NA 1 NA NA NA NA NA NA ...
+##  $ TOTAL_MISSING                     : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_MISSING_DESCRIPTION         : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_INJURIES                    : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_INJURIES_DESCRIPTION        : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_DAMAGE_MILLIONS_DOLLARS     : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_DAMAGE_DESCRIPTION          : int  NA 3 NA 1 NA NA NA NA NA NA ...
+##  $ TOTAL_HOUSES_DESTROYED            : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ TOTAL_HOUSES_DESTROYED_DESCRIPTION: int  NA 3 NA NA NA NA NA NA NA NA ...
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  There are some columns containing categorical data. However, none have
+  the class \texttt{"factor"} and are instead \texttt{"character"}. This
+  is probably because the data was stored as a CSV file.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lapply}\NormalTok{(volcanoes, class) }\OperatorTok{==}\StringTok{ "factor"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                  X                               Year 
+##                              FALSE                              FALSE 
+##                              Month                                Day 
+##                              FALSE                              FALSE 
+##                                TSU                                 EQ 
+##                              FALSE                              FALSE 
+##                               Name                           Location 
+##                              FALSE                              FALSE 
+##                            Country                           Latitude 
+##                              FALSE                              FALSE 
+##                          Longitude                          Elevation 
+##                              FALSE                              FALSE 
+##                               Type                             Status 
+##                              FALSE                              FALSE 
+##                               Time                                VEI 
+##                              FALSE                              FALSE 
+##                              Agent                             DEATHS 
+##                              FALSE                              FALSE 
+##                 DEATHS_DESCRIPTION                            MISSING 
+##                              FALSE                              FALSE 
+##                MISSING_DESCRIPTION                           INJURIES 
+##                              FALSE                              FALSE 
+##               INJURIES_DESCRIPTION            DAMAGE_MILLIONS_DOLLARS 
+##                              FALSE                              FALSE 
+##                 DAMAGE_DESCRIPTION                   HOUSES_DESTROYED 
+##                              FALSE                              FALSE 
+##       HOUSES_DESTROYED_DESCRIPTION                       TOTAL_DEATHS 
+##                              FALSE                              FALSE 
+##           TOTAL_DEATHS_DESCRIPTION                      TOTAL_MISSING 
+##                              FALSE                              FALSE 
+##          TOTAL_MISSING_DESCRIPTION                     TOTAL_INJURIES 
+##                              FALSE                              FALSE 
+##         TOTAL_INJURIES_DESCRIPTION      TOTAL_DAMAGE_MILLIONS_DOLLARS 
+##                              FALSE                              FALSE 
+##           TOTAL_DAMAGE_DESCRIPTION             TOTAL_HOUSES_DESTROYED 
+##                              FALSE                              FALSE 
+## TOTAL_HOUSES_DESTROYED_DESCRIPTION 
+##                              FALSE
+\end{verbatim}
+
+\end{document}
