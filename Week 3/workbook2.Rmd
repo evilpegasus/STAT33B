@@ -74,7 +74,7 @@ YOUR ANSWER GOES HERE:
 
 1. `"C:/"`
 
-2. `""C:\\Users\\mingf\\Documents""`
+2. `"C:\\Users\\mingf\\Documents"`
 ```{r}
 normalizePath("~")
 ```
