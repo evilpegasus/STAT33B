@@ -1,0 +1,571 @@
+---
+title: "Stat 33B - Lecture Notes 4"
+date: September 13, 2020
+output: pdf_document
+---
+
+
+Three Ways to Subset
+====================
+
+Use the subset (or "square bracket") operator `[` to get elements from a vector
+by position:
+```{r}
+x = rep(c(4.1, 2.2, 7.9), 2)
+x
+
+x[3]
+
+x[c(5, 4, 5)]
+```
+
+You can also use the subset operator to set elements:
+```{r}
+x[1] = 10
+
+x
+
+x[c(4, 5)] = c(-20, -10)
+x
+```
+
+Negative positions mean "everything except":
+```{r}
+x[-1]
+
+x[-c(5, 6)]
+
+# x[c(5, -1)]
+```
+
+
+The subset operator `[` can actually get/set elements in three ways:
+
+* By position
+* By name
+* By condition
+
+
+## Subsets by Name
+
+You can make vectors with named elements (just like lists):
+```{r}
+x = c(a = 6, b = 4, c = 3)
+x
+
+names(x)
+
+names(x) = c("hi", "hello", "goodbye")
+x
+```
+
+You can use the subset operator `[` to get elements by name:
+```{r}
+x["hello"]
+
+x[c('hi', 'hi', 'goodbye')]
+```
+
+Likewise to set elements by name:
+```{r}
+x["hello"] = 21
+
+x
+```
+
+
+
+## Congruent Vectors
+
+Two vectors are **congruent** if they have the same length and they correspond
+elementwise.
+
+For example, suppose you do a survey that records each person's:
+
+* Favorite animal
+* Age
+
+These are two different vectors of information, but each person will have a
+response for both.
+
+So you'll have two vectors that are the same length, with corresponding
+elements:
+```{r}
+animal = c("dog", "cat", "iguana")
+age = c(31, 24, 72)
+```
+
+These vectors are congruent.
+
+Columns in a data frame are always congruent!
+
+
+
+## Subsets by Condition
+
+The third way to subset a vector with `[` is to use a congruent logical vector.
+
+For example:
+```{r}
+x = c(2.2, 3.1, 6.7)
+x
+
+logic = c(TRUE, FALSE, TRUE)
+
+x[logic]
+```
+
+`TRUE` means keep the element, `FALSE` means drop the element.
+
+Missing values `NA` in the logical vector are retained in the result:
+```{r}
+x[c(TRUE, NA, NA)]
+```
+
+
+A **condition** is any expression that returns a logical vector.
+
+For example, comparisons are conditions:
+```{r}
+x > 3
+```
+
+You can use conditions to take subsets:
+```{r}
+x[x > 3]
+```
+
+
+Final note: you can technically subset with any logical vector.
+
+If the length is different, R uses the recycling rule:
+```{r}
+x[c(TRUE, FALSE)] #TRUE
+```
+
+
+
+
+
+
+Logic
+=====
+
+R provides functions to negate, combine, and summarize logical vectors.
+
+
+
+## Logical Negation
+
+The **NOT** operator `!` converts `TRUE` to `FALSE` and `FALSE` to `TRUE`:
+```{r}
+x = c(TRUE, FALSE, TRUE, TRUE, NA)
+
+x
+
+!x
+```
+
+You can use `!` with a condition:
+```{r}
+y = c("hi", "hello")
+!(y == "hi")
+```
+
+The NOT operator is vectorized.
+
+
+
+## Logical Combinations
+
+R also has operators for combining logical values.
+
+The **AND** operator `&` returns `TRUE` only when both arguments are `TRUE`.
+
+For example:
+```{r}
+FALSE & FALSE
+TRUE & FALSE
+FALSE & TRUE
+TRUE & TRUE
+
+c(TRUE, FALSE, TRUE) & c(TRUE, TRUE, FALSE)
+```
+
+The **OR** operator `|` returns `TRUE` when at least one argument is `TRUE`.
+
+For example:
+```{r}
+FALSE | FALSE
+TRUE | FALSE
+FALSE | TRUE
+TRUE | TRUE
+
+c(TRUE, FALSE) | c(TRUE, TRUE)
+```
+
+Be careful: everyday English is less precise than logic.
+
+You might say:
+
+> I want all subjects with age over 50 and all subjects that like cats.
+
+But in logic this means:
+
+`(subject age over 50) OR (subject likes cats)`
+
+So think carefully about whether you need both conditions to be true (AND) or
+at least one (OR).
+
+
+Rarely, you might want _exactly one_ condition to be true.
+
+The **XOR** (eXclusive OR) function `xor()` returns `TRUE` when exactly one
+argument is `TRUE`.
+
+For example:
+```{r}
+xor(FALSE, FALSE)
+xor(TRUE, FALSE)
+xor(TRUE, TRUE)
+```
+
+The AND, OR, and XOR operators are vectorized.
+
+
+
+## Short-circuit Operators
+
+The second argument is irrelevant in some conditions:
+
+* `FALSE &` is always `FALSE`
+* `TRUE |` is always `TRUE`
+
+Now imagine you have `FALSE & long_computation()`. You can save time by
+skipping `long_computation()`.
+
+A **short-circuit** operator does exactly that.
+
+
+R has two:
+
+* `&&` is a short-circuited `&`
+* `||` is a short-circuited `|`
+
+These operators only evaluate the second argument if it is necessary to
+determine the result.
+
+These operators are _not_ vectorized!
+
+Examples:
+```{r}
+TRUE && FALSE
+TRUE && TRUE
+
+TRUE || TRUE
+
+c(TRUE, FALSE) && c(TRUE, TRUE)
+```
+
+
+
+
+
+
+Logical Summaries
+=================
+
+Use the `any()` function to check that a logical vector contains a `TRUE`
+value:
+```{r}
+x = c(TRUE, FALSE, TRUE, TRUE, TRUE)
+
+any(x)
+
+any(c(FALSE, FALSE, NA))
+
+any(c(TRUE, FALSE, NA))
+```
+
+Use the `all()` function to check that a logical vector contains only `TRUE`
+values:
+```{r}
+all(c(TRUE, TRUE, FALSE))
+
+all(c(TRUE, TRUE))
+
+all(c(TRUE, TRUE, NA))
+```
+
+Use `sum()` or `table()` to count `TRUE` values:
+```{r}
+sum(x)
+
+table(x)
+```
+
+The `sum()` function is slightly faster than `table()`.
+
+
+
+## The `which()` Function
+
+Sometimes you'll want to ignore missing values in a condition:
+```{r}
+x = c(5.1, NA, 3.2)
+x > 4
+
+x[x > 4]
+```
+
+The `which()` function returns the position of each `TRUE` in a logical vector:
+```{r}
+which(x > 4)
+```
+
+The function ignores missing values.
+
+So you can use `which()` to ignore missing values in a condition:
+```{r}
+x[which(x > 4)]
+```
+
+Do this as needed, not everywhere.
+
+Calling a function takes more time than not calling a function!
+
+
+
+
+
+
+
+
+
+Subset Versus Extract
+=====================
+
+We've learned two different ways to get/set elements:
+
+1. `[`, the subset operator ("square bracket")
+
+2. `[[`,  the extraction operator ("double square bracket")
+
+Both work with vectors, arrays, lists, data frames, and more.
+
+That said, they aren't identical.
+
+
+
+## Multiple Elements
+
+The subset operator `[` can get/set any number of elements:
+```{r}
+x = c(5, 8.1, 2, 10)
+
+x[c(1, 1, 3)]
+```
+
+The extraction operator `[[` can only get/set a single element:
+```{r}
+x[[c(1, 2)]]
+
+x[[1]]
+
+x[[4]] = 21
+x
+
+x[[c(2, 3)]] = 7
+```
+
+Note that a vector can be a *single element* of a list:
+```{r}
+li = list(c(1, 2, 3), "hello")
+li
+
+li[[1]]
+```
+
+You can't use `[[` to get/set elements by condition, because the logical vector
+might have more than one `TRUE` element:
+```{r}
+x[[c(T, F, F, F)]]
+```
+
+Both `[` and `[[` can get/set elements by position and by name.
+
+```{r}
+x = c(a = 1, b = 2)
+
+x[["a"]]
+```
+
+
+## Invalid Elements
+
+The subset operator `[` returns `NA` for invalid elements:
+```{r}
+x[3]
+```
+
+The extraction operator `[[` raises an error for invalid elements:
+```{r}
+x[[3]]
+```
+
+## Containers
+
+In programming languages, a **container** is an object that contains other
+objects.
+
+
+Lists are R's primary container.
+
+In lists, elements can have different data types:
+```{r}
+x = list(c(1, 2, 3), sin, c("hi", "hello"))
+```
+
+
+The subset operator `[` keeps containers:
+```{r}
+x[1]
+class(x[1])
+```
+
+The extraction operator `[[` drops containers:
+```{r}
+x[[1]]
+class(x[[1]])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+Subsets of Data Frames
+======================
+
+Let's look at the dogs data again:
+```{r}
+dogs = readRDS("data/dogs/dogs.rds")
+dogs
+```
+
+R thinks of data frames as lists of columns.
+
+So one-dimensional `[` and `[[` get columns:
+```{r}
+class(dogs[1])
+
+class(dogs[[1]])
+```
+`[` keeps the data frame, `[[` drops the data frame.
+
+
+
+## Two-dimensional Subsetting
+
+Data frames are two-dimensional, so you can also use matrix-style subsetting.
+
+That is, use the syntax:
+
+    DATA[ROWS, COLUMNS]
+
+This works for the subset operator `[` and the extraction operator `[[`.
+
+Examples:
+```{r}
+class(dogs[1:3, 2])
+
+dogs[[1, 2]]
+
+dogs[1:3, ]
+
+dogs[2:4, -2]
+
+dogs[1:3, c("popularity", "breed")]
+```
+
+
+
+## The Drop Parameter
+
+If you use two-dimensional subsetting with `[` to select exactly one column,
+you get a vector:
+```{r}
+dogs[1:3, 2]
+```
+
+The container is dropped!
+
+This is also true for matrices:
+```{r}
+x = matrix(1, 2, 2)
+x
+x[, 1]
+```
+
+
+You can control this behavior with the `drop` parameter:
+```{r}
+x[, 1, drop = FALSE]
+
+dogs[1:3, 2, drop = FALSE]
+```
+
+The default is `drop = TRUE`.
+
+
+
+## The Dollar Sign
+
+The `$` operator is similar to `[[`, but only gets elements by name:
+```{r}
+dogs$breed
+dogs[["breed"]]
+```
+
+Unlike `[[`, the `$` will try to match partial names.
+
+```{r}
+dogs$bree
+```
+
+
+The `$` allows quotes around the name:
+```{r}
+dogs$"breed"
+```
+Use quotes for names with non-alphanumeric characters.
+
+
+
+## The `subset()` Function
+
+Suppose we want to get rows of a data frame that satisfy a condition:
+```{r}
+dogs[which(dogs$weight > 50), ]
+```
+
+The `subset()` function is a shortcut to avoid typing the name of the data
+frame over and over when subsetting rows with a condition:
+```{r}
+subset(dogs, weight > 50)
+```
+With `subset()`, the data frame the columns come from is implied.
+
+
+
+The `subset()` function also eliminates `NA` values in the condition:
+```{r}
+
+```

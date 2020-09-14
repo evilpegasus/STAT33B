@@ -1,0 +1,468 @@
+---
+title: "Stat 33B - Lecture Notes 4"
+date: September 13, 2020
+output: pdf_document
+---
+
+
+Three Ways to Subset
+====================
+
+Use the subset (or "square bracket") operator `[` to get elements from a vector
+by position:
+```{r}
+
+```
+
+You can also use the subset operator to set elements:
+```{r}
+
+```
+
+Negative positions mean "everything except":
+```{r}
+
+```
+
+
+The subset operator `[` can actually get/set elements in three ways:
+
+* By position
+* By name
+* By condition
+
+
+## Subsets by Name
+
+You can make vectors with named elements (just like lists):
+```{r}
+
+```
+
+You can use the subset operator `[` to get elements by name:
+```{r}
+
+```
+
+Likewise to set elements by name:
+```{r}
+
+```
+
+
+
+## Congruent Vectors
+
+Two vectors are **congruent** if they have the same length and they correspond
+elementwise.
+
+For example, suppose you do a survey that records each person's:
+
+* Favorite animal
+* Age
+
+These are two different vectors of information, but each person will have a
+response for both.
+
+So you'll have two vectors that are the same length, with corresponding
+elements:
+```{r}
+
+```
+
+These vectors are congruent.
+
+Columns in a data frame are always congruent!
+
+
+
+## Subsets by Condition
+
+The third way to subset a vector with `[` is to use a congruent logical vector.
+
+For example:
+```{r}
+
+```
+
+`TRUE` means keep the element, `FALSE` means drop the element.
+
+Missing values `NA` in the logical vector are retained in the result:
+```{r}
+
+```
+
+
+A **condition** is any expression that returns a logical vector.
+
+For example, comparisons are conditions:
+```{r}
+
+```
+
+You can use conditions to take subsets:
+```{r}
+
+```
+
+
+Final note: you can technically subset with any logical vector.
+
+If the length is different, R uses the recycling rule:
+```{r}
+
+```
+
+
+
+
+
+
+Logic
+=====
+
+R provides functions to negate, combine, and summarize logical vectors.
+
+
+
+## Logical Negation
+
+The **NOT** operator `!` converts `TRUE` to `FALSE` and `FALSE` to `TRUE`:
+```{r}
+
+```
+
+You can use `!` with a condition:
+```{r}
+
+```
+
+The NOT operator is vectorized.
+
+
+
+## Logical Combinations
+
+R also has operators for combining logical values.
+
+The **AND** operator `&` returns `TRUE` only when both arguments are `TRUE`.
+
+For example:
+```{r}
+
+```
+
+The **OR** operator `|` returns `TRUE` when at least one argument is `TRUE`.
+
+For example:
+```{r}
+
+```
+
+Be careful: everyday English is less precise than logic.
+
+You might say:
+
+> I want all subjects with age over 50 and all subjects that like cats.
+
+But in logic this means:
+
+`(subject age over 50) OR (subject likes cats)`
+
+So think carefully about whether you need both conditions to be true (AND) or
+at least one (OR).
+
+
+Rarely, you might want _exactly one_ condition to be true.
+
+The **XOR** (eXclusive OR) function `xor()` returns `TRUE` when exactly one
+argument is `TRUE`.
+
+For example:
+```{r}
+
+```
+
+The AND, OR, and XOR operators are vectorized.
+
+
+
+## Short-circuit Operators
+
+The second argument is irrelevant in some conditions:
+
+* `FALSE &` is always `FALSE`
+* `TRUE |` is always `TRUE`
+
+Now imagine you have `FALSE & long_computation()`. You can save time by
+skipping `long_computation()`.
+
+A **short-circuit** operator does exactly that.
+
+
+R has two:
+
+* `&&` is a short-circuited `&`
+* `||` is a short-circuited `|`
+
+These operators only evaluate the second argument if it is necessary to
+determine the result.
+
+These operators are _not_ vectorized!
+
+Examples:
+```{r}
+
+```
+
+
+
+
+
+
+Logical Summaries
+=================
+
+Use the `any()` function to check that a logical vector contains a `TRUE`
+value:
+```{r}
+
+```
+
+Use the `all()` function to check that a logical vector contains only `TRUE`
+values:
+```{r}
+
+```
+
+Use `sum()` or `table()` to count `TRUE` values:
+```{r}
+
+```
+
+The `sum()` function is slightly faster than `table()`.
+
+
+
+## The `which()` Function
+
+Sometimes you'll want to ignore missing values in a condition:
+```{r}
+
+```
+
+The `which()` function returns the position of each `TRUE` in a logical vector:
+```{r}
+
+```
+
+The function ignores missing values:
+```{r}
+
+```
+
+So you can use `which()` to ignore missing values in a condition:
+```{r}
+
+```
+
+Do this as needed, not everywhere.
+
+Calling a function takes more time than not calling a function!
+
+
+
+
+Subset Versus Extract
+=====================
+
+We've learned two different ways to get/set elements:
+
+1. `[`, the subset operator ("square bracket")
+
+2. `[[`,  the extraction operator ("double square bracket")
+
+Both work with vectors, arrays, lists, data frames, and more.
+
+That said, they aren't identical.
+
+
+
+## Multiple Elements
+
+The subset operator `[` can get/set any number of elements:
+```{r}
+
+```
+
+The extraction operator `[[` can only get/set a single element:
+```{r}
+
+```
+
+Note that a vector can be a *single element* of a list:
+```{r}
+
+```
+
+You can't use `[[` to get/set elements by condition, because the logical vector
+might have more than one `TRUE` element:
+```{r}
+
+```
+
+Both `[` and `[[` can get/set elements by position and by name.
+
+```{r}
+
+```
+
+
+## Invalid Elements
+
+The subset operator `[` returns `NA` for invalid elements:
+```{r}
+
+```
+
+The extraction operator `[[` raises an error for invalid elements:
+```{r}
+
+```
+
+## Containers
+
+In programming languages, a **container** is an object that contains other
+objects.
+
+
+Lists are R's primary container.
+
+In lists, elements can have different data types:
+```{r}
+
+```
+
+
+The subset operator `[` keeps containers:
+```{r}
+
+```
+
+The extraction operator `[[` drops containers:
+```{r}
+
+```
+
+A visual representation of this idea:
+
+    https://twitter.com/hadleywickham/status/643381054758363136
+
+
+This leads to one oddity with `[`:
+```{r}
+
+```
+
+
+
+
+Subsets of Data Frames
+======================
+
+Let's look at the dogs data again:
+```{r}
+
+```
+
+R thinks of data frames as lists of columns.
+
+So one-dimensional `[` and `[[` get columns:
+```{r}
+
+```
+`[` keeps the data frame, `[[` drops the data frame.
+
+
+
+## Two-dimensional Subsetting
+
+Data frames are two-dimensional, so you can also use matrix-style subsetting.
+
+That is, use the syntax:
+
+    DATA[ROWS, COLUMNS]
+
+This works for the subset operator `[` and the extraction operator `[[`.
+
+Examples:
+```{r}
+
+```
+
+
+
+## The Drop Parameter
+
+If you use two-dimensional subsetting with `[` to select exactly one column,
+you get a vector:
+```{r}
+
+```
+
+The container is dropped!
+
+This is also true for matrices:
+```{r}
+
+```
+
+
+You can control this behavior with the `drop` parameter:
+```{r}
+
+```
+
+The default is `drop = TRUE`.
+
+
+
+## The Dollar Sign
+
+The `$` operator is similar to `[[`, but only gets elements by name:
+```{r}
+
+```
+
+Unlike `[[`, the `$` will try to match partial names.
+
+
+
+The `$` allows quotes around the name:
+```{r}
+
+```
+Use quotes for names with non-alphanumeric characters.
+
+
+
+## The `subset()` Function
+
+Suppose we want to get rows of a data frame that satisfy a condition:
+```{r}
+
+```
+
+The `subset()` function is a shortcut to avoid typing the name of the data
+frame over and over when subsetting rows with a condition:
+```{r}
+
+```
+With `subset()`, the data frame the columns come from is implied.
+
+
+
+The `subset()` function also eliminates `NA` values in the condition:
+```{r}
+
+```

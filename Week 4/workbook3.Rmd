@@ -1,0 +1,229 @@
+---
+title: "STAT 33B Workbook 3"
+date: "Sep 17, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Sep 17, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+
+Three Ways to Subset
+====================
+
+Watch the "Three Ways to Subset" lecture video.
+
+
+## Exercise 1
+
+Create a variable `count` that contains the integers from 1 to 100 (inclusive).
+
+The `as.character()` function coerces its argument into a character vector.
+Coerce `count` into a character vector and assign the result to a variable
+called `fizzy`. Now you have congruent vectors `count` and `fizzy`.
+
+Use subset assignment to replace every number in `fizzy` that's:
+
+* Divisible by 3 with `"Fizz"`
+* Divisible by 5 with `"Buzz"`
+* Divisible by 15 with `"FizzBuzz"`
+
+Leave all other numbers in `fizzy` as-is.
+
+Print out the final version of `fizzy`. It should begin:
+```
+ [1] "1"        "2"        "Fizz"     "4"        "Buzz"     "Fizz"
+ [7] "7"        "8"        "Fizz"     "Buzz"     "11"       "Fizz"
+[13] "13"       "14"       "FizzBuzz" "16"       "17"       "Fizz"
+```
+
+_Hint 1: Take advantage of the fact that `count` and `fizzy` are congruent._
+
+_Hint 2: The modulo operator `%%` returns the remainder after dividing its
+first argument by its second argument. You can use the modulo operator to test
+whether a number is divisible by some other number (that is, the remainder is
+zero after divsion)._
+
+
+YOUR ANSWER GOES HERE:
+
+
+
+Logic
+=====
+
+Watch the "Logic" lecture video.
+
+
+## Exercise 2
+
+Suppose you conduct a survey and store the results in the following congruent
+vectors:
+
+```{r}
+# Q: What's your favorite color?
+color = c("red", "blue", "blue", "green", "yellow", "green")
+color = factor(color)
+
+# Q: Name a dessert you like?
+sweet = c("egg tart", "brownie", "ice cream", "ice cream", "fruit", "egg tart")
+sweet = factor(sweet)
+
+# Q: Name a desert (not dessert) you like?
+dry = c("Kalahari", "Atacama", "Taklamakan", "Sonoran", "Atacama", "Atacama")
+dry = factor(dry)
+
+# Q: How old are you?
+age = c(23, 15, 92, 21, 28, 45)
+
+# Q: How many UFOs have you seen since 2010?
+ufo = c(0, 3, 122, 0, 0, 1)
+```
+
+Use the vectors above, comparison operators, and logical operators to compute a
+logical vector that corresponds to each of the following conditions.
+
+1. People who have seen a UFO.
+
+2. People who have seen a UFO but aren't over 50 years old.
+
+3. People who didn't choose ice cream.
+
+4. People who like both ice cream and the color green.
+
+5. People who like the color red or the color green.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 3
+
+In the expression `(x < 5) == TRUE`, explain why `== TRUE` is redundant.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Logical Summaries
+=================
+
+Watch the "Logical Summaries" lecture video.
+
+
+No exercises for this section. You're halfway finished!
+
+
+
+Subset vs. Extract
+==================
+
+Watch the "Subset vs. Extract" lecture video.
+
+
+## Exercise 4
+
+A **recursive** list is a list with elements that are also lists.
+
+Here's an example of a recursive list:
+```{r}
+mylist = list(list(1i, 2, 3i), list(c("hello", "hi"), 42))
+```
+
+Use the recursive list above to answer the following:
+
+1. What's the first element? What's the second element?
+
+2. Use the extraction operator `[[` to get the value `3i`.
+
+3. What does `mylist[[c(1, 3)]]` do? What does the index `c(1, 3)` mean here?
+   Experiment with using other vectors in `[[` to get elements from the
+   recursive list. Then explain what the extraction operator `[[` does for
+   recursive lists when the index is a vector.
+
+YOUR ANSWER GOES HERE:
+
+
+## Exercise 5
+
+For the list `cool_list = list("Hope", "springs", "eternal")`, why is
+`cool_list[1]` the same as `cool_list[1][1][1][1][1]`? Is this property unique
+to `cool_list`, or is it a property of all lists? Explain your answer.
+
+YOUR ANSWER GOES HERE:
+
+
+
+Subsets of Data Frames
+======================
+
+Watch the "Subsets of Data Frames" lecture video.
+
+## Exercise 6
+
+For the dogs data, compute:
+
+1. The subset that contains rows 10-20 of the height, weight, and longevity
+   columns.
+
+2. The mean and median of the longevity column (ignoring missing values).
+
+3. The number of dog breeds whose average weight is greater than 42. _Note: the
+   `weight` column is the average weight of each row's breed._
+
+4. The subset of large dogs that require daily grooming.
+
+YOUR ANSWER GOES HERE:
+
+
+
+## Exercise 7
+
+The `sort()` function sorts the elements of a vector. For instance:
+```{r}
+x = c(4, 5, 1)
+sort(x)
+```
+
+The `order()` function is a more flexible alternative to `sort()`. Instead of
+returning the sorted vector, the `order()` function returns the index that
+sorts the vector. To actually sort the vector, you have to pass this index to
+the subset operator `[`:
+```{r}
+x = c(4, 5, 1)
+x[order(x)]
+```
+
+The advantage of `order()` over `sort()` is that you can use `order()` to sort
+one vector based on the elements of some other congruent vector.
+
+Use the `order()` function to sort the rows of the dogs data set based on
+height. What are the 3 tallest breeds of dog?
+
+YOUR ANSWER GOES HERE:
