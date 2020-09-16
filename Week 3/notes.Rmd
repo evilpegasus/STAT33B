@@ -236,7 +236,7 @@ R's data structure for tabular data is the **data frame**.
 
 Let's load a data frame:
 ```{r}
-dogs = readRDS("data/dogs_sample.rds")
+dogs = readRDS("Week 3/data/dogs_sample.rds")
 ```
 
 This data set is available on the bCourse.
