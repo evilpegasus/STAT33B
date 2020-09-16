@@ -169,6 +169,7 @@ x
 You can use `!` with a condition:
 ```{r}
 y = c("hi", "hello")
+y == "hi"
 !(y == "hi")
 ```
 
@@ -456,7 +457,7 @@ Subsets of Data Frames
 
 Let's look at the dogs data again:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 3/data/dogs.rds")
 dogs
 ```
 
@@ -464,8 +465,10 @@ R thinks of data frames as lists of columns.
 
 So one-dimensional `[` and `[[` get columns:
 ```{r}
+dogs[1]
 class(dogs[1])
 
+dogs[[1]]
 class(dogs[[1]])
 ```
 `[` keeps the data frame, `[[` drops the data frame.
@@ -484,9 +487,11 @@ This works for the subset operator `[` and the extraction operator `[[`.
 
 Examples:
 ```{r}
+dogs[1:3, 2]
 class(dogs[1:3, 2])
 
 dogs[[1, 2]]
+class(dogs[[1, 2]])
 
 dogs[1:3, ]
 
@@ -518,8 +523,10 @@ x[, 1]
 You can control this behavior with the `drop` parameter:
 ```{r}
 x[, 1, drop = FALSE]
+class(x[, 1, drop = FALSE])
 
 dogs[1:3, 2, drop = FALSE]
+class(dogs[1:3, 2, drop = FALSE])
 ```
 
 The default is `drop = TRUE`.
