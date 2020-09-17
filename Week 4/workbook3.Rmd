@@ -201,7 +201,7 @@ Use the recursive list above to answer the following:
 
 YOUR ANSWER GOES HERE:
 
-1. The first element is the list with `(1i, 2, 3i)` and the second is a list with `("hello", "hi")`.
+1. The first element is the list with `(1i, 2, 3i)` and the second is a list with `("hello", "hi"), 42`.
 ```{r}
 mylist[[1]]
 mylist[[2]]
@@ -216,9 +216,9 @@ mylist[[1]][[3]]
 ```{r}
 mylist[[c(1, 3)]]
 
-mylist[[c(1, 2)]]
+mylist[[c(2, 1, 2)]]
 ```
-Passing a vector into the index of `[[` for recursive lists gets elements of the nested list.
+Passing a vector into the index of `[[` for recursive lists gets elements of the nested list. The `[[` operator will use the `nth` value of a passed vector as the index of the `nth` nested list.
 
 ## Exercise 5
 
@@ -258,17 +258,17 @@ YOUR ANSWER GOES HERE:
 
 1. 
 ```{r}
-dogs = readRDS("Week 3/data/dogs.rds")
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 3\\data\\dogs.rds")
 dogs[10:20, c("height", "weight", "longevity")]
 ```
 
-2. 
+2. Mean: 10.95674, Median: 11.29
 ```{r}
-dogs[ , "longevity"]
 mean(dogs[, "longevity"], na.rm = TRUE)
+median(dogs[, "longevity"], na.rm = TRUE)
 ```
 
-3. 
+3. 37 breeds have an average weight greater than 42.
 ```{r}
 sum(dogs[, "weight"] > 42, na.rm = TRUE)
 ```
