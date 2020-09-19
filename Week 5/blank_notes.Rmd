@@ -1,0 +1,392 @@
+---
+title: "Stat 33B - Lecture Notes 5"
+date: September 20, 2020
+output: pdf_document
+---
+
+
+R Graphics Overview
+===================
+
+There are three main systems for creating visualizations in R:
+
+1. The base R functions, including `plot()`.
+
+2. The `lattice` package. The interface is similar to the base R
+   functions, but uses lists of parameters to control plot details.
+
+3. The `ggplot2` package. The interface is a "grammar of graphics"
+   where plots are assembled from layers.
+  
+Both `lattice` and `ggplot2` are based on R's low-level `grid`
+graphics system.
+
+It is usually easier to customize visualizations made with base R.
+
+Both `lattice` and `ggplot2` are better at handling grouped data and
+generally require less code to create a nice-looking visualization.
+
+We'll learn `ggplot2`.
+
+
+
+The Tidyverse
+=============
+
+`ggplot2` is part of a popular collection of packages for doing data science in
+R called the Tidyverse (<https://www.tidyverse.org/>).
+
+The Tidyverse packages are made by many of the same people that make RStudio.
+
+They provide alternatives to R's built-in tools for:
+
+* Reading files (package `readr`)
+* Manipulating data frames (packages `dplyr`, `tidyr`, `tibble`)
+* Manipulating strings (package `stringr`)
+* Manipulating factors (package `forcats`)
+* Functional programming (package `purrr`)
+* Making visualizations (package `ggplot2`)
+
+The Tidyverse packages are popular but controversial, because some of them use
+a syntax different from base R.
+
+RStudio cheat sheets (mostly for Tidyverse packages):
+
+    https://rstudio.com/resources/cheatsheets/
+
+
+
+Tidy Data
+---------
+
+Most Tidyverse packages, including `ggplot`, are designed for working with tidy
+data sets.
+
+A data set is **tidy** if (and only if):
+
+1. Each observation has its own row.
+2. Each feature has its own column.
+3. Each value has its own cell.
+
+Tidy data sets are convenient for data analysis in general.
+
+The `tidyr` package has tools to clean up untidy data sets, and also examples
+of untidy data.
+
+```{r}
+# install.packages("tidyr")
+```
+
+An example of untidy data:
+```{r}
+table2
+```
+
+Another example:
+```{r}
+table4a
+```
+
+We'll learn about how to clean up untidy data later.
+
+
+
+Tibbles
+=======
+
+**Tibbles** are Tidyverse's improved version of data frames.
+
+Compared to an ordinary data frame, tibbles:
+
+* Print differently
+* Default to `drop = FALSE` for the subset operator `[`
+* Don't allow partial matching for the dollar operator `$`
+
+If you never load a Tidyverse package with `library()`, tibbles behave like
+ordinary data frames.
+
+
+Let's load some data to test these properties:
+```{r}
+```
+
+Tibbles have the class "tbl" and "tbl_df" in addition to "data.frame":
+```{r}
+```
+
+
+
+For the tibble, `[` to subset a single value DOES NOT drop the data frame:
+```{r}
+```
+
+
+For the tibble, `$` DOES NOT allow partial matches:
+```{r, error = TRUE}
+```
+
+There are `as` functions to convert from/to tibbles:
+```{r}
+```
+
+
+
+The Grammar of Graphics
+=======================
+
+The fundamental idea of `ggplot2` is that all graphics are composed of layers.
+
+
+As an example, let's create a simplified version of the Best in Show
+visualization:
+
+    https://informationisbeautiful.net/visualizations/
+        best-in-show-whats-the-top-data-dog/
+
+
+
+First load ggplot2:
+```{r}
+# install.packages("ggplot2")
+```
+
+And also the dogs data:
+```{r}
+```
+This data set is tidy!
+
+
+Layer 1: Data
+-------------
+
+Use the data layer to select the data to plot.
+
+Call the `ggplot()` function to set the data layer:
+```{r}
+```
+
+
+Layer 2: GEOMetry
+-----------------
+
+Use the geometry layer to select the shape to plot.
+
+Add a `geom_` function to set the geometry layer:
+```{r}
+```
+
+
+Layer 3: AESthetics
+-------------------
+
+Use the AESthetic layer to select how data columns correspond to shapes.
+
+Call the `aes()` function in `ggplot()` to set aesthetic layer:
+```{r}
+```
+This applies to the entire plot.
+
+
+You can also set the aesthetic layer for an individual geometry:
+```{r}
+```
+This only applies to that geometry.
+
+
+
+Extended Example
+----------------
+
+For example, let's add breed labels to the plot:
+```{r}
+```
+
+Now let's color the dogs by group:
+```{r}
+```
+
+Where we put the aesthetics matters:
+```{r}
+```
+
+
+
+Saving Plots
+============
+
+Recall the plot we made of the dogs data:
+```{r}
+library(ggplot2)
+
+dogs = readRDS("data/dogs/dogs.rds")
+
+ggplot(dogs) + geom_point(aes(x = datadog, y = popularity))
+```
+
+
+In ggplot2, use `ggsave()` to save the most recent plot you created:
+
+```{r}
+```
+The file format is selected automatically based on the extension.
+
+Common formats are PNG, JPEG, and PDF.
+
+
+
+You can also save a plot with one of R's "plot device" functions.
+
+The steps are:
+
+1. Call a plot device function: `png()`, `jpeg()`, `pdf()`, `bmp()`, `tiff()`,
+   or `svg()`.
+2. Run your code to make the plot.
+3. Call `dev.off()` to indicate that you're done plotting.
+
+This will only work in the console!
+
+For example:
+```{r, eval=FALSE}
+# Run these lines in the console, not the notebook!
+
+```
+
+This strategy is more general than `ggsave()` -- it works for any of R's
+graphics systems.
+
+
+
+
+
+Customizing Plots
+=================
+
+Layer       | Description
+----------  | -----------
+data        | A data frame to visualize
+aesthetics  | The map or "wires" between data and geometry
+geometry    | Geometry to represent the data visually
+labels      | Titles and axis labels
+scales      | How numbers in data are converted to numbers on screen
+guides      | Legend settings
+annotations | Additional geoms that are not mapped to data
+facets      | Side-by-side panels
+coordinates | Coordinate systems (Cartesian, logarithmic, polar)
+statistics  | An alternative to geometry
+
+Recall the plot we made earlier:
+```{r}
+library(ggplot2)
+dogs = readRDS("data/dogs/dogs.rds")
+ggplot(dogs, aes(x = datadog, y = popularity)) + geom_point()
+```
+
+How else can we make our plot look more like the Best in Show plot?
+
+
+1. Add the dog breeds as text.
+
+Add more geometries to add additional details to a plot:
+```{r}
+```
+
+See the `ggrepel` package for automatic label positioning.
+
+
+2. Color the points by type of dog.
+
+```{r}
+```
+
+We can also set parameters outside of the aesthetics.
+
+Doing so sets a constant value instead of mapping to a feature in the
+data.
+
+Set size to 10 for all points:
+```{r}
+```
+
+Note that if you want to set a constant color for all points, you need to do so
+outside of `aes()`:
+```{r}
+```
+
+```{r}
+```
+
+You can also use the scales layer to customize the color choices.
+
+Read the documentation for details about parameters.
+
+
+3. Reverse the y-axis.
+
+Use the scale layer to change axes.
+
+```{r}
+```
+
+
+4. Add titles and labels.
+
+```{r}
+```
+
+Could use ggimage package to replace the points with images of dogs.
+
+
+
+
+Exploratory Data Analysis
+=========================
+
+What does it mean to "explore" data?
+
+* Look for patterns (examine variation in the data)
+* Look for errors in the data
+* Look for relationships between variables
+* Look at data to get an overview (what data are present?)
+* Check assumptions (model, conclusions, etc)
+
+What are the techniques to "explore" data?
+
+* Make plots
+* Compute summary statistics
+* Fit models (including hypothesis tests, machine learning)
+
+
+The table below has _suggestions_ for choosing an appropriate plot
+based on the data types.
+
+You also need to think about what you're trying to convey.
+
+First Feature  | Second Feature   | Plot
+-------------- | ---------------- | ----
+categorical    |                  | bar, dot
+categorical    | categorical      | bar, dot, mosaic
+numerical      |                  | box, density, histogram
+numerical      | categorical      | box, density
+numerical      | numerical        | line, scatter, smooth scatter
+
+
+Again we'll use the dogs data:
+```{r}
+dogs = readRDS("data/dogs/dogs.rds")
+```
+
+Example: How many dogs are there in each group (toy, sporting, etc)?
+
+```{r}
+```
+
+Example: What's the distribution of datadog scores?
+
+```{r}
+```
+
+Example: How are size and height related?
+
+```{r}
+```
+

@@ -1,0 +1,116 @@
+---
+title: "STAT 33B Homework 2"
+date: "Sep 24, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This homework is due __Sep 24, 2020__ by 11:59pm PT.
+
+Homeworks are graded for correctness. 
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+Exercise 1
+----------
+
+For this assignment, you'll use the Datasaurus Dozen data set, which is
+available on the bCourse (`DatasaurusDozen.tsv`).
+
+Load the Datasaurus Dozen data set and assign it to a variable named `dsaur`.
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 2
+----------
+
+Now that you've loaded the data set, print out summary information, including:
+
++ Number of columns
++ Number of rows
++ Classes of the columns
++ Levels in the `dataset` column
+* The range of the `x` column
+* The range of the `y` column
+* Number of missing values in each column
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 3
+----------
+
+The Datasaurus Dozen is actually a collection of 12 data sets stacked together.
+The `dataset` column indicates which data set each row comes from.
+
+1. Use subsetting to extract only the rows in the `dino` data set. Assign those
+   rows to the `dino` variable.
+
+2. Compute the mean and standard deviation for the `x` and `y` columns in the
+   `dino` data set.
+
+3. Repeat part 3.1 and 3.2 for the `star` dataset.
+
+   Based on the statistics, are the two data sets similar?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+
+Exercise 4
+----------
+
+_Note: Exercise 4-5 use ggplot2, which will be covered in the week 5 lectures._
+
+1. Use `ggplot2` to make a scatter plot of `x` versus `y` for the `dino` data
+   set. Make sure your plot includes a title.
+
+2. Repeat for the `star` data set.
+
+   Based on these plots, are the two data sets similar?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+
+Exercise 5
+----------
+
+A "faceted" plot is one that shows several subplots side-by-side, to aid
+comparison between them. Each subplot is called a "facet".
+
+You can create a faceted plot with ggplot2 by using the facet layer. For
+instance, the `facet_wrap()` function creates a line of facets based on a
+single categorical variable. The facet layer should be added to a plot _after_
+the geometry layers.
+
+1.  Read the documentation for `facet_wrap()`, then create a faceted scatter
+    plot that shows each dataset from the Datasaurus Dozen in a separate facet.
+    Use `geom_smooth` with `method = "lm"` to add a linear regression line to
+    each facet.
+
+    _Hint: Unlike other ggplot2 functions, variable names in facet functions
+    need to be enclosed in a call to the `vars()` function. So to write the
+    column `dataset`, you would write `vars(dataset)`. See the `facet_wrap()`
+    documentation for more details._
+
+2. Is there any pattern to the regression lines across the different data sets?
+
+**YOUR ANSWER GOES HERE:**
+
+

@@ -1,0 +1,153 @@
+---
+title: "STAT 33B Workbook 4"
+date: "Sep 24, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Sep 24, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+
+R Graphics Overview
+===================
+
+Watch the "R Graphics Overview" lecture video.
+
+No exercises for this section. Keep at it!
+
+
+The Tidyverse
+=============
+
+Watch the "The Tidyverse" lecture video.
+
+
+## Exercise 1
+
+How many packages are in the Tidyverse? Explore the website to find out. You
+can count the tidymodels packages as a single package.
+
+YOUR ANSWER GOES HERE:
+
+
+
+
+Tibbles
+=======
+
+Watch the "Tibbles" lecture video.
+
+## Exercise 2
+
+Read the documentation for the tibble package on the website.
+
+1. Create a tibble with 4 rows and 3 columns from vectors. You can make up the
+   data in the vectors. Use a different data type for each column.
+
+2. Show how to convert the tibble to an ordinary data frame.
+
+YOUR ANSWER GOES HERE:
+
+
+
+The Grammar of Graphics
+=======================
+
+Watch the "The Grammar of Graphics" lecture video.
+
+
+## Exercise 3
+
+Use ggplot2 and the dogs data to make a scatterplot that shows the relationship
+between height and weights. In 2-3 sentences, discuss any patterns you see in
+the plot.
+
+YOUR ANSWER GOES HERE:
+
+
+## Exercise 4
+
+Use ggplot2 and the dogs data to make a histogram of longevity. How long do
+most dogs typically live? How spread out is the distribution of lifespans?
+
+YOUR ANSWER GOES HERE:
+
+
+Saving Plots
+============
+
+Watch the "Saving Plots" lecture video.
+
+No exercises for this section. Almost done!
+
+
+Customizing Plots
+=================
+
+Watch the "Customizing Plots" lecture video.
+
+## Exercise 5
+
+Revisit your scatterplot from Exercise 3. Make the size of each point
+correspond to the size of the dog. Make the color of each point correspond to
+how good the dog is with kids. Add an appropriate title and labels.
+
+_Hint: A "low" score for kids means the dog is bad with kids._
+
+YOUR ANSWER GOES HERE:
+
+
+## Exercise 6
+
+Use ggplot2 and the dogs data to answer each of the following questions.
+
+1. Is there a relationship between how long dogs live and how big (in any
+   sense) they are?
+
+2. Do small dogs tend to be good with kids? If not, does size seem to be
+   related to how good dogs are with kids at all?
+
+3. Is there a relationship between size and grooming needs?
+
+_Hint: The table from the notes for the next lecture video might help you
+decide which plots to use for these questions._
+
+YOUR ANSWER GOES HERE:
+
+
+
+Exploratory Data Analysis
+=========================
+
+This lecture video is **OPTIONAL**. You can skip it if you like.
+
+The "Exploratory Data Analysis" video discusses how to choose an appropriate
+plot for a given set of columns.
+
+No exercises for this section.
