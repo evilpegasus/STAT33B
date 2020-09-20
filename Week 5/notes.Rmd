@@ -431,7 +431,7 @@ numerical      | numerical        | line, scatter, smooth scatter
 
 Again we'll use the dogs data:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 5/data/dogs.rds")
 ```
 
 Example: How many dogs are there in each group (toy, sporting, etc)?
