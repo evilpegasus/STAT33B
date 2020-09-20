@@ -109,9 +109,9 @@ ordinary data frames.
 
 Let's load some data to test these properties:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 5/data/dogs.rds")
 
-dogs_tbl = readRDS("data/dogs/dogs_tibble.rds")
+dogs_tbl = readRDS("Week 5/data/dogs_tibble.rds")
 ```
 
 Tibbles have the class "tbl" and "tbl_df" in addition to "data.frame":
@@ -175,7 +175,7 @@ library(ggplot2)
 
 And also the dogs data:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 5/data/dogs.rds")
 ```
 This data set is tidy!
 
@@ -252,7 +252,7 @@ Recall the plot we made of the dogs data:
 ```{r}
 library(ggplot2)
 
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 5/data/dogs.rds")
 
 ggplot(dogs) + geom_point(aes(x = datadog, y = popularity))
 ```
@@ -315,7 +315,7 @@ statistics  | An alternative to geometry
 Recall the plot we made earlier:
 ```{r}
 library(ggplot2)
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 5/data/dogs.rds")
 ggplot(dogs, aes(x = datadog, y = popularity)) + geom_point()
 ```
 
