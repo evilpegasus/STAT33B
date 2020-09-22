@@ -55,8 +55,7 @@ can count the tidymodels packages as a single package.
 
 YOUR ANSWER GOES HERE:
 
-
-
+There are 27 packages in the Tidyverse.
 
 Tibbles
 =======
@@ -74,7 +73,13 @@ Read the documentation for the tibble package on the website.
 
 YOUR ANSWER GOES HERE:
 
-
+```{r}
+library(tibble)
+tib = tibble("name" = c("bob", "joe", "ted", "ned"),
+   "age" = 4:7, "height" = c(8.8, 5.6, 1.5, 0.4))
+tib
+as.data.frame(tib)
+```
 
 The Grammar of Graphics
 =======================
@@ -90,6 +95,11 @@ the plot.
 
 YOUR ANSWER GOES HERE:
 
+There is a strong positive correlation between dog height and weight. The relation appears to be non-linear.
+```{r}
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 5\\data\\dogs.rds")
+ggplot(dogs, aes(x = height, y = weight)) + geom_point()
+```
 
 ## Exercise 4
 
@@ -98,6 +108,10 @@ most dogs typically live? How spread out is the distribution of lifespans?
 
 YOUR ANSWER GOES HERE:
 
+The distribution of dog breed longevity appears approximately normal. The mean is about 11.5 years. The max is about 16 and the min is about 6.
+```{r}
+ggplot(dogs, aes(x = longevity)) + geom_histogram()
+```
 
 Saving Plots
 ============
@@ -122,6 +136,9 @@ _Hint: A "low" score for kids means the dog is bad with kids._
 
 YOUR ANSWER GOES HERE:
 
+```{r}
+ggplot(dogs, aes(x = height, y = weight)) + geom_point(aes(size = size))
+```
 
 ## Exercise 6
 
