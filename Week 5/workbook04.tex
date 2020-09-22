@@ -384,6 +384,24 @@ YOUR ANSWER GOES HERE:
 
 \includegraphics{workbook04_files/figure-latex/unnamed-chunk-6-1.pdf}
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Large dogs tend to require less grooming. Small dogs have the highest
+  proportion of requiring daily grooming.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{subset}\NormalTok{(dogs, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(grooming)), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ grooming, }\DataTypeTok{x =}\NormalTok{ size)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom\_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"fill"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{workbook04_files/figure-latex/unnamed-chunk-7-1.pdf}
+
 \hypertarget{exploratory-data-analysis}{%
 \section{Exploratory Data Analysis}\label{exploratory-data-analysis}}
 
