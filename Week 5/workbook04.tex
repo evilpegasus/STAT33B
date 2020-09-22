@@ -238,6 +238,7 @@ The relation appears to be non-linear.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
 \NormalTok{dogs =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{mingf}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Desktop}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{git}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{STAT33B}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Week 5}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{data}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{dogs.rds"}\NormalTok{)}
 \KeywordTok{ggplot}\NormalTok{(dogs, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ height, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom\_point}\NormalTok{()}
 \end{Highlighting}
@@ -302,6 +303,25 @@ and labels.
 
 YOUR ANSWER GOES HERE:
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dogs}\OperatorTok{$}\NormalTok{size =}\StringTok{ }\KeywordTok{factor}\NormalTok{(dogs}\OperatorTok{$}\NormalTok{size, }\DataTypeTok{levels =} \KeywordTok{rev}\NormalTok{(}\KeywordTok{levels}\NormalTok{(dogs}\OperatorTok{$}\NormalTok{size)))}
+\KeywordTok{ggplot}\NormalTok{(dogs, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ height, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom\_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{size =}\NormalTok{ size, }\DataTypeTok{color =}\NormalTok{ kids)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Dogs height vs Weight"}\NormalTok{, }\DataTypeTok{x =} \StringTok{"Weight"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Height"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using size for a discrete variable is not advised.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 98 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{workbook04_files/figure-latex/unnamed-chunk-4-1.pdf}
+
 \hypertarget{exercise-6}{%
 \subsection{Exercise 6}\label{exercise-6}}
 
@@ -323,6 +343,46 @@ Use ggplot2 and the dogs data to answer each of the following questions.
 help you decide which plots to use for these questions.}
 
 YOUR ANSWER GOES HERE:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  There seems to be a weak negative correlation between the longevity
+  and weight of dogs. Small dogs tend to live longer than big ones.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(dogs, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ longevity, }\DataTypeTok{y =}\NormalTok{ weight)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom\_point}\NormalTok{() }\OperatorTok{+}
+\StringTok{   }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Dogs Height vs Longevity"}\NormalTok{, }\DataTypeTok{x =} \StringTok{"Longevity"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"Weight"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 99 rows containing missing values (geom_point).
+\end{verbatim}
+
+\includegraphics{workbook04_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  The trend seems to be that the larger the dog, the better it is with
+  children.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =} \KeywordTok{subset}\NormalTok{(dogs, }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(kids)), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill =}\NormalTok{ kids, }\DataTypeTok{x =}\NormalTok{ size)) }\OperatorTok{+}
+\StringTok{   }\KeywordTok{geom\_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"fill"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{workbook04_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 \hypertarget{exploratory-data-analysis}{%
 \section{Exploratory Data Analysis}\label{exploratory-data-analysis}}

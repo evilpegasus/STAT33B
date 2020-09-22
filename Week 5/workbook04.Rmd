@@ -97,6 +97,7 @@ YOUR ANSWER GOES HERE:
 
 There is a strong positive correlation between dog height and weight. The relation appears to be non-linear.
 ```{r}
+library(ggplot2)
 dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 5\\data\\dogs.rds")
 ggplot(dogs, aes(x = height, y = weight)) + geom_point()
 ```
@@ -137,7 +138,10 @@ _Hint: A "low" score for kids means the dog is bad with kids._
 YOUR ANSWER GOES HERE:
 
 ```{r}
-ggplot(dogs, aes(x = height, y = weight)) + geom_point(aes(size = size))
+dogs$size = factor(dogs$size, levels = rev(levels(dogs$size)))
+ggplot(dogs, aes(x = height, y = weight)) +
+   geom_point(aes(size = size, color = kids)) +
+   labs(title = "Dogs height vs Weight", x = "Weight", y = "Height")
 ```
 
 ## Exercise 6
@@ -157,6 +161,18 @@ decide which plots to use for these questions._
 
 YOUR ANSWER GOES HERE:
 
+1. There seems to be a weak negative correlation between the longevity and weight of dogs. Small dogs tend to live longer than big ones.
+```{r}
+ggplot(dogs, aes(x = longevity, y = weight)) +
+   geom_point() +
+   labs(title = "Dogs Height vs Longevity", x = "Longevity", y = "Weight")
+```
+
+2. The trend seems to be that the larger the dog, the better it is with children.
+```{r}
+ggplot(data = subset(dogs, !is.na(kids)), aes(fill = kids, x = size)) +
+   geom_bar(position = "fill")
+```
 
 
 Exploratory Data Analysis
