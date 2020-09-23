@@ -31,7 +31,9 @@ Load the Datasaurus Dozen data set and assign it to a variable named `dsaur`.
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+dsaur = read.delim("data/DatasaurusDozen.tsv", header = TRUE)
+```
 
 Exercise 2
 ----------
@@ -48,7 +50,17 @@ Now that you've loaded the data set, print out summary information, including:
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+ncol(dsaur)
+nrow(dsaur)
+unlist(lapply(dsaur, class))
+levels(factor(dsaur$dataset))
+range(dsaur$x)
+range(dsaur$y)
+sum(is.na(dsaur$dataset))
+sum(is.na(dsaur$x))
+sum(is.na(dsaur$y))
+```
 
 Exercise 3
 ----------
@@ -68,8 +80,20 @@ The `dataset` column indicates which data set each row comes from.
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+dino = subset(dsaur, dataset == "dino")
+mean(dino$x)
+sd(dino$x)
+mean(dino$y)
+sd(dino$y)
 
-
+star = subset(dsaur, dataset == "star")
+mean(star$x)
+sd(star$x)
+mean(star$y)
+sd(star$y)
+```
+Both the `dino` and `star` datasets have very similar means and SDs. However this could be missleading.
 
 Exercise 4
 ----------
@@ -85,8 +109,12 @@ _Note: Exercise 4-5 use ggplot2, which will be covered in the week 5 lectures._
 
 **YOUR ANSWER GOES HERE:**
 
-
-
+```{r}
+library(ggplot2)
+ggplot(dino, aes(x = x, y = y)) + geom_point() + labs(title = "dino")
+ggplot(star, aes(x = x, y = y)) + geom_point() + labs(title = "star")
+```
+The plots of the two datasets are not similar. `dino` plots a dinosaur image while `star` plots a five-pointed star.
 
 Exercise 5
 ----------
@@ -113,4 +141,13 @@ the geometry layers.
 
 **YOUR ANSWER GOES HERE:**
 
+1. 
+```{r}
+plot = ggplot(dsaur, aes(x = x, y = y)) +
+   geom_point() + labs(title = dsaur$dataset) +
+   geom_smooth(method = "lm")
 
+plot + facet_wrap(vars(dataset))
+```
+
+2. The regression lines of all the plots are very similar if not identical. All the lines have a slight negative slope. However, the actual points of each dataset are completely different from each other. The very similar statistical summaries masks this.
