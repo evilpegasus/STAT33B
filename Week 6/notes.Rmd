@@ -44,7 +44,7 @@ In practice, it's clearer and more efficient to use vectorization here.
 
 Let's use the dogs data for some realistic examples:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("Week 6/data/dogs.rds")
 
 head(dogs)
 lapply(dogs, class)
