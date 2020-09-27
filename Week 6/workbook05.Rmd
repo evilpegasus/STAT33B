@@ -1,0 +1,181 @@
+---
+title: "STAT 33B Workbook 5"
+date: "Oct 1, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Oct 1, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+If you have any last-minute trouble knitting, **DON'T PANIC**. Submit your Rmd
+file on time and follow up in office hours or on Piazza to sort out the PDF.
+
+
+
+Apply Function Basics
+=====================
+
+Watch the "Apply Function Basics" lecture video.
+
+For exercises that mention the dogs data, you can use either `dogs.rds` or
+`dogs_tibble.rds`. Both are on the bCourse.
+
+## Exercise 1
+
+1. Suppose you call `sapply()` with a function that returns vectors. What class
+   of object does `sapply()` return if all of the result vectors have the same
+   length?
+
+   For instance, what if the applied function returns a length-3 vector for
+   each element?
+
+   _Hint: `rnorm()` and `class()` are examples of functions that return
+   vectors._
+
+2. Again suppose you call `sapply()` with a function that returns vectors. What
+   class of object does `sapply()` return if the result vectors have the
+   different lengths?
+
+3. Suppose you call `sapply()` with a function that returns different types.
+   What happens?
+
+   _Hint: `all.equal()` is one function that returns different types._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 2
+
+1. Use `sapply()` and `is.numeric()` to identify all of the numeric columns in
+   the dogs data frame.
+
+2. Use `sapply()` and your result from part 1 to compute the range of every
+   numeric column in the dogs data frame.
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+The Split-Apply Strategy
+========================
+
+Watch the "The Split-Apply Strategy" lecture video.
+
+## Exercise 3
+
+Use the split-apply strategy to compute the minimum weight (ignoring missing
+values) for each size of dog.
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 4
+
+Use `tapply()` to compute a `summary()` of the weight column for each group
+(hound, herding, etc) of dog.
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 5
+
+The `aggregate()` function also implements the split-apply strategy, but
+returns the results as a data frame.
+
+Use `aggregate()` to compute the maximum weight (ignoring missing values) for
+each group of dog.
+
+_Hint: The `by` parameter in `aggregate()` expects a list or data frame, so use
+`[` to select columns for `by` rather than `$` or `[[`._
+
+**YOUR ANSWER GOES HERE:**
+
+
+## Exercise 6
+
+Like `table()`, the `tapply()` function can use multiple categorical features
+to cross-tabulate results.
+
+Use `tapply()` to compute the median price (ignoring missing values) for dogs,
+grouped by both size and grooming.
+
+_Hint: see the `tapply()` documentation for the `INDEX` parameter._
+
+**YOUR ANSWER GOES HERE:**
+
+
+Even More Apply Functions
+=========================
+
+Watch the "Even More Apply Functions" lecture video.
+
+## Exercise 7
+
+Translate your code from Exercise 1, Part 1 to use `vapply()` rather than
+`sapply()`.
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Choosing an Apply Function
+==========================
+
+Watch the "Choosing an Apply Function" lecture video.
+
+No exercises for this section.
+
+
+
+Conditional Expressions
+=======================
+
+Watch the "Choosing an Apply Function" lecture video.
+
+No exercises for this section.
+
+
+
+The `switch()` Function
+=====================
+
+Watch the "The switch() Function" lecture video.
+
+No exercises for this section.
+
+
+The Congruent Vectors Strategy
+==============================
+
+Watch the "The Congruent Vectors Strategy" lecture video.
+
+No exercises for this section.

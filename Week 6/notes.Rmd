@@ -1,0 +1,533 @@
+---
+title: "Stat 33B - Lecture Notes 6"
+date: September 27, 2020
+output: pdf_document
+---
+
+
+Apply Function Basics
+=====================
+
+Doing the same operation repeatedly is a common pattern in programming.
+
+Vectorization is one way, but not all functions are vectorized.
+
+
+In R, the "apply functions" are another way to do something repeatedly.
+
+The apply functions call a function on each element of a vector or list.
+
+
+
+The `lapply()` Function
+---------------------
+
+The first and most important apply function is `lapply()`. The syntax is:
+```
+lapply(X, FUN, ...)
+```
+
+The function `FUN` is called once for each element of `X`, with the element as
+the first argument. The `...` is for additional arguments to `FUN`, which are
+held constant across all calls.
+
+
+Unrealistic example:
+```{r}
+x = c(1, 7, 9)
+lapply(x, sin)
+
+sin(x)
+```
+In practice, it's clearer and more efficient to use vectorization here.
+
+
+Let's use the dogs data for some realistic examples:
+```{r}
+dogs = readRDS("data/dogs/dogs.rds")
+
+head(dogs)
+lapply(dogs, class)
+
+class(dogs)
+
+str(dogs)
+
+cols = c("weight", "height", "price")
+lapply(dogs[cols], median, na.rm = TRUE)
+```
+
+`lapply()` always returns the result as a list.
+
+"l" for **list** result.
+
+
+
+The `sapply()` Function
+---------------------
+
+`sapply()` simplifies the result to a vector, when possible.
+
+"s" for **simplified** result.
+
+Examples:
+```{r}
+sapply(dogs[cols], median, na.rm = TRUE)
+```
+
+The `sapply()` function is useful if you are working interactively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Split-Apply Strategy
+========================
+
+The `split()` function splits a vector or data frame into groups based on some
+other vector (usually congruent).
+
+```{r}
+x = c(1, 7, 9, 2, 5)
+group = c("blue", "red", "blue", "green", "red")
+
+split(x, group)
+```
+
+
+Split weight of dogs by the group column:
+```{r}
+dogs = readRDS("data/dogs/dogs.rds")
+
+by_group = split(dogs, dogs$group)
+```
+
+The `split()` function is especially useful when combined with `lapply()` or
+`sapply`().
+
+```{r}
+price_by_group = split(dogs$price, dogs$group)
+sapply(price_by_group, mean, na.rm = TRUE)
+
+sapply(price_by_group, sd, na.rm = TRUE)
+
+
+weight_by_size = split(dogs$weight, dogs$size)
+sapply(weight_by_size, mean, na.rm = TRUE)
+```
+This is an R idiom!
+
+
+
+The `tapply()` Function
+---------------------
+
+The `tapply()` function is equivalent to the `split()` and `sapply()` idiom.
+
+"t" for **table**, because `tapply()` is a generalization of the
+frequency-counting function `table()`.
+
+
+Examples:
+```{r}
+tapply(dogs$weight, dogs$size, mean, na.rm = TRUE)
+
+# A generalization of table:
+tapply(dogs$size, dogs$size, length)
+table(dogs$size)
+```
+
+This strategy is important for analyzing tabular data regardless of what
+programming language or packages you're using.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Even More Apply Functions
+=========================
+
+
+The `vapply()` Function
+---------------------
+
+`vapply()` simplifies the result to a vector of a specific data type.
+
+"v" for **vector** (or matrix) result.
+
+
+Examples:
+```{r}
+dogs = readRDS("data/dogs/dogs.rds")
+sapply(dogs[c("weight", "height")], median, na.rm = TRUE)
+
+vapply(dogs[c("weight", "height")], median, 5100, na.rm = TRUE)
+
+# vapply(dogs[c("weight", "height")], median, "hi", na.rm = TRUE)
+
+# vapply(dogs[c("weight", "height")], median, c(1, 2), na.rm = TRUE)
+```
+
+The `vapply()` function is more robust and efficient than `sapply()` because
+the return type is specified.
+
+Use `vapply()` when you write functions or other non-interactive code.
+
+
+
+The `mapply()` and `Map()` Functions
+--------------------------------
+
+`mapply()` applies a function to multiple data arguments.
+
+"m" for **multiple** arguments.
+
+Examples:
+```{r}
+x = c(1, 2, 3, 4)
+y = c(-1, 10, 20, 45)
+
+x + y
+
+# sum(x[1], y[1])
+# sum(x[2], y[2])
+
+mapply(sum, x, y)
+
+# More realistic:
+rep(letters[1:4], 4:1)
+rep("a", 4)
+rep("b", 3)
+# ...
+
+mapply(rep, letters[1:4], 4:1)
+```
+
+`mapply()` simplifies the result to a vector, when possible.
+
+`Map()` is a wrapper for `mapply()` that never simplifies the result.
+
+
+
+The `apply()` Function
+--------------------
+
+What if we want to compute the standard deviation of each row in a matrix?
+
+The `apply()` function applies a function along one or more dimensions of an
+array. The syntax is:
+```
+apply(X, MARGIN, FUN, ...)
+```
+The `MARGIN` is a vector of dimensions to apply the function over. 1 means
+rows, 2 means columns, and so on.
+
+
+For example:
+```{r}
+m = matrix(1:6, 2)
+m
+
+apply(m, 1, sd)
+
+apply(m, 2, sd)
+
+apply(m, 2, mean)
+
+apply(m, c(1, 2), mean)
+```
+`apply()` returns a vector or matrix result.
+
+
+`apply()` is rarely used, and when it is, it's usually for matrices.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Choosing an Apply Function
+==========================
+
+
+1. Is the function you want to apply vectorized?
+
+   If yes, use vectorization.
+
+   Otherwise, continue to #2.
+
+
+2. Do you want to apply the function to elements or to groups?
+
+   For elements, continue to #3.
+
+   For groups, use the split-apply pattern. Use `split()`, then
+   continue to #3 to choose an apply function.
+
+   Note `tapply()` is equivalent to `split()` and `sapply()`.
+
+
+3. Will the function return the same data type for each element?
+
+   If yes, continue to #4.
+
+   Otherwise, use `lapply()`.
+
+
+4. Are you working interactively?
+
+   If yes, use `sapply()`.
+
+   Otherwise, use `vapply()`.
+
+
+Other Apply Functions
+---------------------
+
+See this StackOverflow Post for a summary:
+
+    https://stackoverflow.com/a/7141669
+
+
+The purrr and dplyr packages provide Tidyverse alternatives to apply functions.
+
+
+
+
+
+
+
+Conditional Expressions
+=======================
+
+The syntax for an if-statement in R is:
+```{r}
+x = 20
+if (x < 10) {
+   message("Hello")
+} else {
+   message("Goodbye")   
+}
+```
+
+The `else` block is optional:
+```{r}
+x = -1
+if (x < 2)
+   message("Hi")
+```
+
+Curly braces `{ }` are optional for single-line expressions:
+```{r}
+if (x < 2) {
+   message("Hi")
+}
+```
+
+The condition has to be a scalar:
+```{r}
+if (c(TRUE, FALSE)) {
+   message("hello")
+}
+```
+
+You can chain together if-statements:
+```{r}
+if (x < 4) {
+   message("33A")
+} else if (x > 10) {
+   message("33B")
+} else {
+   message("STATS")
+}
+```
+
+If-statements return the value of the last expression in the evaluated block:
+```{r}
+output = if (x > 4) 4 else 5
+output
+
+output = if (x != 10) {
+   message("hi")
+   42
+} else {
+   message("bye")
+   8
+}
+
+if (x != 10) {
+   message("hi")
+   output = 42
+} else {
+   message("bye")
+   output = 8
+}
+```
+
+When there's no `else` block, the value of the `else` block is `NULL`:
+```{r}
+y = if (FALSE) 4
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The `switch()` function
+=====================
+
+The `switch()` function uses integer or string matching to select an expression
+to evaluate.
+
+String example:
+```{r}
+x = "hewfwwrw"
+switch(x, hi = 45, bye = 38, hello = mean(rnorm(3)), 7)
+```
+
+Integer example:
+```{r}
+x = 5
+switch(x, 1, 2, 3, 4, 50, median(1:3))
+```
+
+`switch()` only evaluates the selected expression.
+
+So `switch()` is more efficient than using a list and subsetting:
+```{r}
+ll = list(1, 2, 3, 4, 50, median(1:3))
+ll[[x]]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Congruent Vectors Strategy
+==============================
+
+If-statements don't work well with vectors.
+
+For example, suppose we want to transform a vector `x` so that:
+
+* Negative elements are set to 0.
+* Positive elements are squared.
+
+Using an if-statement doesn't work for this:
+```{r}
+x = c(-4, 5, 10, -3, 2, 1)
+
+# NO GOOD:
+if (x < 0)
+   x = 0
+```
+
+
+Instead, use congruent vectors:
+
+1. An input vector (or vectors) to use in conditions.
+
+2. An output vector to store the results.
+
+Use the input vector to conditionally assign elements to the output vector.
+
+
+So:
+```{r}
+output = x
+
+output[x < 0] = 0
+output[x > 0] = x[x > 0]^2
+output
+```
+
+
+Another example:
+```{r}
+y = c(4, 5, 6, 10, -1, 2)
+color = c("blue", "red", "blue", "green", "red", "red")
+
+# Say we want to:
+# red -> square
+# blue -> cube
+# green -> 0
+
+output = numeric(length(y))
+output[color == "red"] = y[color == "red"]^2
+output[color == "blue"] = y[color == "blue"]^3
+output[color == "green"] = 0
+output
+```
+
+
+The `ifelse()` Function
+-----------------------
+
+R also has a vectorized `ifelse()` function.
+
+For example:
+```{r}
+x = c(-1, 10, 20, -3)
+
+ifelse(x < 0, 0, x)
+```
+
+The `ifelse()` function is less efficient than a regular if-statement or the
+congruent vectors strategy.
