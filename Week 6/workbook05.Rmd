@@ -69,12 +69,27 @@ For exercises that mention the dogs data, you can use either `dogs.rds` or
 
 **YOUR ANSWER GOES HERE:**
 
-1. 
+1. `sapply` will return a matrix as the most simplified form.
 ```{r}
-rnorm(10, mean = 0, sd = 1)
+x = c(3, 3, 3, 3)
+sapply(x, rnorm, mean = 0, sd = 1)
+class(sapply(x, rnorm, mean = 0, sd = 1))
 ```
 
-2. 
+2. `sapply` will return a list here because a matrix could not be formed with different row lengths.
+```{r}
+x = c(1, 2, 3, 4)
+sapply(x, rnorm, mean = 0, sd = 1)
+class(sapply(x, rnorm, mean = 0, sd = 1))
+```
+
+3. `sapply` returns a vector of class character. The `TRUE`s from `all.apply` are coerced into characters.
+```{r}
+x = c(1, 2, 1, 4, 1, 6)
+y = 1
+sapply(x, all.equal, current = y)
+class(sapply(x, all.equal, current = y))
+```
 
 ## Exercise 2
 
@@ -86,7 +101,17 @@ rnorm(10, mean = 0, sd = 1)
 
 **YOUR ANSWER GOES HERE:**
 
+1. 
+```{r}
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 6\\data\\dogs.rds")
+dogs_numerics = sapply(dogs, is.numeric)
+dogs_numerics
+```
 
+2. 
+```{r}
+sapply(dogs[ , dogs_numerics], range, na.rm = TRUE)
+```
 
 The Split-Apply Strategy
 ========================
@@ -100,7 +125,9 @@ values) for each size of dog.
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+sapply(split(dogs$weight, dogs$size), min, na.rm = TRUE)
+```
 
 ## Exercise 4
 
@@ -109,7 +136,9 @@ Use `tapply()` to compute a `summary()` of the weight column for each group
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+tapply(dogs$weight, dogs$group, summary)
+```
 
 ## Exercise 5
 

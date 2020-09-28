@@ -107,7 +107,7 @@ split(x, group)
 
 Split weight of dogs by the group column:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 6\\data\\dogs.rds")
 
 by_group = split(dogs, dogs$group)
 ```
@@ -179,11 +179,13 @@ The `vapply()` Function
 
 Examples:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 6\\data\\dogs.rds")
 sapply(dogs[c("weight", "height")], median, na.rm = TRUE)
 
 vapply(dogs[c("weight", "height")], median, 5100, na.rm = TRUE)
 
+
+# 3rd argument is wrong type
 # vapply(dogs[c("weight", "height")], median, "hi", na.rm = TRUE)
 
 # vapply(dogs[c("weight", "height")], median, c(1, 2), na.rm = TRUE)
@@ -222,6 +224,7 @@ rep("b", 3)
 # ...
 
 mapply(rep, letters[1:4], 4:1)
+Map(rep, letters[1:4], 4:1)
 ```
 
 `mapply()` simplifies the result to a vector, when possible.
