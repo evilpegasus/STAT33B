@@ -153,6 +153,9 @@ _Hint: The `by` parameter in `aggregate()` expects a list or data frame, so use
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+aggregate(dogs$weight, dogs["group"], max, na.rm = TRUE)
+```
 
 ## Exercise 6
 
@@ -166,6 +169,9 @@ _Hint: see the `tapply()` documentation for the `INDEX` parameter._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+
+```
 
 Even More Apply Functions
 =========================
