@@ -170,7 +170,7 @@ _Hint: see the `tapply()` documentation for the `INDEX` parameter._
 **YOUR ANSWER GOES HERE:**
 
 ```{r}
-
+tapply(dogs$price, list(dogs$size, dogs$grooming), median, na.rm = TRUE)
 ```
 
 Even More Apply Functions
@@ -185,7 +185,12 @@ Translate your code from Exercise 1, Part 1 to use `vapply()` rather than
 
 **YOUR ANSWER GOES HERE:**
 
-
+1. The return type here is still a matrix and the example output given was a length 3 numeric vector.
+```{r}
+x = c(3, 3, 3, 3)
+vapply(x, rnorm, c(1, 2, 3), mean = 0, sd = 1)
+class(vapply(x, rnorm, c(1, 2, 3), mean = 0, sd = 1))
+```
 
 Choosing an Apply Function
 ==========================
