@@ -103,7 +103,7 @@ class(sapply(x, all.equal, current = y))
 
 1. 
 ```{r}
-dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 6\\data\\dogs.rds")
+dogs = readRDS("data/dogs.rds")
 dogs_numerics = sapply(dogs, is.numeric)
 dogs_numerics
 ```

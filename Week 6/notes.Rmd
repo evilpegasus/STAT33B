@@ -107,7 +107,7 @@ split(x, group)
 
 Split weight of dogs by the group column:
 ```{r}
-dogs = readRDS("C:\\Users\\mingf\\Desktop\\git\\STAT33B\\Week 6\\data\\dogs.rds")
+dogs = readRDS("data/dogs.rds")
 
 by_group = split(dogs, dogs$group)
 ```
