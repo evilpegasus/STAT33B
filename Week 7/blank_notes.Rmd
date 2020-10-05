@@ -1,0 +1,287 @@
+---
+title: "Stat 33B - Lecture Notes 7"
+date: October 4, 2020
+output: pdf_document
+---
+
+
+Functions
+=========
+
+You can create functions with the `function` command.
+
+Functions return the value of their final expression:
+```{r}
+
+```
+Indent the body of the function by 2 or 4 spaces.
+
+
+
+Curly braces are optional if the body is a single expression:
+```{r}
+
+```
+
+
+To exit the function and return a result early, use `return()`:
+```{r}
+
+```
+It's idiomatic to only use `return()` when strictly necessary.
+
+
+
+Default Arguments
+=================
+
+Parameters can have default arguments that are used if no argument is provided.
+
+Use `=` (not `<-`) to assign default arguments:
+```{r}
+
+```
+
+
+
+Function Example
+================
+
+```{r}
+
+```
+
+How many heatwaves were there? (periods of days where TMAX >= 100)
+
+First: days TMAX >= 100
+```{r}
+
+```
+
+Simple example:
+```{r}
+
+```
+
+Turn this into a function:
+```{r}
+
+```
+
+Try it on on TMAX:
+```{r}
+
+```
+
+
+
+Variables: Scope & Lookup
+=======================
+
+Local Variables
+---------------
+
+A variable's *scope* is the section of code where it exists and is accessible.
+
+The `exists()` function checks whether a variable is in scope:
+```{r}
+
+```
+
+When you create a function, you create a new scope.
+
+Variables defined inside of a function are *local* to the function.
+
+
+Local variables cannot be accessed from outside:
+```{r}
+
+```
+
+Local variables are reset each time the function is called:
+```{r}
+
+```
+
+
+The `local()` function also creates a new scope:
+```{r}
+
+```
+Rarely used in practice.
+
+
+
+Lexical Scoping
+---------------
+
+A function can use variables defined outside (non-local), but only if those
+variables are in scope where the function was **defined**.
+
+This property is called *lexical scoping*.
+
+For example:
+```{r}
+
+```
+
+Variables defined directly in the R console are *global* and available to any
+function.
+
+
+Local variables *mask* (hide) non-local variables with the same name:
+```{r}
+
+```
+
+
+ONE EXCEPTION!
+
+We often call variables:
+```{r}
+
+```
+
+In this case, the variable must refer to a function, so R ignores local
+variables that aren't.
+
+For example:
+```{r}
+
+```
+
+
+Dynamic Lookup
+--------------
+
+Variable lookup happens when a function is **called**, not when it's defined.
+
+This is called *dynamic lookup*.
+
+For example:
+```{r}
+
+```
+
+
+Summary
+-------
+
+* Function definitions (or `local()`) create a new scope.
+
+* Local variables
+    + Are private
+    + Get reset for each call
+    + Mask non-local variables (exception: function calls)
+
+* *Lexical scoping*: where a function is **defined** determines which non-local
+  variables are in scope.
+
+* *Dynamic lookup*: when a function is **called** determines values of
+  non-local variables.
+
+
+
+
+
+
+
+
+
+Lazy Evaluation
+===============
+
+Arguments to a function are only evaluated if they're used:
+```{r}
+
+```
+This is called *lazy evaluation*.
+
+
+
+You can use one parameter in the default argument of another:
+```{r}
+
+```
+Often used to provide multiple ways to call a function.
+
+
+
+You can force evaluation with the `force()` function:
+```{r}
+
+```
+Rarely needed in practice.
+
+
+
+
+
+
+
+
+
+
+The Dots Parameter
+==================
+
+The *dots* parameter `...` accepts any number of arguments.
+
+
+
+The dots parameter is often used to forward arguments to another function.
+
+For example:
+```{r}
+
+```
+
+
+You can access elements of `...` with the `...elt()` function:
+```{r}
+
+```
+This only evaluates the argument you accessed.
+
+
+You can get the number of arguments with `...length()`:
+```{r}
+
+```
+This doesn't evaluate the arguments.
+
+
+You can convert `...` to a list with the `list()` function:
+```{r}
+
+```
+This evaluates all of the arguments.
+
+
+
+See `?dots` for more about the dots parameter.
+
+
+
+Using Functions
+===============
+
+Functions are the building blocks for solving problems.
+
+Take a divide-and-conquer approach, breaking large problems into
+smaller steps.
+
+Use a short function for each step. Then it's easier to:
+
+* Test that each step works correctly.
+* Modify, reuse, or repurpose a step.
+
+Before you write a function, it's useful to go through several steps:
+
+1. Write down what you want to do, in detail. It can also help to
+   draw a picture of what needs to happen.
+
+2. Check whether there's already a built-in function. Google it!
+
+3. Write the code to handle a simple case first. For data science
+   problems, use a small dataset at this step.

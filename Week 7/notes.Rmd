@@ -1,0 +1,472 @@
+---
+title: "Stat 33B - Lecture Notes 7"
+date: October 4, 2020
+output: pdf_document
+---
+
+
+Functions
+=========
+
+You can create functions with the `function` command.
+
+Functions return the value of their final expression:
+```{r}
+square = function(x) {
+  x^2
+}
+```
+Indent the body of the function by 2 or 4 spaces.
+
+
+
+Curly braces are optional if the body is a single expression:
+```{r}
+square = function(x) x^2
+```
+
+
+To exit the function and return a result early, use `return()`:
+```{r}
+square = function(x) {
+  if (!is.numeric(x))
+    return (NA)
+  
+  x^2
+}
+
+square(6)
+square("hi")
+
+square = function(x) {
+  if (!is.numeric(x)) NA else x^2
+}
+
+square(3)
+square("test")
+```
+It's idiomatic to only use `return()` when strictly necessary.
+
+
+
+
+
+
+
+
+
+
+
+Default Arguments
+=================
+
+Parameters can have default arguments that are used if no argument is provided.
+
+Use `=` (not `<-`) to assign default arguments:
+```{r}
+# Gets the top n values from a vector
+top = function(x, n = 5) {
+  sorted = sort(x, decreasing = TRUE)
+  head(sorted, n)
+}
+
+y = c(-6, 7, 10, 3, 1, 15, -2)
+top(y, 3)
+
+top(y)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+Function Example
+================
+
+```{r}
+w = read.csv("data/weather/weather_daily.csv")
+
+head(w)
+```
+
+How many heatwaves were there? (periods of days where TMAX >= 100)
+
+First: days TMAX >= 100
+```{r}
+sum(w$TMAX >= 100)
+```
+
+Simple example:
+```{r}
+# 2 heatwaves
+temp = c(95, 96, 98, 101, 105, 114, 102, 93, 91, 103, 104, 87)
+#temp = c(94, 100, 93, 102, 92, 105, 86)
+
+is_hot = temp >= 100
+
+change = c(FALSE, tail(is_hot, -1) != head(is_hot, -1))
+change
+num_changes = sum(change)
+if (num_changes %% 2 == 0) {
+  num_changes / 2
+} else {
+  (num_changes + 1) / 2
+}
+```
+
+Turn this into a function:
+```{r}
+count_heatwaves = function(temp) {
+  is_hot = temp >= 100
+
+  change = c(FALSE, tail(is_hot, -1) != head(is_hot, -1))
+  num_changes = sum(change)
+  if (num_changes %% 2 == 0) {
+    num_changes / 2
+  } else {
+    (num_changes + 1) / 2
+  }
+}
+
+count_heatwaves(temp)
+
+count_heatwaves(c(10, 100, 10, 100, 100))
+
+count_heatwaves(c(100, 10, 100, 100, 10))
+
+# Here's a bug:
+count_heatwaves(c(100, 10, 100, 100))
+```
+
+Try it on on TMAX:
+```{r}
+head(w$TMAX)
+
+count_heatwaves(w$TMAX)
+```
+
+
+
+
+
+
+
+
+Variables: Scope & Lookup
+=======================
+
+Local Variables
+---------------
+
+A variable's *scope* is the section of code where it exists and is accessible.
+
+The `exists()` function checks whether a variable is in scope:
+```{r}
+exists("x")
+
+x = 3
+exists("x")
+```
+
+When you create a function, you create a new scope.
+
+Variables defined inside of a function are *local* to the function.
+
+
+Local variables cannot be accessed from outside:
+```{r}
+rescale = function(x, center, scale) {
+  centered = x - center
+  centered / scale
+}
+
+centered
+exists("centered")
+```
+
+Local variables are reset each time the function is called:
+```{r}
+f = function() {
+  is_z_in_scope = exists("z")
+  z = 42
+  
+  is_z_in_scope
+}
+
+f()
+f()
+```
+
+
+The `local()` function also creates a new scope:
+```{r}
+local({
+  hi = 10
+})
+
+exists("hi")
+```
+Rarely used in practice.
+
+
+
+Lexical Scoping
+---------------
+
+A function can use variables defined outside (non-local), but only if those
+variables are in scope where the function was **defined**.
+
+This property is called *lexical scoping*.
+
+For example:
+```{r}
+cats = 3
+get_cats = function() cats
+
+get_cats()
+
+
+create_dogs = function() {
+  dogs = "hello"
+}
+
+get_dogs = function() dogs
+
+create_dogs()
+get_dogs()
+```
+
+Variables defined directly in the R console are *global* and available to any
+function.
+
+
+Local variables *mask* (hide) non-local variables with the same name:
+```{r}
+get_parrot = function() {
+  parrot = 3
+  
+  parrot
+}
+
+parrot = 42
+get_parrot()
+```
+
+
+ONE EXCEPTION!
+
+We often call variables:
+```{r}
+#mean()
+```
+
+In this case, the variable must refer to a function, so R ignores local
+variables that aren't.
+
+For example:
+```{r}
+my_mean = function() {
+  mean = 0
+  
+  mean(c(1, 2, 3))
+}
+
+my_mean()
+
+my_get_cats = function() {
+  get_cats = 10
+  
+  get_cats()
+}
+
+my_get_cats()
+```
+
+
+Dynamic Lookup
+--------------
+
+Variable lookup happens when a function is **called**, not when it's defined.
+
+This is called *dynamic lookup*.
+
+For example:
+```{r}
+cats = 10
+get_cats()
+
+cats = 20
+get_cats()
+```
+
+
+Summary
+-------
+
+* Function definitions (or `local()`) create a new scope.
+
+* Local variables
+    + Are private
+    + Get reset for each call
+    + Mask non-local variables (exception: function calls)
+
+* *Lexical scoping*: where a function is **defined** determines which non-local
+  variables are in scope.
+
+* *Dynamic lookup*: when a function is **called** determines values of
+  non-local variables.
+
+
+
+
+
+
+
+
+
+Lazy Evaluation
+===============
+
+Arguments to a function are only evaluated if they're used:
+```{r}
+f = function(x) 42
+
+f(6)
+
+f()
+
+message("hi")
+
+f(message("hello"))
+```
+This is called *lazy evaluation*.
+
+
+
+You can use one parameter in the default argument of another:
+```{r}
+add = function(x = y, y = x) x + y
+
+add(x = 4)
+
+add(y = 3)
+
+add()
+```
+Often used to provide multiple ways to call a function.
+
+
+
+You can force evaluation with the `force()` function:
+```{r}
+f = function(x) {
+  force(x)
+  42
+}
+
+f()
+
+f(message("hi"))
+```
+Rarely needed in practice.
+
+
+
+
+
+
+
+
+
+
+The Dots Parameter
+==================
+
+The *dots* parameter `...` accepts any number of arguments.
+
+
+
+The dots parameter is often used to forward arguments to another function.
+
+For example:
+```{r}
+# Mean function with tolerance:
+mean_tol = function(x, tol, ...) {
+  mean(x[x > tol], ...)
+}
+
+mean_tol(c(1, 3, 5, 0.01, 0.2, NA), 0.5)
+
+mean_tol(c(1, 3, 5, 0.01, 0.2, NA), 0.5, na.rm = TRUE)
+
+mean(c(1, 3, 5, 10))
+```
+
+
+You can access elements of `...` with the `...elt()` function:
+```{r}
+f = function(x, ...) {
+  ...elt(2)
+  x + ...elt(1)
+}
+
+f(3, 5, message("hi"))
+
+f(3)
+```
+This only evaluates the argument you accessed.
+
+
+You can get the number of arguments with `...length()`:
+```{r}
+count_args = function(...) ...length()
+
+count_args(4, 5, 6, message("hi"))
+```
+This doesn't evaluate the arguments.
+
+
+You can convert `...` to a list with the `list()` function:
+```{r}
+f = function(...) list(...)
+
+f(hi = 1, 3, 4)
+```
+This evaluates all of the arguments.
+
+
+
+See `?dots` for more about the dots parameter.
+
+
+
+Using Functions
+===============
+
+Functions are the building blocks for solving problems.
+
+Take a divide-and-conquer approach, breaking large problems into
+smaller steps.
+
+Use a short function for each step. Then it's easier to:
+
+* Test that each step works correctly.
+* Modify, reuse, or repurpose a step.
+
+Before you write a function, it's useful to go through several steps:
+
+1. Write down what you want to do, in detail. It can also help to
+   draw a picture of what needs to happen.
+
+2. Check whether there's already a built-in function. Google it!
+
+3. Write the code to handle a simple case first. For data science
+   problems, use a small dataset at this step.

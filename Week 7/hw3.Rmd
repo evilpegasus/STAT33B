@@ -1,0 +1,190 @@
+---
+title: "STAT 33B Homework 3"
+date: "Oct 8, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This homework is due __Oct 8, 2020__ by 11:59pm PT.
+
+Homeworks are graded for correctness. 
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+If you have any last-minute trouble knitting, **DON'T PANIC**. Submit your Rmd
+file on time and follow up in office hours or on Piazza to sort out the PDF.
+
+
+The Bay Area Vehicles Data Set
+==============================
+
+The Bay Area Vehicles Data Set is a collection of advertisements for vehicles
+for sale in the San Francisco Bay Area. The data set was collected from the
+website Craigslist on Sep 28, 2020.
+
+The data set is available on the bCourse as `2020.09_cl_vehicles.rds`.
+
+Each row is one advertisement. The columns are:
+
+* `title`: title of advertisement
+* `text`: full text of advertisement
+* `latitude`: latitude of vehicle
+* `longitude`: longitude of vehicle
+* `city_text`: city listed in advertisement
+* `date_posted`: date advertisement was posted
+* `date_updated`: date advertisement was updated, if any
+* `price`: price in US dollars
+* `vin`: vehicle identification number (like a serial number)
+* `condition`: condition, as a category
+* `drive`: type of drivetrain
+* `fuel`: type of fuel used
+* `odometer`: odometer reading, in miles
+* `transmission`: type of transmission
+* `type`: type of vehicle (sedan, truck, van, etc.)
+* `year`: year vehicle was manufactured
+* `make`: brand of vehicle
+* `model`: model of vehicle
+* `craigslist`: craigslist region where advertisement was posted
+* `place`: place name (like city, but also includes small towns) based on
+  latitude/longitude
+* `city`: city based on latitude/longitude
+* `state`: state based on latitude/longitude
+* `county`: county based on latitude/longitude
+
+Many of the columns were programmatically extracted from the `title` and
+`text`, so there may be missing or incorrect values.
+
+
+Exercise 1
+==========
+
+Read the vehicles data set into R, then use R functions to answer the
+following:
+
+1. How many advertisements are there?
+
+2. Which columns are categorical but aren't factors? Convert these to factors.
+
+   _Hint 1: Remember that categorical features are usually qualitive and have a
+   limited set of possible values._
+
+   _Hint 2: You can use subsetting and `lapply()` to convert many columns at
+   once._
+
+3. What percentage of each column is missing? Which columns have a lot of
+   missing values?
+
+   _Hint 1: Call `is.na()` on each column, then use `colSums()`._
+
+   _Hint 2: Yes, the second question is a little bit vague. Think of it as the
+   sort of casual question a supervisor might ask you in an industry job. Your
+   answer should clarify how you interpreted "a lot of missing values"._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 2
+==========
+
+1. Compute the number of missing values in each row.
+
+   _Hint 1: Call `is.na()` on each row._
+
+   _Hint 2: Some of the apply functions transpose the results. The `dim()`
+   function is one way to check._
+
+2. Use ggplot2 to make a bar plot of the numbers from from part 1. Make sure to
+   put an appropriate title and labels on your plot.
+
+   _Hint: You can create a data frame with the `data.frame()` function._
+
+3. When a row in this data set has missing values, does it tend to have a lot
+   of missing values, or only a few?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 3
+==========
+
+Make a box plot of `odometer` readings, broken down by the `condition` of the
+vehicle. Remove any extreme `odometer` values, so that it is easy to compare
+the boxes.
+
+Comment briefly on the distribution of odometer readings for the various
+conditions.
+
+_Hint: There are several ways to identify extreme values. One way is to make a
+box plot. Another way is to find values above a certain percentile
+(`quantile()`), say 99%. Yet another way is to find values more than 2-3
+standard deviations (`sd()`) from the mean. Each has trade-offs, but we won't
+focus on those in this class._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 4
+==========
+
+Answer each question about advertisements for vehicles **in Berkeley**.
+
+_Hint: You might want to get started by taking a subset. Watch out for missing
+values._
+
+1. How many advertisements are for vehicles in Berkeley?
+
+2. How many of each `type` of car are there? Which type is the most common?
+
+3. What's the median price (ignoring missing values) of each `type` of car?
+   Which type has the highest median, and which has the lowest?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Exercise 5
+==========
+
+1. Make a density plot of price. Use three separate lines for ads in San
+   Francisco, San Jose, and Oakland (omit the other cities).
+
+   _Hint: You can use the `droplevels()` function to drop factor levels that
+   aren't present._
+
+2. How do price distributions of the three cities compare?
+
+3. Based on the plot, which of these cities have ads with extreme/anomalous
+   prices? Isolate one of these ads. Does the extreme price seem accurate, or
+   is it a mistake? Use the original title and text of the ad as evidence.
+
+   _Hint 1: You can print the text of an ad in human-readable form with the
+   `message()` function._
+
+   _Hint 2: You can use the `stringr` package's `str_wrap()` function to wrap
+   long strings (e.g., the ad text) for printing in the notebook._
+
+   _Hint 3: The PDFLaTeX program that RMarkdown uses to knit PDFs only supports
+   ASCII characters. Many of the advertisments contain non-ASCII characters. If
+   you get a knit error like `! Package inputenc Error: Unicode character`, you
+   probably printed an ad with non-ASCII characters._
+
+   _To fix it, you can either comment out the line that prints the ad, or
+   switch from PDFLaTeX to XeLaTeX or LuaLaTeX. See
+   <https://bookdown.org/yihui/rmarkdown-cookbook/latex-unicode.html> for
+   details about how to switch._
+
+
+**YOUR ANSWER GOES HERE:**
