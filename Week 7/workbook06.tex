@@ -1,0 +1,364 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STAT 33B Workbook 6},
+  pdfauthor={Ming Fong (3035619833)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{STAT 33B Workbook 6}
+\author{Ming Fong (3035619833)}
+\date{Oct 8, 2020}
+
+\begin{document}
+\maketitle
+
+This workbook is due \textbf{Oct 8, 2020} by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture
+videos for the week. Watch a video, then do the corresponding exercises
+\emph{before} moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear
+effort to solve each problem, you'll get full credit. That said, make
+sure you understand the concepts here, because they're likely to
+reappear in homeworks, quizzes, and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many
+new code chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by
+pressing \texttt{Ctrl} + \texttt{Enter} on Windows or \texttt{Cmd} +
+\texttt{Enter} on Mac OS X. You can run an entire code chunk by clicking
+on the green arrow in the upper right corner of the code chunk.
+
+Please do not delete the exercises already in this notebook, because it
+may interfere with our grading tools.
+
+You need to submit your work in two places:
+
+\begin{itemize}
+\tightlist
+\item
+  Submit this Rmd file with your edits on bCourses.
+\item
+  Knit and submit the generated PDF file on Gradescope.
+\end{itemize}
+
+If you have any last-minute trouble knitting, \textbf{DON'T PANIC}.
+Submit your Rmd file on time and follow up in office hours or on Piazza
+to sort out the PDF.
+
+\hypertarget{functions}{%
+\section{Functions}\label{functions}}
+
+Watch the ``Functions'' lecture video.
+
+No exercises for this section.
+
+\hypertarget{default-arguments}{%
+\section{Default Arguments}\label{default-arguments}}
+
+Watch the ``Default Arguments'' lecture video.
+
+\hypertarget{exercise-1}{%
+\subsection{Exercise 1}\label{exercise-1}}
+
+Write a function \texttt{to\_kelvin()} to convert temperatures in
+degrees Celsius to temperatures in degrees Kelvin (you can find the
+formula online). Your function should have a parameter \texttt{celsius}
+for the temperature to convert.
+
+Make sure that your function is vectorized in \texttt{celsius}, so that
+it can convert an entire vector of temperatures in one call.
+
+Show that your function works correctly for a few test cases.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{to\_kelvin =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(celsius) \{}
+\NormalTok{    celsius }\OperatorTok{+}\StringTok{ }\FloatTok{273.15}
+\NormalTok{\}}
+\KeywordTok{to\_kelvin}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 288.15 273.15 274.15 373.15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\DecValTok{1234}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1507.15
+\end{verbatim}
+
+\hypertarget{function-example}{%
+\section{Function Example}\label{function-example}}
+
+The ``Function Example'' lecture video is optional. It provides a more
+realistic example of writing a function.
+
+No exercises for this section.
+
+\hypertarget{variable-scope-lookup}{%
+\section{Variable Scope \& Lookup}\label{variable-scope-lookup}}
+
+Watch the ``Variable Scope \& Lookup'' lecture video.
+
+No exercises for this section.
+
+\hypertarget{lazy-evaluation}{%
+\section{Lazy Evaluation}\label{lazy-evaluation}}
+
+Watch the ``Lazy Evaluation'' lecture video.
+
+\hypertarget{exercise-2}{%
+\subsection{Exercise 2}\label{exercise-2}}
+
+Extend your \texttt{to\_kelvin()} function to be able to convert degrees
+Fahrenheit to degrees Kelvin as well. Add a parameter
+\texttt{fahrenheit} for the Fahrenheit temperature to convert.
+
+Leave the code in the body of your function unchanged. Instead, provide
+a default argument for \texttt{celsius} that converts the
+\texttt{fahrenheit} argument.
+
+Show that your function works correctly for a few test cases (for both
+Celsius and Fahrenheit temperatures).
+
+What happens if you call your function with arguments to the
+\texttt{celsius} parameter and the \texttt{fahrenheit} parameter at the
+same time?
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+Passing both the \texttt{celsius} and \texttt{fahrenheit} parameters
+will only use the \texttt{celsius} parameter. This is because fahrenheit
+only works when it overrides the \texttt{celsius} default value.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{to\_kelvin =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{celsius =}\NormalTok{ (fahrenheit }\OperatorTok{{-}}\StringTok{ }\DecValTok{32}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{5} \OperatorTok{/}\StringTok{ }\DecValTok{9}\NormalTok{, fahrenheit) \{}
+\NormalTok{    celsius }\OperatorTok{+}\StringTok{ }\FloatTok{273.15}
+\NormalTok{\}}
+\KeywordTok{to\_kelvin}\NormalTok{(}\DataTypeTok{celsius =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 373.15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\DataTypeTok{fahrenheit =} \DecValTok{32}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 273.15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\DataTypeTok{fahrenheit =} \KeywordTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 263.1500 273.1500 310.9278
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\DataTypeTok{celsius =} \DecValTok{0}\NormalTok{, }\DataTypeTok{fahrenheit =} \KeywordTok{c}\NormalTok{(}\DecValTok{14}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 273.15
+\end{verbatim}
+
+\hypertarget{exercise-3}{%
+\subsection{Exercise 3}\label{exercise-3}}
+
+Rather than using a separate parameter in \texttt{to\_kelvin()} for each
+source unit, a better design is to have a \texttt{temperature} parameter
+and a \texttt{unit} parameter. The function can then check \texttt{unit}
+and choose an appropriate conversion for \texttt{temperature}.
+
+The \texttt{unit} parameter should be restricted to supported units,
+which in this case are \texttt{"celsius"} and \texttt{"fahrenheit"}. You
+can use the special \texttt{match.arg()} function to check that an
+argument matches against a set of candidate arguments. For instance,
+\texttt{match.arg(x,\ c("red",\ "blue"))} checks that the argument to
+\texttt{x} is either \texttt{"red"} or \texttt{"blue"}. The function
+also allows for partial matches, so for instance \texttt{"r"} matches
+\texttt{"red"}. See the documentation for full details.
+
+Rewrite the \texttt{to\_kelvin()} function with a \texttt{temperature}
+and \texttt{unit} parameter. Make sure the function is still vectorized
+in the \texttt{temperature} parameter.
+
+As always, show that your function works correctly for a few test cases.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{to\_kelvin =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(temperature, unit) \{}
+\NormalTok{    unit =}\StringTok{ }\KeywordTok{match.arg}\NormalTok{(unit, }\KeywordTok{c}\NormalTok{(}\StringTok{"celsius"}\NormalTok{, }\StringTok{"fahrenheit"}\NormalTok{))}
+    \ControlFlowTok{if}\NormalTok{ (unit }\OperatorTok{==}\StringTok{ "celsius"}\NormalTok{) \{}
+\NormalTok{        temperature }\OperatorTok{+}\StringTok{ }\FloatTok{273.15}
+\NormalTok{    \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (unit }\OperatorTok{==}\StringTok{ "fahrenheit"}\NormalTok{) \{}
+\NormalTok{        (temperature }\OperatorTok{{-}}\StringTok{ }\DecValTok{32}\NormalTok{) }\OperatorTok{*}\StringTok{ }\DecValTok{5} \OperatorTok{/}\StringTok{ }\DecValTok{9} \OperatorTok{+}\StringTok{ }\FloatTok{273.15}
+\NormalTok{    \}}
+\NormalTok{\}}
+\KeywordTok{to\_kelvin}\NormalTok{(}\DecValTok{0}\NormalTok{, }\StringTok{"celsius"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 273.15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{32}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{100}\NormalTok{), }\DataTypeTok{unit =} \StringTok{"f"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 273.1500 260.9278 310.9278
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{to\_kelvin}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{23}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{{-}100}\NormalTok{, }\DecValTok{20}\NormalTok{), }\DataTypeTok{unit =} \StringTok{"cel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 296.15 273.15 173.15 293.15
+\end{verbatim}
+
+\hypertarget{the-dots-parameter}{%
+\section{The Dots Parameter}\label{the-dots-parameter}}
+
+Watch the ``The Dots Parameter'' lecture video.
+
+No exercises for this section.
+
+\hypertarget{using-functions}{%
+\section{Using Functions}\label{using-functions}}
+
+Watch the ``Using Functions'' lecture video.
+
+No exercises for this section.
+
+\end{document}

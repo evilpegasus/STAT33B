@@ -92,7 +92,7 @@ Function Example
 ================
 
 ```{r}
-w = read.csv("data/weather/weather_daily.csv")
+w = read.csv("data/weather_daily.csv")
 
 head(w)
 ```

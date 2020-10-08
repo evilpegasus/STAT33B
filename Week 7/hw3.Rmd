@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Homework 3"
 date: "Oct 8, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 

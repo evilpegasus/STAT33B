@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Workbook 6"
 date: "Oct 8, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -65,7 +65,13 @@ Show that your function works correctly for a few test cases.
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+to_kelvin = function(celsius) {
+    celsius + 273.15
+}
+to_kelvin(c(15, 0, 1, 100))
+to_kelvin(1234)
+```
 
 Function Example
 ================
@@ -109,7 +115,16 @@ parameter and the `fahrenheit` parameter at the same time?
 
 **YOUR ANSWER GOES HERE:**
 
-
+Passing both the `celsius` and `fahrenheit` parameters will only use the `celsius` parameter. This is because fahrenheit only works when it overrides the `celsius` default value.
+```{r}
+to_kelvin = function(celsius = (fahrenheit - 32) * 5 / 9, fahrenheit) {
+    celsius + 273.15
+}
+to_kelvin(celsius = 100)
+to_kelvin(fahrenheit = 32)
+to_kelvin(fahrenheit = c(14, 32, 100))
+to_kelvin(celsius = 0, fahrenheit = c(14, 32, 100))
+```
 
 ## Exercise 3
 
@@ -133,7 +148,19 @@ As always, show that your function works correctly for a few test cases.
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+to_kelvin = function(temperature, unit) {
+    unit = match.arg(unit, c("celsius", "fahrenheit"))
+    if (unit == "celsius") {
+        temperature + 273.15
+    } else if (unit == "fahrenheit") {
+        (temperature - 32) * 5 / 9 + 273.15
+    }
+}
+to_kelvin(0, "celsius")
+to_kelvin(c(32, 10, 100), unit = "f")
+to_kelvin(c(23, 0, -100, 20), unit = "cel")
+```
 
 The Dots Parameter
 ==================
