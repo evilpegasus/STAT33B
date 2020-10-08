@@ -92,7 +92,30 @@ following:
 
 **YOUR ANSWER GOES HERE:**
 
+1. There are 14990 advertisements (rows).
+```{r}
+data = readRDS("data/2020.09_cl_vehicles.rds")
+nrow(data)
+```
 
+2. Categorical features to be converted to factors are: `$make $model $place $city $state $county`
+```{r}
+data[, c("make", "model", "place", "city", "state", "county")] =
+   lapply(data[, c("make", "model", "place", "city", "state", "county")], 
+   factor)
+```
+
+3. The columns with "a lot" (> 10%) of missing values are: `date_updated, vin, condition, drive, odometer, place, city`
+```{r}
+# Count of NA by column
+na_count = colSums(sapply(data[, ], is.na))
+# Percentages of NA by column
+na_percentages = na_count / nrow(data) * 100
+na_percentages
+# We will use 10% of rows as the cutoff for "a lot"
+# columns with TRUE have > 10% missing values
+na_percentages > 10
+```
 
 Exercise 2
 ==========
@@ -114,7 +137,22 @@ Exercise 2
 
 **YOUR ANSWER GOES HERE:**
 
+1. 
+```{r}
+row_na_count = colSums((apply(data, 1, is.na)))
+dim(row_na_count)
+```
 
+2. 
+```{r}
+library(ggplot2)
+ggplot(data.frame(table(row_na_count)), aes(y = Freq, x = row_na_count)) +
+geom_bar(stat = "identity") +
+ggtitle("Frequencies of missing value counts") +
+xlab("Number of NA values") + ylab("Frequency")
+```
+
+3. Rows tend to have fewer missing values. This can be seen in right-skewed distribution of the bar plot. The center of the distribution is around 2 missing values.
 
 Exercise 3
 ==========
@@ -134,7 +172,15 @@ focus on those in this class._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+# removing outliers
+Q = quantile(data$odometer, probs = c(.01, .99), na.rm = TRUE)
 
+ggplot(subset(data, data$odometer < Q[2] & data$odometer > Q[1]),
+aes(x = odometer, y = condition)) +
+geom_boxplot()
+```
+As the condition of the car gets worse, the milage on the odometer tends to increase. This makes sense because cars that are driven more are more likely to be in bad condition.
 
 Exercise 4
 ==========
@@ -153,7 +199,27 @@ values._
 
 **YOUR ANSWER GOES HERE:**
 
+1. There are 73 advertisements for vehicles in Berkeley. This result is the same using either `$place or $city`.
+```{r}
+data_in_berkeley = subset(data, data$city == "Berkeley")
+nrow(data_in_berkeley)
+```
 
+2. The most common type of car is `sedan` with 28 advertisements.
+```{r}
+table(data_in_berkeley$type)
+# The mose common type of car
+head(sort(table(data_in_berkeley$type), decreasing = TRUE), 1)
+```
+
+3. The highest median price type is `coupe` at `39300` while the lowest is `wagon` at `13400`.
+```{r}
+tapply(data_in_berkeley$price, data_in_berkeley$type, median, na.rm = TRUE)
+# Highest median price
+head(sort(tapply(data_in_berkeley$price, data_in_berkeley$type, median, na.rm = TRUE), decreasing = TRUE), 1)
+# Lowest median price
+tail(sort(tapply(data_in_berkeley$price, data_in_berkeley$type, median, na.rm = TRUE), decreasing = TRUE), 1)
+```
 
 Exercise 5
 ==========
@@ -188,3 +254,26 @@ Exercise 5
 
 
 **YOUR ANSWER GOES HERE:**
+
+1. 
+```{r}
+# Prepare data
+three_cities_data = subset(data, city == c("San Francisco", "Oakland", "San Jose"))
+three_cities_data$city = droplevels(three_cities_data$city)
+levels(three_cities_data$city)
+
+ggplot(three_cities_data, aes(x = price, color = city)) + geom_density() +
+ggtitle("Desity of prices in selected cities") + xlab("Price") + ylab("Density")
+```
+
+2. The price distrubutions are similar. San Francisco seems to have slightly higher prices.
+
+3. San Francisco has some very extreme values for prices. The two most expensive ads are both Ferraris, so the price makes sense. The cars are simply very expensive.
+```{r}
+library(stringr)
+extreme_value = subset(three_cities_data, three_cities_data$price > 240000)
+extreme_value$title
+
+text <- str_c(extreme_value$text, collapse = "\n")
+cat(str_wrap(text), "\n")
+```
