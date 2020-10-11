@@ -1,0 +1,133 @@
+---
+title: "STAT 33B Workbook 7"
+date: "Oct 15, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Oct 15, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+If you have any last-minute trouble knitting, **DON'T PANIC**. Submit your Rmd
+file on time and follow up in office hours or on Piazza to sort out the PDF.
+
+
+For-loops
+=========
+
+Watch the "For-loops" lecture video.
+
+No exercises for this section.
+
+
+
+Loop Indices
+============
+
+Watch the "Loop Indices" lecture video.
+
+No exercises for this section.
+
+
+
+While-loops
+===========
+
+Watch the "While-loops" lecture video.
+
+No exercises for this section.
+
+
+
+Preallocation
+=============
+
+Watch the "Preallocation" lecture video.
+
+## Exercise 1
+
+Use the microbenchmark package to benchmark the "BAD" and "GOOD" example from
+the lecture video.
+
+Benchmark with three different values of `n` (testing both the "BAD" and "GOOD"
+example for each value). About how much faster is the "GOOD" example?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Loops Example
+=============
+
+Watch the "Loops Example" lecture video.
+
+## Exercise 2
+
+Write a function that returns the first `n + 1` positions of a 3-dimensional
+discrete random walk. Return the `x`, `y`, and `z` coordinates in a data frame
+with columns `x`, `y`, and `z`. Your function should have a parameter `n` that
+controls the number of steps.
+
+_Hint: For efficiency, use vectors for `x`, `y`, and `z`. Wait to combine them
+into a data frame until the very last line of your function._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Recursion
+=========
+
+Watch the "Recursion" lecture video.
+
+
+## Exercise 3
+
+1. Use the microbenchmark package to benchmark `find_fib()` and `find_fib2()`
+   for `n` equal to 1 through 30.
+
+2. Collect the median timings for each into a data frame with a columns `time`,
+   `n`, and `function`. The data frame should have 60 rows (30 for each
+   function).
+
+3. Use ggplot2 to make a line plot of `n` versus `time`, with a separate line
+   for each `function`.
+
+4. Comment on the the shapes of the lines. Does the computation time grow at
+   the same rate (as `n` increases) for both functions?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+Developing Iterative Code
+=========================
+
+Watch the "Developing Iterative Code" lecture video.
+
+No exercises for this section. All done!

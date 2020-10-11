@@ -1,0 +1,350 @@
+---
+title: "Stat 33B - Lecture Notes 8"
+date: October 11, 2020
+output: pdf_document
+---
+
+
+For-loops
+=========
+
+A for-loop runs a block of code once for each element of a vector or list:
+```{r}
+x = c(-15, 12, 3)
+
+for (elt in x) {
+  message("The element is ", elt)
+}
+
+for (i in 1:3) {
+  elt = x[i]
+  message("The element at position ", i, " is ", elt)
+}
+```
+The idea is the same as for-loops in other languages.
+
+Curly braces `{ }` are only required if you have multiple lines of code.
+
+
+
+Use `break` to exit a loop early:
+```{r}
+for (elt in x) {
+  if (elt %% 2 == 0)
+    break
+  
+  message("The element is ", elt)
+}
+```
+
+
+Use `next` to skip to the next iteration early:
+```{r}
+for (elt in x) {
+  if (elt %% 2 == 0)
+    next
+  
+  message("The element is ", elt)
+}
+```
+
+
+
+Loop Indices
+============
+
+If you need indices, using `1:n` can cause bugs:
+```{r}
+n = 0
+for (i in 1:n) {
+  message(i)
+}
+```
+
+Use `seq_len(n)` instead:
+```{r}
+n = 0
+for (i in seq_len(n)) {
+  message(i)
+}
+```
+
+Similarly, using `1:length(x)` can cause bugs:
+```{r}
+#x = c(-3, 5, 7)
+x = c()
+
+for (i in 1:length(x)) {
+  message("The element is ", x[i])
+}
+```
+
+Use `seq_along(x)` instead:
+```{r}
+# x = c(-3, 5, 7)
+x = c()
+
+for (i in seq_along(x)) {
+  message("The element is ", x[i])
+}
+```
+
+More generally, use `seq()` to produce sequences of indices.
+
+
+
+While-loops
+===========
+
+A while-loop runs a block of code repeatedly while some condition is `TRUE`.
+
+The condition is checked before each iteration:
+```{r}
+even = seq(0, 50, 2)
+
+total = 0
+i = 1
+while (total < 50) {
+  total = total + even[i]
+  i = i + 1
+}
+
+total
+i
+```
+Again, the same idea as in other languages.
+
+
+
+Some languages have a do-while-loop, which checks the condition after each
+iteration (so the first iteration always runs).
+
+R has `repeat`, which is the same as `while (TRUE)`.
+
+You can create a do-while-loop in R with `repeat`:
+```{r}
+total = 20
+repeat {
+  total = total * 2
+  if (total > 10)
+    break
+}
+
+total
+
+total = 20
+while (total <= 10) {
+  total = total * 2
+}
+total
+```
+
+These kinds of loops are most useful when the number of iterations is unknown
+before the loop runs.
+
+
+
+Preallocation
+=============
+
+_Preallocation_ means allocating memory for results before a computation.
+
+These functions allocate vectors:
+
+* `character()`
+* `complex()`
+* `numeric()`
+* `logical()`
+
+* `vector()`
+* `rep()`
+
+Examples:
+```{r}
+character(3)
+
+complex(10)
+
+numeric(4)
+
+logical(3)
+
+vector("logical", 6)
+
+vector("list", 3)
+```
+
+Preallocation is especially important for loops:
+```{r}
+# BAD, NO PREALLOCATION:
+x = c()
+
+for (i in 1:1e5) {
+  x = c(x, i * 2)
+}
+x
+
+# GOOD:
+
+n = 1e5
+x = numeric(n)
+for (i in seq_len(n)) {
+  x[i] = i * 2
+}
+```
+
+
+Loops Example
+=============
+
+Let's simulate a two-dimensional discrete random walk.
+
+In a random walk, at each time step the walker randomly moves 1 unit along the
+x-coordinates or the y-coordinates.
+
+The algorithm is:
+
+1. Flip a coin to determine whether walker moves in x or y.
+2. Flip a coin to determine whether walker moves `-1` or `+1`.
+3. Update the walker's position.
+4. Repeat 1-3 for the desired number of steps.
+
+We can do this with a for-loop:
+```{r}
+# Take n steps in a random walk.
+n = 10
+x = numeric(n + 1)
+y = numeric(n + 1)
+
+xy = sample(c(0, 1), n, replace = TRUE)  
+move = sample(c(-1, 1), n, replace = TRUE)
+
+for (i in seq_len(n)) {
+  if (xy[i] == 0) { # x
+    x[i + 1] = x[i] + move[i]
+    y[i + 1] = y[i]
+  } else { # y
+    x[i + 1] = x[i]
+    y[i + 1] = y[i] + move[i]
+  }
+}
+```
+
+
+
+Recursion
+=========
+
+A _recursive_ function is one that calls itself.
+
+In R, recursion is usually the slowest way to write a loop.
+
+But some problems are naturally recursive, so for those problems it may make
+sense to use recursion.
+
+For example:
+
+The Fibonacci numbers are recursive by definition; each Fibonacci number is the
+sum of the previous two.
+
+The first few Fibonacci numbers are:
+```
+1 1 2 3 5 8 13
+```
+
+Suppose we want a function that computes the nth Fibonacci number:
+```{r}
+find_fib = function(n) {
+  if (n == 1 | n == 2)
+    return (1)
+  
+  find_fib(n - 2) + find_fib(n - 1)
+}
+
+find_fib(1)
+find_fib(2)
+find_fib(3)
+
+sapply(1:10, find_fib)
+
+find_fib(30)
+```
+The recursion creates a kind of loop.
+
+This solution for computing the Fibonacci numbers is not efficient.
+
+
+
+A better solution is to keep track of the numbers that have already been
+computed:
+```{r}
+find_fib2 = function(n, fib = c(1, 1)) {
+  len = length(fib)
+  if (n <= len)
+    return (fib[n])
+  
+  fib = c(fib, fib[len - 1] + fib[len])
+  find_fib2(n, fib)
+}
+
+find_fib2(1)
+find_fib2(2)
+find_fib2(3)
+
+sapply(1:10, find_fib2)
+
+find_fib2(100)
+```
+Using a for-loop would be even more efficient here.
+
+
+R's built-in `Recall()` function will re-call the enclosing function:
+```{r}
+find_fib2 = function(n, fib = c(1, 1)) {
+  len = length(fib)
+  if (n <= len)
+    return (fib[n])
+  
+  fib = c(fib, fib[len - 1] + fib[len])
+  Recall(n, fib)
+}
+
+find_fib2(30)
+```
+
+Without `Recall()`, renaming a recursive function can break the function.
+
+
+
+Developing Iterative Code
+=========================
+
+See the slides.
+
+
+When thinking about writing a loop, try (in order):
+
+1. vectorization
+2. apply functions
+    * Try an apply function if iterations are independent.
+3. for/while-loops
+    * Try a for-loop if some iterations depend on others.
+    * Try a while-loop if the number of iterations is unknown.
+4. recursion
+    * Convenient for naturally recursive problems (like Fibonacci),
+      but often there are faster solutions.
+
+
+Before you write the loop, try writing the code for just 1 iteration.
+
+Make sure that code works; it's easy to test code for 1 iteration.
+
+When you have 1 iteration working, then try using the code in a loop
+(you will have to make some small changes).
+
+If your loop doesn't work, try to figure out which iteration is
+causing the problem. One way to do this is to use message() to print
+out information.
+
+Then try to write the code for the broken iteration, get that
+iteration working, and repeat this whole process.
