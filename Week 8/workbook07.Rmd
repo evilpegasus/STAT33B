@@ -125,7 +125,34 @@ into a data frame until the very last line of your function._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+n = 10
+x = numeric(n + 1)
+y = numeric(n + 1)
+z = numeric(n + 1)
 
+xyz = sample(c(0, 1, 2), n, replace = TRUE)
+move = sample(c(-1, 1), n, replace = TRUE)
+
+for (i in seq_len(n)) {
+   if (xyz[i] == 0) { # x
+      x[i + 1] = x[i] + move[i]
+      y[i + 1] = y[i]
+      z[i + 1] = z[i]
+  } else if (xyz[i] == 1){ # y
+      x[i + 1] = x[i]
+      y[i + 1] = y[i] + move[i]
+      z[i + 1] = z[i]
+  } else { # z
+      x[i + 1] = x[i]
+      y[i + 1] = y[i]
+      z[i + 1] = z[i] + move[i]
+  }
+}
+x
+y
+z
+```
 
 Recursion
 =========
@@ -150,7 +177,52 @@ Watch the "Recursion" lecture video.
 
 **YOUR ANSWER GOES HERE:**
 
+1. Combined with part 2 below
+2. 
+```{r}
+find_fib = function(n) {
+  if (n == 1 | n == 2)
+    return (1)
 
+  find_fib(n - 2) + find_fib(n - 1)
+}
+
+find_fib2 = function(n, fib = c(1, 1)) {
+  len = length(fib)
+  if (n <= len)
+    return (fib[n])
+
+  fib = c(fib, fib[len - 1] + fib[len])
+  find_fib2(n, fib)
+}
+
+times = numeric(60)
+n = numeric(60)
+fun = character(60)
+for (i in 1:30){
+   m1 = microbenchmark(find_fib(i), unit = "us", times = 50L)
+   times[i] = summary(m1)["median"]
+   n[i] = i
+   fun[i] = "find_fib"
+
+   m2 = microbenchmark(find_fib2(i), unit = "us", times = 50L)
+   times[i + 30] = summary(m2)["median"]
+   n[i + 30] = i
+   fun[i + 30] = "find_fib2"
+}
+times = unlist(times)
+df = data.frame(times, n, fun)
+```
+
+3. 
+```{r}
+library(ggplot2)
+ggplot(df, aes(x = n, y = times, color = fun)) + geom_point() + geom_line() +
+   labs(title = "Times vs n", color = "Function") + 
+   xlab("n") + ylab("Times (us)")
+```
+
+4. The recursive approach is **much** slower than the second appraoch. With recursion, the time to run grew exponentially with `n`, while the second method seemed linear.
 
 Developing Iterative Code
 =========================
