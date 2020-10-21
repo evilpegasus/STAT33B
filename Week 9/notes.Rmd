@@ -204,7 +204,7 @@ result. Otherwise, it returns the result of the expression.
 For example:
 ```{r}
 f = function(x, y) {
-  #message("Hi")
+  message("Hi")
   x + y
 }
 
