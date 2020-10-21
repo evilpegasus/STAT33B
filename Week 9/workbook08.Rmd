@@ -56,7 +56,15 @@ The program should exit the loop (and quit) if the user enters the name `quit`.
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r, eval = FALSE}
+while (TRUE) {
+  name = scan(what  = character(), n = 1)
+  if (name == "quit") {
+    break
+  }
+  cat("Hello,", name)
+}
+```
 
 Messages, Warnings, and Errors
 ==============================
@@ -92,7 +100,27 @@ Test your function to show that it checks for potential problems. You can use
 
 **YOUR ANSWER GOES HERE:**
 
+```{r, error = TRUE}
+to_kelvin = function(temperature, unit) {
+  unit = match.arg(unit, c("celsius", "fahrenheit"), several.ok = TRUE)
 
+  # Check for errors in params
+  if (class(temperature) != "numeric") {
+    stop("temperature must be numeric")
+  }
+  if (length(temperature) != length(unit) | length(unit) != 1) {
+    stop("unit must be the same length as temperature or be length 1")
+  }
+
+  # First convert Fahrenheit to Celsius.
+  is_f = unit == "fahrenheit"
+  temperature[is_f] = (temperature[is_f] - 32) * 5 / 9
+
+  temperature + 273.15
+}
+to_kelvin(temperature = c(1, 2, 3), unit = c("c", "c"))
+to_kelvin(temperature = "Apple pie", unit = "c")
+```
 
 Handling Errors
 ===============
@@ -121,9 +149,37 @@ added to `.Rprofile`.
 
 **YOUR ANSWER GOES HERE:**
 
+I changed the `warn` option to 1 as recommended by the professor. I also printed a welcome mess8 age on start.
 ```{r, eval = FALSE}
 # Put your new .Rprofile code here.
+# Things you might want to change
 
+# options(papersize="a4")
+# options(editor="notepad")
+# options(pager="internal")
+
+# set the default help type
+# options(help_type="text")
+  options(help_type="html")
+
+# set a site library
+# .Library.site <- file.path(chartr("\\", "/", R.home()), "site-library")
+
+# set a CRAN mirror
+# local({r <- getOption("repos")
+#       r["CRAN"] <- "http://my.local.cran"
+#       options(repos=r)})
+
+# Give a fortune cookie, but only to interactive sessions
+# (This would need the fortunes package to be installed.)
+#  if (interactive()) 
+#    fortunes::fortune()
+
+options(warn = 1)
+
+.First = function() {
+  cat("Welcome Ming Fong", date(), "\n")
+}
 ```
 
 
