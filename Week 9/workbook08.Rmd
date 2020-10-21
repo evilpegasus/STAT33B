@@ -149,7 +149,7 @@ added to `.Rprofile`.
 
 **YOUR ANSWER GOES HERE:**
 
-I changed the `warn` option to 1 as recommended by the professor. I also printed a welcome mess8 age on start.
+I changed the `warn` option to 1 as recommended by the professor. I also printed a welcome message on start.
 ```{r, eval = FALSE}
 # Put your new .Rprofile code here.
 # Things you might want to change
