@@ -89,8 +89,8 @@ more efficient for rejection sampling.
 **YOUR ANSWER GOES HERE:**
 
 ```{r}
-
 curve(dhand, -2, 2, xlab = "Value", ylab = "Density (unscaled)", asp = 1)
+rect(-1.6, 0, 1.6, 3.5, lty = "dashed")
 ```
 
 Exercise 2
@@ -106,7 +106,25 @@ Test that your function runs without error for `n` equal to 10, 100, and 1000.
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+rhand = function(n = 100) {
+   samples = numeric(n)
+   count = 0
+   while (count < n) {
+      x = runif(1, -1.6, 1.6)
+      y = runif(1, 0, 3.5)
+      if (y < dhand(x)) {
+         samples[count + 1] = x
+         count = count + 1
+      }
+   }
 
+   samples
+}
+x = rhand(10)
+x = rhand()
+x = rhand(1000)
+```
 
 
 Exercise 3
@@ -139,13 +157,30 @@ Exercise 3
 
 ### Part 1
 
+```{r}
+set.seed(42)
+sample = rhand()
+plot(density(sample), asp = 1, xlim = c(-3, 3))
+```
+
 ### Part 2
+
+My estimation looks like a blob while the original curve had clearly defined curves and edges.
 
 ### Part 3
 
+The new curve with 1,000,000 points has much more distinguishable features than the previous sample.
+```{r}
+sample = rhand(1000000)
+plot(density(sample), asp = 1, xlim = c(-3, 3))
+```
+
 ### Part 4
 
-
+```{r}
+mean(sample)
+sd(sample)
+```
 
 Exercise 4
 ==========
@@ -162,3 +197,21 @@ repeatedly._
 
 **YOUR ANSWER GOES HERE:**
 
+About `46%` of the points are typically rejected.
+```{r}
+rhand_rejected = function(n = 100) {
+   count = 0
+   iterations = 0
+   while (count < n) {
+      iterations = iterations + 1
+      x = runif(1, -1.6, 1.6)
+      y = runif(1, 0, 3.5)
+      if (y > dhand(x)) {
+         count = count + 1
+      }
+   }
+
+   iterations
+}
+mean(replicate(100, 1000 / rhand_rejected(n = 1000)))
+```
