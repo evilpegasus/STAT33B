@@ -369,7 +369,7 @@ estimate.
 
 \textbf{YOUR ANSWER GOES HERE:}
 
-About \texttt{46\%} of the points are typically rejected.
+About \texttt{53\%} of the points are typically rejected.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -385,14 +385,15 @@ About \texttt{46\%} of the points are typically rejected.
 \NormalTok{      \}}
 \NormalTok{   \}}
 
-\NormalTok{   iterations}
+\NormalTok{   iterations }\OperatorTok{{-}}\StringTok{ }\NormalTok{n}
 \NormalTok{\}}
-\KeywordTok{mean}\NormalTok{(}\KeywordTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{1000} \OperatorTok{/}\StringTok{ }\KeywordTok{rhand\_rejected}\NormalTok{(}\DataTypeTok{n =} \DecValTok{1000}\NormalTok{)))}
+\NormalTok{n =}\StringTok{ }\DecValTok{1000}
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{replicate}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{n }\OperatorTok{/}\StringTok{ }\NormalTok{(n }\OperatorTok{+}\StringTok{ }\KeywordTok{rhand\_rejected}\NormalTok{(n))))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.4626666
+## [1] 0.5373334
 \end{verbatim}
 
 \end{document}
