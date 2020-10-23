@@ -197,7 +197,7 @@ repeatedly._
 
 **YOUR ANSWER GOES HERE:**
 
-About `46%` of the points are typically rejected.
+About `53%` of the points are typically rejected.
 ```{r}
 rhand_rejected = function(n = 100) {
    count = 0
@@ -211,7 +211,8 @@ rhand_rejected = function(n = 100) {
       }
    }
 
-   iterations
+   iterations - n
 }
-mean(replicate(100, 1000 / rhand_rejected(n = 1000)))
+n = 1000
+mean(replicate(100, 1 - n / (n + rhand_rejected(n))))
 ```
