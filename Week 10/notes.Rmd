@@ -1,0 +1,370 @@
+---
+title: "Stat 33B - Lecture Notes 10"
+date: October 25, 2020
+output: pdf_document
+---
+
+
+Environments
+============
+
+Motivation: How does scope in R work (technical details)?
+
+
+An _environment_ is a collection of named R objects.
+
+Each environment has two parts:
+
+1. A _frame_ that associates names with R objects (a hash map)
+2. A _parent environment_
+
+
+Use `new.env` to create a new environment:
+```{r}
+e = new.env()
+e
+```
+
+Use `ls` or `names` to list the names in an environment:
+```{r}
+ls(e)
+
+names(e)
+```
+
+Use `exists` to check for a specific name:
+```{r}
+exists("hi", e)
+```
+
+Use `[[` or `$` to get or set elements of an environment:
+```{r}
+e[["hi"]] = 24
+
+e[["hi"]]
+e$hi
+
+e$x = c("hi", "bye")
+e$x
+
+e$.x = 10
+```
+
+
+By default, the `ls` function ignores names that start with `.`
+
+Use `all.names = TRUE` to make the function print these names:
+```{r}
+ls(e, all.names = TRUE)
+```
+
+
+Environments are _reference objects_.
+
+So they **do not** follow the copy-on-write rule:
+```{r}
+# Copy on write:
+x = list()
+x$a = 10
+x
+y = x
+x$a = 20
+y
+
+# Does not apply to environments:
+ex = new.env()
+ex$a = 10
+ex$a
+
+ey = ex
+ex$a = 20
+ey$a
+```
+
+
+
+
+
+
+
+Variable Lookup, Part 2
+=======================
+
+R uses environments to store variables.
+
+At run-time, **each call** to a function creates a new environment:
+
+* The frame contains local variables.
+* The parent environment is the environment where the function was
+  **defined** (lexical scoping).
+
+To look up a variable, R checks the local environment, then the parent, then
+the parent's parent, and so on.
+
+
+Use `parent.env` to get the parent environment:
+```{r}
+e = new.env()
+g = parent.env(e)
+
+names(g)
+g$x
+```
+
+The _global environment_ stores variables you define in the console (not in
+functions).
+
+Use `globalenv` to get the global environment:
+```{r}
+globalenv()
+```
+
+Most functions for manipulating environments default to the local environment.
+
+Use `environment` to get the local environment:
+```{r}
+environment()
+
+f = function() {
+  environment()
+}
+
+g = function() {
+  parent.env(environment())
+}
+```
+
+Typing a variable name gets an element in the local environment:
+```{r}
+x
+
+globalenv()$x
+```
+
+The `get` function can also get an element:
+```{r}
+get("x", e)
+
+#get("x", e, inherits = FALSE)
+```
+Use `inherits = FALSE` to ignore the parent environment.
+
+
+The `<-` and `=` operators set an element in the local environment:
+```{r}
+y = 10
+```
+
+The `assign` function can also set an element:
+```{r}
+assign("y", 15)
+
+assign("z", 10, e)
+e[["z"]] = 12
+```
+
+
+
+
+
+
+
+The Search Path
+===============
+
+R uses environments to store variables in packages, too.
+
+When R loads a package, it creates a new environment:
+
+* The frame contains the package's local variables.
+* The parent environment is the environment of the previous package loaded.
+* This new environment becomes the parent of the global environment.
+
+R always loads several built-in packages at startup.
+
+
+So the global environment is not the top-level environment:
+```{r}
+g = globalenv()
+
+e = parent.env(g)
+e = parent.env(e)
+e
+```
+
+The _base environment_, or `package:base`, corresponds to the built-in R
+package `base`.
+
+The parent of the base environment is a special environment called the _empty
+environment_, which contains no variables and has no parent.
+
+Use `baseenv` and `emptyenv` to access these:
+```{r}
+baseenv()
+
+emptyenv()
+```
+
+The history of loaded packages is called the _search path_.
+
+Use `search` to see the search path:
+```{r}
+search()
+```
+Package environments (and the global environment) are listed from child to
+parent.
+
+
+
+
+
+
+
+
+The Colon Operators
+===================
+
+The double-colon operator `::` gets a variable in a package.
+
+Two common uses:
+
+1. Disambiguate which package you mean, when packages have variables with the
+   same names.
+2. Get a variable from a package without loading the package.
+
+
+For example:
+```{r}
+library(dplyr)
+
+stats::filter
+dplyr::filter
+
+ggplot2::ggplot
+```
+
+The related triple-colon operator `:::` gets a _private_ variable in a package.
+
+Generally these are private for a reason!
+
+Only use `:::` if you're sure you know what you're doing.
+
+
+
+
+
+
+
+Closures
+========
+
+A _closure_ is a function together with an enclosing environment.
+
+Every R function is a closure.
+
+The enclosing environment is the environment where the function was
+**defined**.
+
+Call `environment()` on a function to get its enclosing environment:
+```{r}
+f = function() 42
+
+environment(f)
+
+g = local(function() 2)
+
+environment(g)
+```
+
+The enclosing environment persists between calls.
+
+You can use this to make a function that "remembers" previous calls.
+
+
+Use the superassignment operator `<<-` to assign to a variable to an ancestor
+environment (if the variable already exists) or the global environment (if the
+variable does not already exist).
+
+So `<<-` is especially useful inside functions:
+```{r}
+assignz = function(a) {
+  z <<- a
+}
+```
+
+As an example, let's make a function that returns the number of times it's been
+called.
+
+Here's the code:
+```{r}
+counter = 0
+count = function() {
+  counter <<- counter + 1
+  counter
+}
+```
+
+Modifying the enclosing environment is a _side effect_.
+
+Functions with side effects make code harder to understand and predict.
+
+Use side effects sparingly. Most functions should not have side effects.
+
+If you do need side effects, try to isolate them.
+
+
+Creating Closures
+-----------------
+
+The example function has side effects on the global environment.
+
+This extremely bad design!
+
+The function might overwrite the user's variables:
+```{r}
+counter = 0
+count()
+```
+
+Or the user might overwrite the function's variables:
+```{r}
+counter = "hi"
+count()
+```
+
+It's better to create a isolated enclosing environment for the function.
+
+There are two different idioms for doing this:
+
+1. Define the function inside of another function (a _factory function_)
+2. Define the function inside of a call to `local`
+
+
+Here's skeleton code for the first approach:
+```{r}
+make_f = function() {
+  # Put variables that `f` remembers between calls here:
+
+  # This is your closure `f`:
+  function() {
+    # ...
+  }
+}
+
+f = make_f()
+# Now you can use f() as you would any other function.
+```
+
+We can use this approach for the example function:
+```{r}
+make_count = function() {
+  counter = 0
+  
+  function() {
+    counter <<- counter + 1
+    counter
+  }
+}
+
+count = make_count()
+```
