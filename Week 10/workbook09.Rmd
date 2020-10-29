@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Workbook 9"
 date: "Oct 29, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -78,7 +78,19 @@ _Hint 2: You can use `identical` to check if two environments are equal._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+locate = function(name, env) {
+   e = env
+   while(!exists(name, e, inherits = FALSE)) {
+      if(identical(e, emptyenv())) {
+         return(e)
+      }
+      e = parent.env(e)
+   }
+   e
+}
 
+```
 
 ## Exercise 2
 
@@ -108,7 +120,9 @@ Test your `locate` function on `e` by:
 **YOUR ANSWER GOES HERE:**
 
 ### Part 1
-
+```{r}
+locate("c", environment())
+```
 ### Part 2
 
 ### Part 3
