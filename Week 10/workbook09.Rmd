@@ -121,14 +121,21 @@ Test your `locate` function on `e` by:
 
 ### Part 1
 ```{r}
-locate("c", environment())
+locate("c", e)$c
 ```
 ### Part 2
-
+```{r}
+locate("zzz", e)
+```
 ### Part 3
-
+```{r}
+locate("e", e)
+```
 ### Part 4
-
+The `methods` package provides `show()`
+```{r}
+locate("show", e)
+```
 
 
 The Colon Operators
@@ -184,7 +191,26 @@ efficiency in many programming problems._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+make_find_fib3 = function(n) {
+   fib_1 = 1   # fib(n - 1)
+   fib_2 = 1   # fib(n - 2)
+   function(n) {
+      if (n == 1 || n == 2) {
+         return(1)
+      }
+      for (i in seq_len(n - 2)) {
+         temp = fib_1 + fib_2
+         fib_2 = fib_1
+         fib_1 = temp
+      }
+      temp
+   }
+}
 
+find_fib3 = make_find_fib3()
+find_fib3(40)
+```
 
 ## Exercise 4
 
@@ -203,4 +229,18 @@ efficiency in many programming problems._
 
 ### Part 1
 
+`find_fib3` will use more memory than `find_fib2` but will be much faster. Usually speed is preferred, so `find_fib3` would be better.
+
 ### Part 2
+
+`find_fib3` is much faster (about 20x faster in these two tests).
+```{r}
+library(microbenchmark)
+n = 30
+microbenchmark(find_fib2(n))
+microbenchmark(find_fib3(n))
+
+n = 40
+microbenchmark(find_fib2(n))
+microbenchmark(find_fib3(n))
+```
