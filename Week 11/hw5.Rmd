@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Homework 5"
 date: "Nov 5, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -107,13 +107,13 @@ tip_calculator = function(subtotal, percent_tip = 0.20, post_tax = TRUE,
 {
   tax = subtotal**percent_tax
   pre_tip = subtotal
-  if(post_tax {
+  if(post_tax) {
     pre_tip = subtotal + tax
   }
   tip = pre_tip*0.0925
   grand_total == subtotal + tax + tip
   
-  out = c("tip" = tip "total" = grand_total)
+  out = c("tip" = tip, "total" = grand_total)
   
   out
 }

@@ -1,0 +1,190 @@
+---
+title: "Stat 33B - Lecture Notes 11"
+date: November 1, 2020
+output: pdf_document
+---
+
+
+Attributes
+==========
+
+_Attributes_ are name-value pairs in the metadata of an R object.
+
+Some common attributes:
+
+* `class` -- class
+* `row.names` -- row names
+* `names` -- element names or column names
+* `dim` -- dimensions (on matrices)
+* `dimnames` -- names of dimensions (on matrices)
+
+There are helper functions like `class` to get and set these:
+```{r}
+
+```
+
+There's also a more general way to get and set attributes.
+
+Use the `attributes` function to get all attributes on an object:
+```{r}
+
+```
+
+Use the `attr` function to get or set an attribute:
+```{r}
+
+```
+
+
+Use the `structure` function to set all attributes on an object:
+```{r}
+
+```
+
+Vectors usually don't have attributes:
+```{r}
+
+```
+
+But the `class` function still returns a class:
+```{r}
+
+```
+
+The `attr` function shows that the class for this object is not an attribute:
+```{r}
+
+```
+
+Most of the time, you should use helper functions to get/set attributes.
+
+
+
+The S3 Object System
+====================
+
+The `class` function returns an object's S3 classes:
+```{r}
+
+```
+
+
+Use `inherits` to test whether an object is an instance of a specific S3 class:
+```{r}
+
+```
+
+A _generic function_ is a special function that has multiple implementations.
+These implementations are called _methods_.
+
+When you call a generic function, an appropriate method is selected based on
+the class of an argument (usually the first argument). This is called _method
+dispatch_, or just _dispatch_.
+
+Use `methods` to list the methods defined for a given generic function:
+```{r}
+
+```
+This also lists methods for the S4 system.
+
+If you only want S3 methods, use `.S3methods`:
+```{r}
+
+```
+
+The pattern for S3 method names is `GENERIC.CLASS`, where:
+
+* `GENERIC` is the name of the generic function.
+* `CLASS` is the name of the class that corresponds to the method.
+
+For example: `print.lm` is the `print` method for the `lm` class.
+
+```{r}
+
+```
+Methods in packages are not always accessible from the global workspace.
+
+Use `getS3method` or `getAnywhere` to get these methods.
+
+```{r}
+
+```
+
+
+Not all functions with a `.` in their name are methods.
+
+For example, the `row.names` function is **NOT** a method.
+
+In fact, it's a generic function:
+```{r}
+
+```
+
+
+
+S3 Objects
+==========
+
+An S3 object is just an object with a `class` attribute.
+
+So you can use `class`, `attr`, or `structure` to create an S3 object:
+```{r}
+
+```
+
+S3 objects are created from other objects.
+
+Most people create S3 objects from lists.
+
+Then the elements of the list are called _fields_ of the class:
+```{r}
+
+```
+
+A _constructor function_ is a function that creates a classed object.
+
+Generally, constructor functions are named after the class of object they
+create:
+```{r}
+
+```
+
+For an S3 class, it's idiomatic to provide a constructor function.
+
+The constructor function serves as an implicit definition of the class.
+
+
+
+S3 Generics & Methods
+=====================
+
+Use the `UseMethod` function to create an S3 generic function:
+```{r}
+
+```
+
+Use `GENERIC.CLASS` as the name to create a method:
+```{r}
+
+```
+
+S3 generics select a method based on one argument.
+
+The default is the first argument. You can optionally specify which argument to
+use in `UseMethod`:
+```{r}
+
+```
+
+
+Use `NextMethod` to call the same method for an object's parent class:
+```{r}
+
+```
+
+
+
+Other Object Systems
+====================
+
+See the slides.
