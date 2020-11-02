@@ -20,7 +20,7 @@ Some common attributes:
 
 There are helper functions like `class` to get and set these:
 ```{r}
-dogs = readRDS("data/dogs/dogs.rds")
+dogs = readRDS("data/dog/dogs.rds")
 
 class(dogs)
 ```
