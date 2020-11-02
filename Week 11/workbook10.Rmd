@@ -88,7 +88,13 @@ _Hint 2: You can convert a list to a vector with `unlist()` or `as.vector()`._
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+poly = function(...) {
+  for(n in ...) {
+    cat(n)
+  }
+}
+```
 
 S3 Generics & Methods
 =====================
@@ -147,7 +153,9 @@ it a different name. That way you can still see R's default printout for
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
 
+```
 
 Other Object Systems
 ====================
@@ -166,3 +174,7 @@ Based on this, is R6 strictly necessary to avoid the threading state problem?
 _Hint: For more context, read Chapter 14 as well._
 
 **YOUR ANSWER GOES HERE:**
+
+```{r}
+
+```
