@@ -90,10 +90,13 @@ _Hint 2: You can convert a list to a vector with `unlist()` or `as.vector()`._
 
 ```{r}
 poly = function(...) {
-  for(n in ...) {
-    cat(n)
+  if (nargs() == 0 | !is.numeric(c(...))) {
+    stop("Invalid arguments, must pass numeric coefs")
   }
+  polynomial = list(coefs = c(...))
+  structure(polynomial, class = "polynomial")
 }
+poly(3, 1, 0, 2)
 ```
 
 S3 Generics & Methods
@@ -154,7 +157,35 @@ it a different name. That way you can still see R's default printout for
 **YOUR ANSWER GOES HERE:**
 
 ```{r}
-
+print.polynomial = function(polynomial) {
+  output = ""
+  power = 0
+  for(coef in polynomial$coefs) {
+    coef = round(coef, digits = 2)
+    if(coef < 0) {
+      if(power == 0) {
+        output = paste(output, coef, "  ", sep = "")
+      } else if (power == 1) {
+        output = paste(output, coef, "x", "  ", sep = "")
+      }else {
+        output = paste(output, coef, "x^", power, "  ", sep = "")
+      }
+    } else if(power == 0) {
+       output = paste(coef, "  ", sep = "")
+    } else if (power == 1) {
+      output = paste(output, "+", coef, "x", "  ", sep = "")
+    } else {
+      output = paste(output, "+", coef, "x^", power, "  ", sep = "")
+    }
+    power = power + 1
+  }
+  output = paste(output, "\n", sep = "")
+  output = (output)
+  cat(output)
+}
+p
+print(poly(2/3, 0, 1))
+print(poly(-1/6, -10, 42, 144, 169))
 ```
 
 Other Object Systems
