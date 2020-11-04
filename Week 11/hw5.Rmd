@@ -90,6 +90,19 @@ make_stack = function() {
 }
 ```
 
+Tests for `make_stack`
+```{r}
+stack = make_stack()
+
+stack$push(3)
+stack$push(4)
+stack$push(5)
+
+stack$pop() == 5
+stack$pop() == 4
+stack$pop() == 3
+```
+
 Exercise 2
 ==========
 
