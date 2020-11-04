@@ -72,7 +72,22 @@ _Note: You can optionally make the stack more efficient by overallocating
 **YOUR ANSWER GOES HERE:**
 
 ```{r}
+make_stack = function() {
+  stack_data = list()
+  push = function(n) {
+    stack_data[length(stack_data) + 1] <<- n
+  }
+  pop = function() {
+    if(length(stack_data) == 0) {
+      stop("Failed to pop, stack was empty")
+    }
+    ret = stack_data[[length(stack_data)]]
+    stack_data[[length(stack_data)]] <<- NULL
+    ret
+  }
+  stack = list(push = push, pop = pop)
 
+}
 ```
 
 Exercise 2
@@ -144,9 +159,24 @@ fix the bug. Place the fixed code in the cell below.
 
 **YOUR ANSWER GOES HERE:**
 
+The line `tax = subtotal**percent_tax` raises `subtotal` to the power of `percent_tax` when it should be multiplied. I also fixed the formatting and spacing of the code.
 ```{r, error = TRUE}
 # Your fixed code after round 1 goes here.
-
+tip_calculator = function(subtotal, percent_tip = 0.20, post_tax = TRUE,
+  percent_tax = 0.0925)
+{
+  tax = subtotal * percent_tax
+  pre_tip = subtotal
+  if(post_tax) {
+    pre_tip = subtotal + tax
+  }
+  tip = pre_tip * 0.0925
+  grand_total = subtotal + tax + tip
+  
+  out = c("tip" = tip, "total" = grand_total)
+  
+  out
+}
 ```
 
 
@@ -159,9 +189,24 @@ fix the bug. Place the fixed code in the cell below.
 
 **YOUR ANSWER GOES HERE:**
 
+I ran the tests and found that `grand_total == subtotal + tax + tip` does not assign the variable `grand_total`, `==` should be replaced with `=`
 ```{r, error = TRUE}
 # Your fixed code after round 2 goes here.
-
+tip_calculator = function(subtotal, percent_tip = 0.20, post_tax = TRUE,
+  percent_tax = 0.0925)
+{
+  tax = subtotal * percent_tax
+  pre_tip = subtotal
+  if(post_tax) {
+    pre_tip = subtotal + tax
+  }
+  tip = pre_tip * 0.0925
+  grand_total = subtotal + tax + tip
+  
+  out = c("tip" = tip, "total" = grand_total)
+  
+  out
+}
 ```
 
 
@@ -174,9 +219,30 @@ fix the bug. Place the fixed code in the cell below.
 
 **YOUR ANSWER GOES HERE:**
 
+I ran the first test and it was `FALSE`. This indicated somethingwas wrong with the `percent_tip` value.
+I used the debugger to check the value of `tip` and found that `percent_tip` was incorrectly replaced with a hardcoded `0.0925`.
+The error was at
+```
+tip = pre_tip * 0.0925
+```
 ```{r, error = TRUE}
 # Your fixed code after round 3 goes here.
-
+tip_calculator = function(subtotal, percent_tip = 0.20, post_tax = TRUE,
+  percent_tax = 0.0925)
+{
+  # browser()
+  tax = subtotal * percent_tax
+  pre_tip = subtotal
+  if(post_tax) {
+    pre_tip = subtotal + tax
+  }
+  tip = pre_tip * percent_tip
+  grand_total = subtotal + tax + tip
+  
+  out = c("tip" = tip, "total" = grand_total)
+  
+  out
+}
 ```
 
 
@@ -192,6 +258,7 @@ section._
 
 **YOUR ANSWER GOES HERE:**
 
+After round 3, all tests passed as `TRUE` and all bugs appear to be fixed.
 ```{r, error = TRUE}
 # Your fixed code after round 4 goes here.
 
