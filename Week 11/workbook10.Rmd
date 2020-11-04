@@ -206,6 +206,4 @@ _Hint: For more context, read Chapter 14 as well._
 
 **YOUR ANSWER GOES HERE:**
 
-```{r}
-
-```
+No, Homework 5, Exercise 1 only requires us to create and return the stack object. R6 is not strictly necassary to avoid this problem.

@@ -71,7 +71,9 @@ _Note: You can optionally make the stack more efficient by overallocating
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
 
+```
 
 Exercise 2
 ==========
