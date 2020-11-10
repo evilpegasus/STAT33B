@@ -1,0 +1,192 @@
+---
+title: "Stat 33B - Lecture Notes 12"
+date: November 8, 2020
+output: pdf_document
+---
+
+Code Performance
+================
+
+See the slides.
+
+
+
+Profiling
+=========
+
+The `Rprof` function enables or disables R's built-in profiler.
+
+Important parameters:
+
+* `filename`, a path to a file for storing results. Defaults to `Rprof.out`
+* `interval`, the time between samples, in seconds
+* `memory.profiling`, whether to track memory in addition to time
+
+Call `Rprof(NULL)` to disable the profiler.
+
+
+As an example, let's look at what happens if we don't preallocate.
+
+We'll use the rejection sampler from Homework 4:
+```{r}
+dhand = function(x) {
+  y = numeric(length(x))
+  i = -1.6 < x & x < 1.6
+  y[i] = sqrt(2.56 - x[i]^2) + dunif(x[i], -1.25, -0.75) +
+    dunif(x[i], -0.5, 0.5)
+
+  y
+}
+
+
+rhand = function(n) {
+  samp = c()
+
+  while (n > 0) {
+    x = runif(1, -1.6, 1.6)
+    y = runif(1, 0, 3.5)
+
+    if (y < dhand(x)) {
+      samp = c(samp, x)
+      n = n - 1
+    }
+  }
+
+  samp
+}
+```
+
+```{r}
+Rprof()
+rhand(1e5)
+Rprof(NULL)
+```
+
+The `summaryRprof` function summarizes results from `Rprof`.
+
+Important parameters:
+
+* `filename`, the path to the results file. Defaults to `Rprof.out`
+* `memory`, how to display memory information. Use `"both"` to see total
+  changes.
+
+The summary lists times in seconds and memory in bytes.
+
+Let's try it:
+```{r}
+summaryRprof()
+```
+
+The `total.pct` column is the time spent in a function as a percentage of
+total time.
+
+The `self.time` column is the time spent in a function and NOT other functions
+called from that function.
+
+The `self.pct` column is the `self.time` as a percentage of total time.
+
+The `by.self` data frame only includes rows where `self.time` is nonzero.
+
+
+
+Profvis
+=======
+
+The profvis package provides a visualization of profiler results.
+
+Load the library and then call `profvis` on the code you want to profile.
+
+Under the hood, profvis uses the `Rprof` function.
+
+
+Let's again look at the rejection sampler from Homework 4.
+
+This time we'll use profvis:
+```{r}
+library(profvis)
+
+profvis({
+  dhand = function(x) {
+    y = numeric(length(x))
+    i = -1.6 < x & x < 1.6
+    y[i] = sqrt(2.56 - x[i]^2) + dunif(x[i], -1.25, -0.75) +
+      dunif(x[i], -0.5, 0.5)
+  
+    y
+  }
+  
+  
+  rhand = function(n) {
+    samp = numeric(n)
+  
+    while (n > 0) {
+      x = runif(1, -1.6, 1.6)
+      y = runif(1, 0, 3.5)
+  
+      if (y < dhand(x)) {
+        samp[n] = x
+        n = n - 1
+      }
+    }
+  
+    samp
+  }
+  
+  rhand(1e5)
+})
+```
+
+
+
+Profiling Case Study
+====================
+
+In a 2-dimensional random walk, at each step we randomly choose a move in one
+of the four compass directions.
+
+Goal: write an efficient function to compute the path of a 2-d random walk.
+
+```{r}
+library(profvis)
+
+profvis({
+rwalk = function(n) {
+  x = numeric(n)
+  y = numeric(n)
+  axis = sample(c(T, F), n - 1, replace = TRUE)
+  move = sample(c(-1, 1), n - 1, replace = TRUE)
+  
+  for (i in 2:n) {
+    if (axis[i - 1]) {
+      # x movement
+      x[i] = x[i - 1] + move[i - 1]
+      y[i] = y[i - 1]
+    } else {
+      # y movement
+      x[i] = x[i - 1]
+      y[i] = y[i - 1] + move[i - 1]
+    }
+  }
+  
+  data.frame(x = x, y = y)
+}
+
+rwalk(1e6)
+})
+```
+
+```{r}
+profvis({
+rwalk2 = function(n) {
+  xmove = c(0, 1, 0, -1)
+  ymove = c(1, 0, -1, 0)
+  dir = sample(1:4, n - 1, replace = TRUE)
+  x = cumsum(c(0, xmove[dir]))
+  y = cumsum(c(0, ymove[dir]))
+  
+  data.frame(x = x, y = y)
+}
+
+rwalk2(1e6)
+})
+```

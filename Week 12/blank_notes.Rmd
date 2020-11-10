@@ -1,0 +1,119 @@
+---
+title: "Stat 33B - Lecture Notes 12"
+date: November 8, 2020
+output: pdf_document
+---
+
+Code Performance
+================
+
+See the slides.
+
+
+
+Profiling
+=========
+
+The `Rprof` function enables or disables R's built-in profiler.
+
+Important parameters:
+
+* `filename`, a path to a file for storing results. Defaults to `Rprof.out`
+* `interval`, the time between samples, in seconds
+* `memory.profiling`, whether to track memory in addition to time
+
+Call `Rprof(NULL)` to disable the profiler.
+
+
+As an example, let's look at what happens if we don't preallocate.
+
+We'll use the rejection sampler from Homework 4:
+```{r}
+dhand = function(x) {
+  y = numeric(length(x))
+  i = -1.6 < x & x < 1.6
+  y[i] = sqrt(2.56 - x[i]^2) + dunif(x[i], -1.25, -0.75) +
+    dunif(x[i], -0.5, 0.5)
+
+  y
+}
+
+
+rhand = function(n) {
+  samp = c()
+
+  while (n > 0) {
+    x = runif(1, -1.6, 1.6)
+    y = runif(1, 0, 3.5)
+
+    if (y < dhand(x)) {
+      samp = c(samp, x)
+      n = n - 1
+    }
+  }
+
+  samp
+}
+```
+
+```{r}
+
+```
+
+The `summaryRprof` function summarizes results from `Rprof`.
+
+Important parameters:
+
+* `filename`, the path to the results file. Defaults to `Rprof.out`
+* `memory`, how to display memory information. Use `"both"` to see total
+  changes.
+
+The summary lists times in seconds and memory in bytes.
+
+Let's try it:
+```{r}
+
+```
+
+The `total.pct` column is the time spent in a function as a percentage of
+total time.
+
+The `self.time` column is the time spent in a function and NOT other functions
+called from that function.
+
+The `self.pct` column is the `self.time` as a percentage of total time.
+
+The `by.self` data frame only includes rows where `self.time` is nonzero.
+
+
+
+Profvis
+=======
+
+The profvis package provides a visualization of profiler results.
+
+Load the library and then call `profvis` on the code you want to profile.
+
+Under the hood, profvis uses the `Rprof` function.
+
+
+Let's again look at the rejection sampler from Homework 4.
+
+This time we'll use profvis:
+```{r}
+
+```
+
+
+
+Profiling Case Study
+====================
+
+In a 2-dimensional random walk, at each step we randomly choose a move in one
+of the four compass directions.
+
+Goal: write an efficient function to compute the path of a 2-d random walk.
+
+```{r}
+
+```
