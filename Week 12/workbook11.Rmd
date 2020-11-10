@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Workbook 11"
 date: "Nov 12, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
