@@ -9,3 +9,7 @@ Fall 2020 - Professor Nick Ulle
 [Berkeleytime](https://www.berkeleytime.com/catalog/STAT/33B/)
 
 [Class Repo](https://github.com/IntroToProgrammingWithR/2020-fall-stat33b)
+
+## R Textbooks and Resources
+https://adv-r.hadley.nz/
+

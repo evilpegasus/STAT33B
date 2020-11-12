@@ -71,7 +71,10 @@ for a call to `<GC>`. What do these entries mean? Why are the listed as being
 
 **YOUR ANSWER GOES HERE:**
 
-
+Calls to `<GC>` are for the garbage collector, which clears unused memory.
+The `c` function calls this because of its copy-on-write.
+Everytime you replace the value of c, a new copy is created and the old one needs to be removed to free up memory.
+This is inefficient and should be avoided if possible.
 
 Profiling Case Study
 ====================
@@ -89,6 +92,7 @@ What's the difference between `colSums` and `.colSums`? Explain.
 
 **YOUR ANSWER GOES HERE:**
 
+`.colSums` can only be used with numeric matrices and is the bare-bones version of `colSums`. `.colSums` requires specifying the number of rows and columns in the matrix.
 
 ## Exercise 3
 
@@ -104,3 +108,38 @@ consistently faster than the others? Does the size of the matrix have an effect
 on which is faster?
 
 **YOUR ANSWER GOES HERE:**
+
+```{r}
+library(microbenchmark)
+n = 1000
+mats = list()
+for(x in 1:n) {
+    mats[[x]] = matrix(1:(x^2), nrow = x, ncol = x)
+}
+
+times = data.frame(
+    n = rep(NA, n),
+    colSums = rep(NA, n),
+    .colSums = rep(NA, n),
+    apply = rep(NA, n)
+)
+for(x in 1:n) {
+    times[x, "n"] = x
+    times[x, "colSums"] = summary(microbenchmark(colSums(mats[[x]]), unit = "us"))[["mean"]]
+    times[x, ".colSums"] = summary(microbenchmark(.colSums(mats[[x]], x, x), unit = "us"))[["mean"]]
+    times[x, "apply"] = summary(microbenchmark(apply(mats[[x]], 2, sum), unit = "us"))[["mean"]]
+}
+```1 do
+
+It seems that `.colSums` is the fastest method of the three. The size of the matrix has little effect on the order of speeds (`colSums` and `.colSums` occasionally switch). `apply` is definitely slower than the other two.
+```{r}
+library(ggplot2)
+ggplot(times, aes(x = n)) +
+    geom_line(aes(y = colSums, color = "colSums")) +
+    geom_line(aes(y = .colSums, color = ".colSums")) +
+    geom_line(aes(y = apply, color = "apply")) +
+    labs(title = "Time vs n", color = "Function") +
+    xlab("n") +
+    ylab("Time (us)") +
+    theme()
+```
