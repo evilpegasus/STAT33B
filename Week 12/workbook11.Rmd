@@ -129,7 +129,7 @@ for(x in 1:n) {
     times[x, ".colSums"] = summary(microbenchmark(.colSums(mats[[x]], x, x), unit = "us"))[["mean"]]
     times[x, "apply"] = summary(microbenchmark(apply(mats[[x]], 2, sum), unit = "us"))[["mean"]]
 }
-```1 do
+```
 
 It seems that `.colSums` is the fastest method of the three. The size of the matrix has little effect on the order of speeds (`colSums` and `.colSums` occasionally switch). `apply` is definitely slower than the other two.
 ```{r}
