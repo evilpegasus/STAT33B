@@ -77,7 +77,15 @@ how to use `str_sub` to reassign part of a string.
 
 **YOUR ANSWER GOES HERE:**
 
-
+The `str_sub` function subsets strings:
+```{r}
+library(stringr)
+x = "Hello world"
+str_sub(x, 1, 5)  # Get the first 5 characters ("Hello")
+str_sub(x, -5) # Get the last 5 characters ("world")
+str_sub(x, -5) = "everybody"  # Replace the last 5 characters with "everybody"
+x
+```
 
 ## Exercise 2
 
@@ -89,7 +97,15 @@ in other recent lectures._
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+library(tidyr)
+table3
+splits = str_split_fixed(table3$rate, "/", 2)
+tidy_table3 = table3[-3]
+tidy_table3["cases"] = splits[,1]
+tidy_table3["population"] = splits[,2]
+tidy_table3
+```
 
 Regular Expressions
 ===================
@@ -142,7 +158,15 @@ interprets backslashes literally (rather than as escape sequences).
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+r"(\telephone)"
 
+has_backslash = function(x) {
+   str_detect(x, r"(\\)")
+}
+
+has_backslash(c(r"(no backslash here)", r"(here \is \a \backslash)"))
+```
 
 ## Exercise 4
 
@@ -164,3 +188,12 @@ _Hint 2: Take advantage of non-numeric characters that mark the boundaries of a
 phone number._
 
 **YOUR ANSWER GOES HERE:**
+
+```{r}
+extract_phone = function(x) {
+   str_match(x, r"(\d{3}-\d{4})")
+}
+extract_phone(ex1)
+extract_phone(ex2)
+extract_phone(ex3)
+```
