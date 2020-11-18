@@ -1,0 +1,302 @@
+---
+title: "Stat 33B - Lecture Notes 13"
+date: November 15, 2020
+output: pdf_document
+---
+
+
+Tidy Data
+=========
+
+Many Tidyverse functions require data in _tidy_ form:
+
+1. Each observation must have its own row.
+2. Each feature must have its own column.
+3. Each value must have its own cell.
+
+Tidy data sets are convenient for data analysis in general.
+
+
+The tidyr package provides functions to reshape data to and from tidy form.
+
+An example of tidy data (Tuberculosis Data Set):
+```{r}
+# install.packages("tidyr")
+library(tidyr)
+
+table1
+```
+
+The `country` and `year` columns identify the observation.
+
+The `cases` and `population` columns are measurements (features).
+
+
+Determine the identifiers and the measurements are BEFORE reshaping!
+
+
+
+
+
+Columns into Rows
+=================
+
+Tidy data rule 1 says each observation must have its own row.
+
+Here's a table that breaks rule 1:
+```{r}
+library(tidyr)
+
+table4a
+```
+All of the numbers measure the same thing: cases.
+
+
+To make the data tidy, we must rotate the `1999` and `2000` column names into
+rows, one for each value in the columns. New columns are `year` and `cases`.
+
+
+Less columns (generally), more rows. The data set becomes longer.
+
+
+Use `pivot_longer` to rotate columns into rows.
+
+Need to specify:
+
+* Columns to rotate as `cols`.
+* Name(s) of new identifier column(s) as `names_to`.
+* Name(s) of new measuerment column(s) as `values_to`.
+
+Here's the code:
+```{r}
+
+```
+
+
+You also can do this without `tidyr`:
+
+1. Subset columns to separate `1999` and `2000` into two data frames.
+2. Add a `year` column to each.
+3. Rename the `1999` and `2000` columns to `cases`.
+4. Stack the two data frames with `rbind`.
+
+```{r}
+
+```
+
+
+
+
+
+Rows into Columns
+=================
+
+Tidy data rule 2 says each feature must have its own column.
+
+
+Let's look at a table that breaks rule 2:
+```{r}
+library(tidyr)
+
+table2
+```
+Here the `count` column contains two different features: cases and population.
+
+
+To make the data tidy, we must rotate the `count` values into columns, one for
+each `type` value. New columns are `cases` and `population`.
+
+
+Less rows, more columns. The data set becomes wider.
+
+
+Use `pivot_wider` to rotate rows into columns.
+
+Need to specify:
+
+* Column names to rotate as `names_from`.
+* Measurements to rotate as `values_from`.
+
+Here's the code:
+```{r}
+
+```
+
+
+You can also do this without `tidyr`:
+
+1. Subset rows to separate `cases` and `population` values.
+2. Remove the `type` column from each.
+3. Rename the `count` column to `cases` and `population`.
+4. Merge the two subsets by matching `country` and `year`.
+
+```{r}
+
+```
+
+We'll see a better way to do step 4 later.
+
+
+Run `vignette("pivot")` for more examples of how to use tidyr.
+
+
+
+
+
+String Processing
+=================
+
+Tidy data rule 3 says each value must have its own cell.
+
+Here's a table that breaks rule 3:
+```{r}
+library(tidyr)
+
+table3
+```
+Cells in the `rate` column contain two values: cases and population.
+
+The values in the `rate` column are strings:
+```{r}
+
+```
+
+So we need a way to manipulate strings.
+
+Some things we might want to do with strings are:
+
+* Detect one string within another
+* Split a string into parts
+* Extract part of a string
+* Replace one string within another
+
+There are base R functions for working with strings, but they have an
+inconsistent interface.
+
+The stringr package (part of the Tidyverse) also provides functions for
+searching and transforming strings.
+
+We'll use stringr:
+```{r}
+# install.packages("stringr")
+library(stringr)
+```
+
+The typical syntax of stringr functions is:
+```
+str_FUNCTION(string, pattern, ...)
+```
+
+For example, the `str_detect` function detects whether the pattern appears
+within the string:
+```{r}
+
+```
+
+The stringr functions are vectorized:
+```{r}
+
+```
+
+The stringr functions use a special language called _regular expressions_ or
+_regex_. In regex, some characters have special meanings.
+
+You can disable regular expressions with the `fixed` function:
+```{r}
+
+```
+We'll learn more about regex in a different lecture.
+
+
+The `str_replace` function replaces the pattern the first time it appears in
+the string:
+```{r}
+
+```
+
+
+The `str_replace_all` function replaces the pattern every time it appears in
+the string:
+```{r}
+
+```
+
+
+The `str_split_fixed` function splits a string into a fixed number of pieces,
+at some separating character:
+```{r}
+
+```
+
+We can use `str_split_fixed` to tidy the data from the table:
+```{r}
+
+```
+
+
+
+
+
+Regular Expressions
+===================
+
+Patterns in stringr use a language called _regular expressions_ or _regex_.
+
+A regular expression can describe a complicated pattern in just a few
+characters, because some characters, called _metacharacters_, have special
+meanings.
+
+Letters and numbers are NEVER metacharacters. They are always literal.
+
+Metacharacter | Matches
+------------- | -------
+`.`           | any character
+`^`           | beginning of string
+`$`           | end of string
+`[ab]`        | `'a'` or `'b'`
+`[^a]`        | any character except `'a'`
+`*`           | previous character appears 0 or more times
+`+`           | previous character appears 1 or more times
+`?`           | previous character appears 0 or 1 times
+`()`          | make a group
+`(ab|c)`      | match `'ab'` or `'c'`
+
+More metacharacters are listed on the stringr cheatsheet, or in:
+```{r}
+?regex
+```
+
+
+We can test these with `str_detect`.
+
+For example, the wildcard `.`:
+```{r}
+
+```
+
+
+Square brackets create a _character class_, a set of characters where any one
+will match:
+```{r}
+
+```
+
+
+Parentheses create a _group_:
+```{r}
+
+```
+Notice the parentheses are not matched literally.
+
+
+The `*`, `+`, and `?` are _quantifiers_ that repeat a character or group:
+```{r}
+
+```
+They are _greedy_, meaning they match as many characters as possible.
+
+
+The `str_match` and `str_match_all` functions extract matching groups:
+```{r}
+
+```
