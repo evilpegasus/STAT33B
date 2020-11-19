@@ -1,0 +1,530 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={STAT 33B Homework 6 Solutions},
+  pdfauthor={Ming Fong (3035619833)},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{STAT 33B Homework 6 Solutions}
+\author{Ming Fong (3035619833)}
+\date{Nov 19, 2020}
+
+\begin{document}
+\maketitle
+
+This homework is due \textbf{Nov 19, 2020} by 11:59pm PT.
+
+Homeworks are graded for correctness.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many
+new code chunks as you like.
+
+Please do not delete the exercises already in this notebook, because it
+may interfere with our grading tools.
+
+You need to submit your work in two places:
+
+\begin{itemize}
+\tightlist
+\item
+  Submit this Rmd file with your edits on bCourses.
+\item
+  Knit and submit the generated PDF file on Gradescope.
+\end{itemize}
+
+If you have any last-minute trouble knitting, \textbf{DON'T PANIC}.
+Submit your Rmd file on time and follow up in office hours or on Piazza
+to sort out the PDF.
+
+\hypertarget{profiling}{%
+\section{Profiling}\label{profiling}}
+
+The purpose of this homework is to practice profiling and optimizing
+code.
+
+The function in the next section is quite slow. The exercises will walk
+you through various performance improvements to the function.
+
+\emph{Note 1:} When benchmarking or profiling code, other programs
+running on your computer can affect the results. So when you benchmark
+or profile code, first make sure you don't have lots of other programs
+running. Close your web browser, word processor, media player, etc.
+
+\emph{Note 2:} Each time you profile code the results will vary
+slightly, even if you don't change the code. Thus if you are
+investigating an optimization that appears to have a small effect, you
+may want to profile the code several times to determine whether the
+effect is real or due to random variation.
+
+\emph{Note 3:} The code cells in this notebook are all set up with
+\texttt{eval=FALSE} so that they don't actually run the code they
+contain. Your notebook may fail to knit if you put profiler code in a
+cell that doesn't have \texttt{eval=FALSE}. You do not need to show us
+the output from profvis; just tell us about what you observed.
+
+\hypertarget{the-function}{%
+\subsection{The Function}\label{the-function}}
+
+The \texttt{sample\_markov} function, shown below, generates a vector
+that represents the state (A or B) of a system over time. Each element
+corresponds to one time step.
+
+At each time step, the system transitions to a new state. If the system
+is in state A, then at the next time step it can either stay in state A,
+or switch to state B. If the system is in state B, then at the next time
+step it can either switch to state A, or stay in state B. The transition
+is random, with a fixed probability for each of the possible
+transitions.
+
+For instance, suppose the probability of A to B is 0.3, and the
+probability of B to B is 0.4. We can use these to compute the other
+probabilties. The probability of A to A must be \(1 - 0.3 = 0.7\), and
+the probability of B to A must be \(1 - 0.4 = 0.6\).
+
+This random system is called a 2-state Markov chain.
+
+The parameters of the function are:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{n}, the number of time steps to run the system, which equals
+  the length of the returned vector.
+\item
+  \texttt{p}, a length-2 vector that contains the probability of A to B
+  and B to B, respectively.
+\item
+  \texttt{init}, the initial state of the system.
+\end{itemize}
+
+The function is defined as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \StringTok{"A"}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\NormalTok{init}
+
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ "A"}\NormalTok{) \{}
+      \CommentTok{\# Get the probabilities for \{A to A\} and \{A to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{1}\NormalTok{], p[}\DecValTok{1}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain =}\StringTok{ }\KeywordTok{c}\NormalTok{(chain, x)}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Get the probabilities for \{B to A\} and \{B to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{2}\NormalTok{], p[}\DecValTok{2}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain =}\StringTok{ }\KeywordTok{c}\NormalTok{(chain, x)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{round-1}{%
+\subsection{Round 1}\label{round-1}}
+
+Use profvis to profile the \texttt{sample\_markov} function. Make sure
+the \texttt{n} argument in your call to \texttt{sample\_markov} is large
+enough that the function runs for at least 30 seconds. You can use the
+default arguments for the other parameters.
+
+The \texttt{sample\_markov} function uses a loop, but doesn't
+preallocate the vector that stores the results. Record the total time it
+takes for the function to run, and describe evidence you can see in the
+profile that failure to preallocate hurts the performance of the
+function.
+
+Finally, edit the \texttt{sample\_markov} function so that it
+preallocates the vector that stores the results. Use profvis to profile
+the edited version (with the same arguments). Record the total time it
+takes for the function to run, and comment on how the performance
+changed.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+Time to run: \texttt{54550ms}.
+
+From profvis, it seems that the line to append to \texttt{chain} is
+taking an unusally long amount of time and memory. This indicates a lack
+of preallocation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code to profile the original function goes here:}
+\KeywordTok{library}\NormalTok{(profvis)}
+\KeywordTok{profvis}\NormalTok{(\{}
+\NormalTok{  sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \StringTok{"A"}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\NormalTok{init}
+
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ "A"}\NormalTok{) \{}
+      \CommentTok{\# Get the probabilities for \{A to A\} and \{A to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{1}\NormalTok{], p[}\DecValTok{1}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain =}\StringTok{ }\KeywordTok{c}\NormalTok{(chain, x)}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Get the probabilities for \{B to A\} and \{B to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{2}\NormalTok{], p[}\DecValTok{2}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain =}\StringTok{ }\KeywordTok{c}\NormalTok{(chain, x)}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+  \KeywordTok{sample\_markov}\NormalTok{(}\DecValTok{150000}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+After preallocating \texttt{chain}, the function took \texttt{850ms} to
+run, almost 50 times faster.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your edited function and the code to profile it go here:}
+\KeywordTok{profvis}\NormalTok{(\{}
+\NormalTok{  sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \StringTok{"A"}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\KeywordTok{character}\NormalTok{(n)}
+\NormalTok{  chain[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{init}
+
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ "A"}\NormalTok{) \{}
+      \CommentTok{\# Get the probabilities for \{A to A\} and \{A to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{1}\NormalTok{], p[}\DecValTok{1}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{x}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Get the probabilities for \{B to A\} and \{B to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{2}\NormalTok{], p[}\DecValTok{2}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{x}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+  \KeywordTok{sample\_markov}\NormalTok{(}\DecValTok{150000}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{round-2}{%
+\subsection{Round 2}\label{round-2}}
+
+In your new version of the \texttt{sample\_markov} function, the most
+time-consuming lines should be
+\texttt{x\ =\ sample(c("A",\ "B"),\ 1,\ prob\ =\ prob)}.
+
+In some cases, using numbers instead of strings can make a computation
+significantly faster, and here it is possible to represent the two
+states in the chain as 0 and 1 instead of A and B.
+
+Edit your \texttt{sample\_markov} function from round 1 so that it uses
+the numbers 0 and 1 to represent the states instead of the strings ``A''
+and ``B''. Use profvis to profile the edited version (with the same
+arguments). Record the total time it takes for the function to run, and
+comment on how the performance changed.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+After changing the samples to integers, the function took \texttt{720ms}
+to run. This is slightly faster than the previous version that used
+strings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code goes here.}
+\KeywordTok{profvis}\NormalTok{(\{}
+\NormalTok{  sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\KeywordTok{integer}\NormalTok{(n)}
+\NormalTok{  chain[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{init}
+
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+      \CommentTok{\# Get the probabilities for \{A to A\} and \{A to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{1}\NormalTok{], p[}\DecValTok{1}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{x}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Get the probabilities for \{B to A\} and \{B to B\}.}
+\NormalTok{      prob =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1} \OperatorTok{{-}}\StringTok{ }\NormalTok{p[}\DecValTok{2}\NormalTok{], p[}\DecValTok{2}\NormalTok{])}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DataTypeTok{prob =}\NormalTok{ prob)}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{x}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+  \KeywordTok{sample\_markov}\NormalTok{(}\DecValTok{150000}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{round-3}{%
+\subsection{Round 3}\label{round-3}}
+
+Switching from strings to numbers to represent the states should give
+your function a small but measurable speed boost.
+
+Among experienced R users, it's well known that the general-purpose
+\texttt{sample} function is slower than R's functions for sampling from
+specific distributions. If you want to sample 0s and 1s, the
+\texttt{rbinom} function is significantly faster.
+
+The \texttt{rbinom} function samples values from the ``binomial
+distribution'', which models the number of successes in a series of
+identical, random trials. Each trial randomly gives a failure (0) or a
+success (1). You can sample a single 0 or 1 with \texttt{rbinom} by
+setting both the number of observations and the number of trials to 1.
+See the documentation for details.
+
+Edit your \texttt{sample\_markov} function from round 2 so that it uses
+\texttt{rbinom} to sample the 0s and 1s instead of \texttt{sample}. In
+doing so, it should be possible to eliminate the variables \texttt{prob}
+and \texttt{x}.
+
+Use profvis to profile the edited version (with the same arguments).
+Record the total time it takes for the function to run, and comment on
+how the performance changed.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+The function now takes just \texttt{240ms} to run, much faster than
+before.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code goes here.}
+\KeywordTok{profvis}\NormalTok{(\{}
+\NormalTok{  sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\KeywordTok{integer}\NormalTok{(n)}
+\NormalTok{  chain[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{init}
+
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, p[}\DecValTok{1}\NormalTok{])}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\KeywordTok{rbinom}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, p[}\DecValTok{2}\NormalTok{])}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+  \KeywordTok{sample\_markov}\NormalTok{(}\DecValTok{150000}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{round-4}{%
+\subsection{Round 4}\label{round-4}}
+
+Switching from \texttt{sample} to \texttt{rbinom} should give your
+function a signifcant speed boost.
+
+Another strategy for improving performance is to move code out of loops,
+either because it doesn't need to be done multiple times, or because it
+can be vectorized instead. Generally the code to start with is whatever
+takes the longest to run in the loop.
+
+In your \texttt{sample\_markov} function, the calls to \texttt{rbinom}
+take up most of the time in the loop. Code that samples random values is
+an especially good candidate for vectorization, because sampling is
+time-consuming, and all of R's sampling functions are vectorized.
+
+However, we can't just sample \texttt{n} values with \texttt{rbinom}
+outside the loop, because the probability of success (1) varies. At each
+time step, the probability of transitioning to 1 depends on the state in
+the previous time step.
+
+Fortunately, we can solve this problem by using different strategy for
+sampling 0s and 1s. Suppose we want the probabilty of getting a 1 to be
+\texttt{p}. Then one sampling strategy is:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Uniformly sample a decimal value from the interval 0 to 1. In R, we
+  can do this with the \texttt{runif} function.
+\item
+  Compare the step 1 value to \texttt{p}. If it is less than \texttt{p},
+  count it as 1; otherwise, count it as 0.
+\end{enumerate}
+
+The advantage of this strategy is that the sampling happens in step 1,
+but we don't need to know the value of \texttt{p} until step 2.
+
+Edit your \texttt{sample\_markov} function from round 3 so that it uses
+the sampling strategy described above to sample 0s and 1s. In
+particular, use a vectorized call to \texttt{runif} \emph{outside the
+loop} to generate a step 1 value for all \texttt{n} time steps. In the
+loop, use \texttt{\textless{}} to compare the appropriate step 1 value
+to the appropriate probability from \texttt{p}, and thereby determine
+whether the step 2 value is 0 or 1. Note that you can avoid adding an
+extra if-statement by using the fact that \texttt{as.integer} converts
+\texttt{FALSE} to 0 and \texttt{TRUE} to 1.
+
+Use profvis to profile the edited version (with the same arguments).
+Record the total time it takes for the function to run, and comment on
+how the performance changed.
+
+Also comment on how the performance of this final version of the
+function compares to the version at the beginning of the homework.
+
+\textbf{YOUR ANSWER GOES HERE:}
+
+The function now takes just \texttt{50ms} to run. Compared to the
+starter code, this is about 1000 times faster.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Your code goes here.}
+\KeywordTok{profvis}\NormalTok{(\{}
+\NormalTok{  sample\_markov =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(n, }\DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.6}\NormalTok{, }\FloatTok{0.7}\NormalTok{), }\DataTypeTok{init =} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  chain =}\StringTok{ }\KeywordTok{integer}\NormalTok{(n)}
+\NormalTok{  chain[}\DecValTok{1}\NormalTok{] =}\StringTok{ }\NormalTok{init}
+\NormalTok{  sample =}\StringTok{ }\KeywordTok{runif}\NormalTok{(n, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n) \{}
+    \CommentTok{\# Check the previous state, chain[i].}
+    \ControlFlowTok{if}\NormalTok{ (chain[i] }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(sample[i] }\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{p[}\DecValTok{1}\NormalTok{])}
+
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \CommentTok{\# Randomly sample new state using the probabilities.}
+\NormalTok{      chain[i }\OperatorTok{+}\StringTok{ }\DecValTok{1}\NormalTok{] =}\StringTok{ }\KeywordTok{as.integer}\NormalTok{(sample[i] }\OperatorTok{\textgreater{}}\StringTok{ }\NormalTok{p[}\DecValTok{2}\NormalTok{])}
+\NormalTok{    \}}
+\NormalTok{  \}}
+
+\NormalTok{  chain[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{\}}
+  \KeywordTok{sample\_markov}\NormalTok{(}\DecValTok{150000}\NormalTok{)}
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

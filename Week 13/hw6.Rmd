@@ -126,7 +126,7 @@ comment on how the performance changed.
 
 **YOUR ANSWER GOES HERE:**
 
-Time to run: `46880ms`.
+Time to run: `54550ms`.
 
 From profvis, it seems that the line to append to `chain` is taking an unusally long amount of time and memory.
 This indicates a lack of preallocation.
@@ -161,7 +161,7 @@ profvis({
 })
 ```
 
-After preallocating `chain`, the function took `950ms` to run, almost 50 times faster.
+After preallocating `chain`, the function took `850ms` to run, almost 50 times faster.
 ```{r, eval=FALSE}
 # Your edited function and the code to profile it go here:
 profvis({
@@ -212,12 +212,12 @@ it takes for the function to run, and comment on how the performance changed.
 
 **YOUR ANSWER GOES HERE:**
 
-
+After changing the samples to integers, the function took `720ms` to run. This is slightly faster than the previous version that used strings.
 ```{r, eval=FALSE}
 # Your code goes here.
 profvis({
-  sample_markov = function(n, p = c(0.6, 0.7), init = "0") {
-  chain = numeric(n)
+  sample_markov = function(n, p = c(0.6, 0.7), init = 0) {
+  chain = integer(n)
   chain[1] = init
 
   for (i in 1:n) {
@@ -272,9 +272,30 @@ changed.
 
 **YOUR ANSWER GOES HERE:**
 
+The function now takes just `240ms` to run, much faster than before.
 ```{r, eval=FALSE}
 # Your code goes here.
+profvis({
+  sample_markov = function(n, p = c(0.6, 0.7), init = 0) {
+  chain = integer(n)
+  chain[1] = init
 
+  for (i in 1:n) {
+    # Check the previous state, chain[i].
+    if (chain[i] == 0) {
+      # Randomly sample new state using the probabilities.
+      chain[i + 1] = rbinom(1, 1, p[1])
+
+    } else {
+      # Randomly sample new state using the probabilities.
+      chain[i + 1] = rbinom(1, 1, p[2])
+    }
+  }
+
+  chain[-1]
+}
+  sample_markov(150000)
+})
 ```
 
 
@@ -329,7 +350,28 @@ compares to the version at the beginning of the homework.
 
 **YOUR ANSWER GOES HERE:**
 
+The function now takes just `50ms` to run. Compared to the starter code, this is about 1000 times faster.
 ```{r, eval=FALSE}
 # Your code goes here.
+profvis({
+  sample_markov = function(n, p = c(0.6, 0.7), init = 0) {
+  chain = integer(n)
+  chain[1] = init
+  sample = runif(n, 0, 1)
+  for (i in 1:n) {
+    # Check the previous state, chain[i].
+    if (chain[i] == 0) {
+      # Randomly sample new state using the probabilities.
+      chain[i + 1] = as.integer(sample[i] > p[1])
 
+    } else {
+      # Randomly sample new state using the probabilities.
+      chain[i + 1] = as.integer(sample[i] > p[2])
+    }
+  }
+
+  chain[-1]
+}
+  sample_markov(150000)
+})
 ```
