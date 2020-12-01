@@ -54,13 +54,13 @@ Joins (with dplyr)
 
 We'll use the grocery data set:
 ```{r}
-stores = readRDS("data/grocery/stores.rds")
+stores = readRDS("Week 14/data/grocery/stores.rds")
 stores
 
-items = readRDS("data/grocery/items.rds")
+items = readRDS("Week 14/data/grocery/items.rds")
 items
 
-inv = readRDS("data/grocery/inventory.rds")
+inv = readRDS("Week 14/data/grocery/inventory.rds")
 inv
 ```
 
