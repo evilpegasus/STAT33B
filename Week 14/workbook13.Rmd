@@ -1,0 +1,132 @@
+---
+title: "STAT 33B Workbook 13"
+date: "Dec 3, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This workbook is due __Dec 3, 2020__ by 11:59pm PT.
+
+The workbook is organized into sections that correspond to the lecture videos
+for the week. Watch a video, then do the corresponding exercises _before_
+moving on to the next video.
+
+Workbooks are graded for completeness, so as long as you make a clear effort to
+solve each problem, you'll get full credit. That said, make sure you understand
+the concepts here, because they're likely to reappear in homeworks, quizzes,
+and later lectures.
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+In the notebook, you can run the line of code where the cursor is by pressing
+`Ctrl` + `Enter` on Windows or `Cmd` + `Enter` on Mac OS X. You can run an
+entire code chunk by clicking on the green arrow in the upper right corner of
+the code chunk. 
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+If you have any last-minute trouble knitting, **DON'T PANIC**. Submit your Rmd
+file on time and follow up in office hours or on Piazza to sort out the PDF.
+
+
+Relational Data
+===============
+
+Watch the "Relational Data" lecture video.
+
+No exercises for this section.
+
+
+
+Joins (with dplyr)
+==================
+
+Watch the "Joins (with dplyr)" lecture video.
+
+
+In this workbook, you'll use three tables from the Internet Movie Database
+(IMDB) to practice joining data frames and taking subsets.
+
+The following is a description of the three tables and their columns.
+
+* Titles (`titles10s.rds`), where each row is one movie. Columns:
+    + `tconst` - alphanumeric unique identifier of the title
+    + `titleType` - the type of the title (movie or tvMovie)
+    + `primaryTitle` - title used by the filmmakers at the point of release
+    + `originalTitle` - original title, in the original language
+    + `startYear` - release year of the title
+    + `runtimeMinutes` - primary runtime of the title, in minutes
+
+* Cast (`cast10s.rds`), where each row is one cast member from a movie.
+  Columns:
+    + `tconst` - alphanumeric unique identifier of the title
+    + `ordering` - a number to uniquely identify rows for a given tconst
+    + `nconst` - alphanumeric unique identifier of the name/person
+    + `category` - the category of job that person was in
+    + `job` - the specific job title if applicable, else `NA`
+
+* People (`people10s.rds`), where each row is one person. Columns:
+    + `nconst` - alphanumeric unique identifier of the name/person
+    + `primaryName` - name by which the person is most often credited
+
+The tables are a subset of IMDB's larger collection of data, which is available
+at <https://www.imdb.com/interfaces/>.
+
+
+## Exercise 1
+
+Find the names of the three people that had the most roles in movies in the
+data set.
+
+_Hint 1: Think about what the rows in each table represent. Is there a table
+where rows represent appearances/roles in movies?_
+
+_Hint 2: A join is only needed here to get the names of the people._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 2
+
+Compute a data frame that contains the `nconst` IDs, names, and roles of the
+primary cast from the 2018 movie "Black Panther". 
+
+_Hint 1: A common strategy for relational data is to reduce the size of a table
+or get specific rows by taking a subset, and then join that table with another
+table. Start by taking a subset of the Titles table to find the `tconst` ID for
+Black Panther._
+
+_Hint 2: When you have more than two tables, it is sometimes necessary to use
+more than one join._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 3
+
+Compute a data frame that contains the names of the primary **actors and
+actresses** for all Harry Potter movies in the data set.
+
+_Hint: The `startsWith` function (or stringr) is helpful for identifying Harry
+Potter movies._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+STAT 33 Wrap-up
+=================
+
+Watch the "STAT 33 Wrap-up" lecture video.
+
+Please fill in the teaching evaluations for this class!

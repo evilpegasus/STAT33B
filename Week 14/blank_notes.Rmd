@@ -1,0 +1,102 @@
+---
+title: "Stat 33B - Lecture Notes 14"
+date: November 29, 2020
+output: pdf_document
+---
+
+
+Relational Data
+===============
+
+Data split across multiple tables are called _relational data_.
+
+A column shared by several tables is called a _key_.
+
+For example, a grocery store's inventory system might have:
+
+* A table that lists stores
+* A table that lists items (fruits, vegetables, etc)
+* A table that lists quantity of each item at each store
+
+
+
+A _join_ combines two separate tables by based on a common key.
+
+For each row in the first table, the key is compared against the rows
+in the second table.
+
+If the key matches, the rows are combined into a new row.
+
+Note that a join can duplicate rows!
+
+
+Four kinds of joins are:
+
+* Inner: keep matches
+* Full: keep everything
+* Left: keep all left, keep matching right
+* Right: keep matching left, keep all right
+
+
+Joins are not just used in R; joins are especially important to understand for
+working with databases and SQL.
+
+
+
+
+
+
+
+
+
+Joins (with dplyr)
+==================
+
+We'll use the grocery data set:
+```{r}
+
+```
+
+
+The dplyr package provides several join functions.
+
+
+The `inner_join()` function only keeps rows where the key matched:
+```{r}
+
+```
+
+Use the `by` parameter to specify the key:
+```{r}
+
+```
+
+
+The `left_join()` function keeps all rows in the "left" or first
+table.
+
+Rows in the right table are only kept if they match:
+```{r}
+
+```
+
+
+Conversely, the `right_join()` function keeps all rows in the "right"
+or second table.
+
+```{r}
+
+```
+
+
+The `full_join()` function keeps all rows, regardless of whether the key
+matched.
+
+As a result, some rows will contain missing values:
+```{r}
+
+```
+
+
+The dplyr package also provides other kinds of joins that are not as common
+outside of R. See the docs for details.
