@@ -94,15 +94,14 @@ _Hint 2: A join is only needed here to get the names of the people._
 **YOUR ANSWER GOES HERE:**
 
 ```{r}
+library(dplyr)
 cast = readRDS("data/imdb/cast10s.rds")
 people = readRDS("data/imdb/people10s.rds")
 titles = readRDS("data/imdb/titles10s.rds")
-head(cast, 30)
-head(people)
-head(titles)
 
-sort(table(cast$nconst), decreasing = TRUE)[1:3]
-
+top_3 = data.frame(sort(table(cast$nconst), decreasing = TRUE)[1:3])
+joined = left_join(top_3, people, by = c("Var1" = "nconst"))
+joined$primaryName
 ```
 
 ## Exercise 2
@@ -120,7 +119,11 @@ more than one join._
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+bp_tconst = titles[titles$primaryTitle == "Black Panther", ]$tconst
+bp_cast = cast[cast$tconst == bp_tconst, ]
+data.frame(left_join(bp_cast, people, by = "nconst"))
+```
 
 ## Exercise 3
 
@@ -132,7 +135,12 @@ Potter movies._
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+hp_tconst = titles[startsWith(titles$primaryTitle, "Harry Potter"), ]$tconst
+hp_cast = cast[cast$tconst == hp_tconst, ]
+hp_joined = left_join(hp_cast, people, by = "nconst")
+hp_joined[hp_joined$category == "actor" | hp_joined$category == "actress", ]$primaryName
+```
 
 STAT 33 Wrap-up
 =================
