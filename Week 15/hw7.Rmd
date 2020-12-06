@@ -1,0 +1,133 @@
+---
+title: "STAT 33B Homework 7"
+date: "Dec 10, 2020"
+author: "YOUR NAME (YOUR SID)"
+output: pdf_document
+---
+
+This homework is due __Dec 10, 2020__ by 11:59pm PT.
+
+Homeworks are graded for correctness. 
+
+As you work, write your answers in this notebook. Answer questions with
+complete sentences, and put code in code chunks. You can make as many new code
+chunks as you like.
+
+Please do not delete the exercises already in this notebook, because it may
+interfere with our grading tools.
+
+You need to submit your work in two places:
+
+* Submit this Rmd file with your edits on bCourses.
+* Knit and submit the generated PDF file on Gradescope.
+
+If you have any last-minute trouble knitting, **DON'T PANIC**. Submit your Rmd
+file on time and follow up in office hours or on Piazza to sort out the PDF.
+
+
+SpamAssassin Email Data
+=======================
+
+The SpamAssassin Email Data set is a collection of email messages used to train
+the SpamAssassin software to detect spam. The email messages are divided into
+legitimate "ham" emails and illegitimate "spam" emails. Each email is in a
+separate plain text file.
+
+In this assignment, you'll only use a collection of "ham" emails. You can find
+the emails in the file `emails.zip` on the bCourse. You will need to unzip the
+file before proceeding with Exercise 1.
+
+This data set is originally from the
+[Apache SpamAssassin](https://spamassassin.apache.org/) project.
+
+
+## Exercise 1
+
+The `readLines` function reads lines of text from a file and returns them in a
+character vector with one element for each line. The first argument is the path
+to the file. By default, the function will read all of the lines in the file.
+
+Write a function `read_email` that reads all of the text in a single email
+file. Your function should have a parameter `file` to set the path to the file.
+Your function should collapse all of the lines in the file into a single string
+with lines separated by the newline character `\n`.
+
+Show that your function works for 3 of the email files.
+
+_Hint: The `paste` function is relevant here._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 2
+
+Write a function `read_email_all` that reads all of the files in the email
+directory and returns a character vector with one element for each email. Your
+function should have a parameter `dir` to set the path to the directory. Your
+function should call the `read_email` function from Exercise 1.
+
+Make sure not to put other files in the email directory!
+
+After writing your function, use it to read all of the email files into a
+character vector called `emails`.
+
+How many email files are there?
+
+_Hint: The `list.files` function is relevant here._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 3
+
+Use stringr and regular expressions to write a function `extract_email_addr`
+that extracts all email addresses from a character vector. Your function should
+have a parameter `x` for the character vector, and should return a character
+vector with one element for each email address (duplicates are okay).
+
+For simplicity, you can assume the formatting rules for email addresses are
+that they:
+
+1. Must contain exactly one at-symbol `@`
+2. Can also contain any number of letters, numbers, or characters in `._-`
+
+Test your function on some made up strings and also on one of the email
+messages.
+
+_Hint: Using character classes `[ ]` in the regex pattern is important here._
+
+_Note: It's not necessary for this exercise, but if you're curious about the
+actual rules for email addresses, see
+[Section 3.4.1 of RFC 5322](https://tools.ietf.org/html/rfc5322#section-3.4.1),
+or [this Wikipedia article](https://en.wikipedia.org/wiki/Email_address)._
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 4
+
+Using your `extract_email_addr` function and the email message data:
+
+1. How many different email addresses appear in the emails?
+2. Which 5 email addresses appear the most?
+
+**YOUR ANSWER GOES HERE:**
+
+
+
+## Exercise 5
+
+The part of an email address after the `@` is called the _domain_. The domain
+refers to a website, so it usually contains at least one dot. For example, Cal
+email addresses use the domain `berkeley.edu`, which is also the Cal website
+address.
+
+Which 10 domains are the most common among the email addresses you extracted
+from the email data?
+
+How many domains in the email addresses end in `.edu`?
+
+**YOUR ANSWER GOES HERE:**
