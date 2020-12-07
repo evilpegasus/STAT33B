@@ -1,7 +1,7 @@
 ---
 title: "STAT 33B Homework 7"
 date: "Dec 10, 2020"
-author: "YOUR NAME (YOUR SID)"
+author: "Ming Fong (3035619833)"
 output: pdf_document
 ---
 
@@ -58,7 +58,16 @@ _Hint: The `paste` function is relevant here._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+read_email = function(file) {
+    lines = readLines(file)
+    paste(lines, sep = "", collapse = "\n")
+}
 
+x = read_email("data/emails/easy_ham/0001.ea7e79d3153e7469e7a9c3e0af6a357e")
+y = read_email("data/emails/easy_ham/0002.b3120c4bcbf3101e661161ee7efcb8bf")
+z = read_email("data/emails/easy_ham/0003.acfc5ad94bbd27118a0d8685d18c89dd")
+```
 
 ## Exercise 2
 
@@ -78,7 +87,15 @@ _Hint: The `list.files` function is relevant here._
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+read_email_all = function(dir) {
+    files = list.files(dir, full.names = TRUE)
+    vapply(files, read_email, "a")
+}
 
+emails = read_email_all("data/emails/easy_ham")
+length(emails)
+```
 
 ## Exercise 3
 
@@ -105,7 +122,13 @@ or [this Wikipedia article](https://en.wikipedia.org/wiki/Email_address)._
 
 **YOUR ANSWER GOES HERE:**
 
-
+```{r}
+library(stringr)
+extract_email_addr = function(x) {
+    unlist(str_extract_all(x, "[[:alnum:]|.|_|-]+@[[:alnum:]|\\.|_|-]+"))
+}
+head(extract_email_addr(emails[1]))
+```
 
 ## Exercise 4
 
@@ -116,7 +139,15 @@ Using your `extract_email_addr` function and the email message data:
 
 **YOUR ANSWER GOES HERE:**
 
+```{r}
+addresses = unlist(sapply(emails, extract_email_addr), use.names = FALSE)
+addresses_count = table(addresses)
+# Number of unique addresses
+length(addresses_count)
 
+# Top 5 addresses
+head(sort(addresses_count, decreasing = TRUE), 5)
+```
 
 ## Exercise 5
 
@@ -131,3 +162,14 @@ from the email data?
 How many domains in the email addresses end in `.edu`?
 
 **YOUR ANSWER GOES HERE:**
+```{r}
+domains = substring(str_extract(addresses, "@.+"), 2)
+domains_count = sort(table(domains), decreasing = TRUE)
+# 10 most common domains
+head(domains_count, 10)
+
+edu_domains = domains[str_detect(domains, "\\.edu$")]
+# Number of .edu domains
+edu_domains_count = table(edu_domains)
+length(edu_domains_count)
+```
