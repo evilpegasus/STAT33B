@@ -1,0 +1,615 @@
+---
+title: "Stat 33B - Final Review"
+date: September 6, 2020
+output: pdf_document
+---
+Vectors
+=======
+
+R has no concept of scalars or arrays.
+
+R's atomic data type is the __vector__, an ordered container for 0 or more
+elements.
+
+Vector elements must all have the same data type.
+
+The `c()` function combines vectors:
+```{r}
+x = c(5, 7, 1)
+x
+
+c(x, 1)
+
+c("hi", "hello")
+"hi"
+
+c("hi", 1)
+```
+
+## Vectorization
+
+A __vectorized__ function is one that is applied element-by-element when passed
+a vector argument.
+
+Many R functions are vectorized:
+```{r}
+c(sin(0), sin(1), sin(2))
+
+x = c(0, 1, 2)
+sin(x)
+
+# NOT VECTORIZED:
+mean(x)
+```
+
+Vectorization is the fastest kind of iteration in R.
+
+
+
+## Indexing
+
+In R, indexes start at 1.
+
+Use the square bracket `[` to access elements of a vector:
+```{r}
+x = c(1, 3, 7)
+x[2]
+x[6]
+```
+
+You can use a vector as an index:
+```{r}
+x[c(1, 1, 2)]
+```
+
+## More about Data Frames
+
+R uses data frames to represent tabular data.
+
+A data frame is a list of column vectors. So:
+
+* Elements of a column must all have the same type (like a vector).
+* Elements of a row can have different types (like a list).
+* Every row must be the same length.
+
+In addition, every column must be the same length.
+
+
+This idea is reflected in the type of a data frame:
+```{r}
+data("iris")
+typeof(iris)
+```
+
+## Deconstructing Data Frames
+
+The `unclass()` function resets the class of an object to match the object's
+type.
+
+You can use `unclass()` to inspect the internals of an object.
+
+For example, you can see that a data frame is a list:
+```{r}
+unclass(iris)
+```
+
+
+Special Values
+==============
+
+R has four special values.
+
+
+## Missing Values
+
+`NA` represents a **missing value** in a data set:
+```{r}
+NA
+
+class(NA)
+typeof(NA)
+
+x = c(1, NA, 2)
+class(x)
+
+x = c("hi", NA)
+class(x)
+x
+
+c("NA", NA)
+```
+
+The missing value `NA` is contagious!
+```{r}
+NA + 3
+
+3 * NA
+
+7 / NA
+```
+
+Using a unknown argument in a computation usually produces an unknown result.
+
+
+## Null
+
+`NULL` represents a value that's not defined _in R_.
+
+`NULL` usually indicates absence of a result:
+```{r}
+c()
+
+dim(c(1, 2))
+
+class(NULL)
+typeof(NULL)
+
+c(1, NULL)
+```
+
+For instance, if we try to get the matrix dimensions of a vector.
+
+
+## Not a Number
+
+`NaN`, or "not a number", represents a value that's not defined mathematically.
+
+```{r}
+NaN
+
+class(NaN)
+typeof(NaN)
+
+c(1, NaN)
+
+0 / 0
+```
+
+
+## Infinite Values
+
+`Inf` represents infinity. Produced by some computations:
+
+```{r}
+13 / 0
+
+Inf
+
+c(1, Inf)
+
+class(Inf)
+typeof(Inf)
+```
+
+
+Three Ways to Subset
+====================
+
+Use the subset (or "square bracket") operator `[` to get elements from a vector
+by position:
+```{r}
+x = rep(c(4.1, 2.2, 7.9), 2)
+x
+
+x[3]
+
+x[c(5, 4, 5)]
+```
+
+You can also use the subset operator to set elements:
+```{r}
+x[1] = 10
+
+x
+
+x[c(4, 5)] = c(-20, -10)
+x
+```
+
+Negative positions mean "everything except":
+```{r}
+x[-1]
+
+x[-c(5, 6)]
+
+# x[c(5, -1)]
+```
+
+
+The subset operator `[` can actually get/set elements in three ways:
+
+* By position
+* By name
+* By condition
+
+
+## Subsets by Name
+
+You can make vectors with named elements (just like lists):
+```{r}
+x = c(a = 6, b = 4, c = 3)
+x
+
+names(x)
+
+names(x) = c("hi", "hello", "goodbye")
+x
+```
+
+You can use the subset operator `[` to get elements by name:
+```{r}
+x["hello"]
+
+x[c('hi', 'hi', 'goodbye')]
+```
+
+Likewise to set elements by name:
+```{r}
+x["hello"] = 21
+
+x
+```
+
+
+
+## Congruent Vectors
+
+Two vectors are **congruent** if they have the same length and they correspond
+elementwise.
+
+For example, suppose you do a survey that records each person's:
+
+* Favorite animal
+* Age
+
+These are two different vectors of information, but each person will have a
+response for both.
+
+So you'll have two vectors that are the same length, with corresponding
+elements:
+```{r}
+animal = c("dog", "cat", "iguana")
+age = c(31, 24, 72)
+```
+
+These vectors are congruent.
+
+Columns in a data frame are always congruent!
+
+
+
+## Subsets by Condition
+
+The third way to subset a vector with `[` is to use a congruent logical vector.
+
+For example:
+```{r}
+x = c(2.2, 3.1, 6.7)
+x
+
+logic = c(TRUE, FALSE, TRUE)
+
+x[logic]
+```
+
+`TRUE` means keep the element, `FALSE` means drop the element.
+
+Missing values `NA` in the logical vector are retained in the result:
+```{r}
+x[c(TRUE, NA, NA)]
+```
+
+
+A **condition** is any expression that returns a logical vector.
+
+For example, comparisons are conditions:
+```{r}
+x > 3
+```
+
+You can use conditions to take subsets:
+```{r}
+x[x > 3]
+```
+
+
+Final note: you can technically subset with any logical vector.
+
+If the length is different, R uses the recycling rule:
+```{r}
+x[c(TRUE, FALSE)] #TRUE
+```
+
+
+Tidy Data
+---------
+
+Most Tidyverse packages, including `ggplot`, are designed for working with tidy
+data sets.
+
+A data set is **tidy** if (and only if):
+
+1. Each observation has its own row.
+2. Each feature has its own column.
+3. Each value has its own cell.
+
+Tidy data sets are convenient for data analysis in general.
+
+The `tidyr` package has tools to clean up untidy data sets, and also examples
+of untidy data.
+
+Apply Function Basics
+=====================
+
+Doing the same operation repeatedly is a common pattern in programming.
+
+Vectorization is one way, but not all functions are vectorized.
+
+In R, the "apply functions" are another way to do something repeatedly.
+
+The apply functions call a function on each element of a vector or list.
+
+
+The `lapply()` Function
+---------------------
+
+The first and most important apply function is `lapply()`. The syntax is:
+```
+lapply(X, FUN, ...)
+```
+
+The function `FUN` is called once for each element of `X`, with the element as
+the first argument. The `...` is for additional arguments to `FUN`, which are
+held constant across all calls.
+
+
+Unrealistic example:
+```{r}
+x = c(1, 7, 9)
+lapply(x, sin)
+
+sin(x)
+```
+In practice, it's clearer and more efficient to use vectorization here.
+
+
+Let's use the iris data for some realistic examples:
+```{r}
+
+head(iris)
+lapply(iris, class)
+
+class(iris)
+
+str(iris)
+
+cols = c("Sepal.Width", "Petal.Length", "Petal.Width")
+lapply(iris[cols], median, na.rm = TRUE)
+```
+
+`lapply()` always returns the result as a list.
+
+"l" for **list** result.
+
+The `sapply()` Function
+---------------------
+
+`sapply()` simplifies the result to a vector, when possible.
+
+"s" for **simplified** result.
+
+Examples:
+```{r}
+sapply(iris[cols], median, na.rm = TRUE)
+```
+
+The `sapply()` function is useful if you are working interactively.
+
+
+The Split-Apply Strategy
+========================
+
+The `split()` function splits a vector or data frame into groups based on some
+other vector (usually congruent).
+
+```{r}
+x = c(1, 7, 9, 2, 5)
+group = c("blue", "red", "blue", "green", "red")
+
+split(x, group)
+```
+
+Split iris by the petal length column:
+```{r}
+by_group = split(iris, iris$Petal.Length)
+```
+
+The `split()` function is especially useful when combined with `lapply()` or
+`sapply`().
+
+```{r}
+width_by_length = split(iris$Sepal.Width, iris$Petal.Length)
+sapply(width_by_length, mean, na.rm = TRUE)
+```
+This is an R idiom!
+
+The `tapply()` Function
+---------------------
+
+The `tapply()` function is equivalent to the `split()` and `sapply()` idiom.
+
+"t" for **table**, because `tapply()` is a generalization of the
+frequency-counting function `table()`.
+
+
+Examples:
+```{r}
+tapply(iris$Sepal.Width, iris$Petal.Length, mean, na.rm = TRUE)
+
+# A generalization of table:
+tapply(iris$Sepal.Width, iris$Sepal.Width, length)
+table(iris$Sepal.Width)
+```
+
+This strategy is important for analyzing tabular data regardless of what
+programming language or packages you're using.
+
+Developing Iterative Code
+=========================
+
+When thinking about writing a loop, try (in order):
+
+1. vectorization
+2. apply functions
+    * Try an apply function if iterations are independent.
+3. for/while-loops
+    * Try a for-loop if some iterations depend on others.
+    * Try a while-loop if the number of iterations is unknown.
+4. recursion
+    * Convenient for naturally recursive problems (like Fibonacci),
+      but often there are faster solutions.
+
+Handling Warnings and Errors
+============================
+
+Use the `try` function to try running an expression that might produce an
+error:
+```{r}
+x = try(5 + 6)
+
+y = try(5 + "hi")
+
+if (inherits(y, "try-error")) {
+  # Handle error
+} else {
+  # Proceed normally
+}
+
+```
+
+If the expression produces an error, `try` returns an object with class
+`try-error`. Otherwise, it returns the result.
+
+An error in `try` does NOT stop evaluation:
+```{r}
+f = function(x, y) {
+  try(5 + "hi")
+  x + y
+}
+```
+
+The error can be silenced by setting `silent = TRUE`:
+```{r}
+f = function(x, y) {
+  try(5 + "hi", silent = TRUE)
+  x + y
+}
+```
+
+
+Creating Closures
+-----------------
+As an example, let's make a function that returns the number of times it's been
+called.
+
+Here's the code:
+```{r}
+counter = 0
+count = function() {
+  counter <<- counter + 1
+  counter
+}
+```
+
+Modifying the enclosing environment is a _side effect_.
+
+Functions with side effects make code harder to understand and predict.
+
+Use side effects sparingly. Most functions should not have side effects.
+
+If you do need side effects, try to isolate them.
+
+The example function has side effects on the global environment.
+
+This extremely bad design!
+
+The function might overwrite the user's variables:
+```{r}
+counter = 0
+count()
+```
+
+Or the user might overwrite the function's variables:
+
+It's better to create a isolated enclosing environment for the function.
+
+There are two different idioms for doing this:
+
+1. Define the function inside of another function (a _factory function_)
+2. Define the function inside of a call to `local`
+
+
+Here's skeleton code for the first approach:
+```{r}
+make_f = function() {
+  # Put variables that `f` remembers between calls here:
+
+  # This is your closure `f`:
+  function() {
+    # ...
+  }
+}
+
+f = make_f()
+# Now you can use f() as you would any other function.
+```
+
+We can use this approach for the example function:
+```{r}
+make_count = function() {
+  counter = 0
+  
+  function() {
+    counter <<- counter + 1
+    counter
+  }
+}
+
+count = make_count()
+```
+
+Relational Data
+===============
+
+Data split across multiple tables are called _relational data_.
+
+A column shared by several tables is called a _key_.
+
+For example, a grocery store's inventory system might have:
+
+* A table that lists stores
+* A table that lists items (fruits, vegetables, etc)
+* A table that lists quantity of each item at each store
+
+
+
+A _join_ combines two separate tables by based on a common key.
+
+For each row in the first table, the key is compared against the rows
+in the second table.
+
+If the key matches, the rows are combined into a new row.
+
+Note that a join can duplicate rows!
+
+
+Four kinds of joins are:
+
+* Inner: keep matches
+* Full: keep everything
+* Left: keep all left, keep matching right
+* Right: keep matching left, keep all right
+
+
+Joins are not just used in R; joins are especially important to understand for
+working with databases and SQL.
